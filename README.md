@@ -1,8 +1,6 @@
 # C 编写规范和其他（coding style and more）
 
-$$
-温馨提示：本文推荐下载下来，在 Typora 中阅读
-$$
+***p.s 温馨提示：本文推荐下载下来，在 Typora 中阅读***
 
 编辑整理 by [Staok](https://github.com/Staok)，始于 2021.2 且无终稿
 
