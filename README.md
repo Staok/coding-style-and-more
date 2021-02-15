@@ -1,5 +1,9 @@
 # C 编写规范和其他（coding style and more）
 
+$$
+温馨提示：本文推荐下载下来，在 Typora 中阅读
+$$
+
 编辑整理 by [Staok](https://github.com/Staok)，始于 2021.2 且无终稿
 
 本文件是“瞰百易”计划的一部分，为遵循“二向箔”定则而努力着，我做东西致力于与网络上碎片化严重的现象泾渭分明！（这中二魂...）
@@ -249,13 +253,13 @@
 - 命名遵循"属什么 _ 是什么 _ 做什么"的形式。
 
 ```c
-void 			my_func(void);
-void 			myfunc(void);
-const char* 	my_func(void);
-my_struct_t* 	my_func(int32_t a, int32_t b);
-void        	set(int32_t a);
-my_type_t   	get(void);
-my_ptr_t*   	get_ptr(void);
+void            my_func(void);
+void            myfunc(void);
+const char*     my_func(void);
+my_struct_t*    my_func(int32_t a, int32_t b);
+void            set(int32_t a);
+my_type_t       get(void);
+my_ptr_t*       get_ptr(void);
 ```
 ### 关于变量定义形式（Variables）
 
