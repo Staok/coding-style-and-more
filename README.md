@@ -1,6 +1,6 @@
 # C 编写规范和其他（coding style and more）
 
-***p.s 温馨提示：本文推荐下载下来，在 Typora 中阅读***       [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)
+***p.s 温馨提示：本文推荐下载下来，在 Typora 中阅读，或者在  [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)  阅读***      
 
 编辑整理 by [Staok](https://github.com/Staok)，始于 2021.2 且无终稿
 
@@ -91,7 +91,7 @@
   ​	AStyle is a great piece of software that can help with formatting the code based on input configuration.
   ​	This repository contains `astyle-code-format.cfg` file which can be used with `AStyle` software as command line below.
 
-  ```
+  ```bash
   astyle --options="astyle-code-format.cfg" "input_path/*.c,*.h" "input_path2/*.c,*.h"
   ```
 
@@ -148,26 +148,26 @@
 11. 控制语句总加括号（即使一句），括号在竖方向对齐，用 tab 把层次分地清清楚楚，例如：（代码横向写技术~）
 
     ```c
-    if( )			for (i = 0; i < 5; ++i)		do				switch (check()) 
-    {				{						 {				  {	
-    																case 0:	
-    }else if( )		 }						  }while( );				do_a();
-    {																	break;
-    																case 1:	
-    }else																do_b();
-    {																	break;
-    																default:
-    }																	break;
-    															}
+    if( )             for (i = 0; i < 5; ++i)    do                switch (check()) 
+    {                 {                          {                 {	
+                                                                          case 0:	
+    }else if( )       }                          }while( );                   do_a();
+    {                                                                         break;
+                                                                          case 1:	
+    }else                                                                     do_b();
+    {                                                                         break;
+                                                                          default:
+    }                                                                         break;
+                                                                          }
     ```
 
 12. 层次分明，多用tab划分层次关系（预编译代码也不例外），例如：
 
     ```c
     #ifdef _DEBUG
-    	#define DEBUGMSG(msg,date) printf(msg);printf(“%d%d%d”,date,_LINE_,_FILE_)
+        #define DEBUGMSG(msg,date) printf(msg);printf(“%d%d%d”,date,_LINE_,_FILE_)
     #else
-    	#define DEBUGMSG(msg,date)
+        #define DEBUGMSG(msg,date)
     #endif
     ```
 
@@ -184,7 +184,7 @@
     const void* const p; /* p 所指向的内容和 p 地址本身都不能改变 */
     /*
     p.s	char* c 与 char *c 没有任何区别
-    	signed int 和 unsigned int 区别很大，前者是可以表达正负数的源码，后者是从0开始的正数或是一串参与逻辑运算的二进制
+        signed int 和 unsigned int 区别很大，前者是可以表达正负数的源码，后者是从0开始的正数或是一串参与逻辑运算的二进制
     */
     ```
 
@@ -289,24 +289,24 @@ char *p, *n;
       MY_ENUM_TESTB,
   }my_enum_t;
   
-  struct SIMPLE_struct_t		struct /* 只用一次的结构体 */		typedef struct
-  {						  {								   {
-      int a;						int a;							int a;
-      char b;						char b;							char b;
-      double c;					double c;						double c;
-  };						  }abc;								}Simple_struct_t;
+  struct SIMPLE_struct_t      struct /* 只用一次的结构体 */        typedef struct
+  {                           {                                  {
+      int a;                        int a;                            int a;
+      char b;                       char b;                           char b;
+      double c;                     double c;                         double c;
+  };                          }abc;                              }Simple_struct_t;
   ```
 
 - 结构体的实例化尽量用"表格"形式，并在每列头部写好注释，例如：
 
   ```c
   struct fsm_states_struct_t fsm_XXX1_state[XXX1_State_MAX] = 	/*定义描述名为‘fsm_XXX1’的状态机的状态图*/
-  {                                                 	/*跳转条件都初始化为0*/
-      /*					状态      	执行函数         跳转条件数量		各个条件跳转后的状态（注：根据跳转条件的优先级从高到低往下写）*/
-      {(unsigned int)XXX1_State_1,   fsm_XXX1_state_1_Fun,	2,{  	{0,(unsigned int)XXX1_State_5	},
-                                                                 {0,(unsigned int)XXX1_State_2	},    }},
+  {                                                 	      /*跳转条件都初始化为0*/
+      /*               状态               执行函数         跳转条件数量     各个条件跳转后的状态（注：根据跳转条件的优先级从高到低往下写）*/
+      {(unsigned int)XXX1_State_1,   fsm_XXX1_state_1_Fun,    2,{     {0,(unsigned int)XXX1_State_5    },
+                                                                      {0,(unsigned int)XXX1_State_2    },    }},
   
-      {(unsigned int)XXX1_State_4,   fsm_XXX1_state_4_Fun,	1,{  	{0,(unsigned int)XXX1_State_5	},    }},
+      {(unsigned int)XXX1_State_4,   fsm_XXX1_state_4_Fun,    1,{     {0,(unsigned int)XXX1_State_5    },    }},
   };
   /*或者*/
   Simple_struct_t simple = 
@@ -337,7 +337,7 @@ char *p, *n;
   #define SET_POINT(p, x, y)  do{ (p)->px = (x); (p)->py = (y); }while(0)
   /*或者下句更好：*/
       #define SET_POINT(p, x, y)  do{    \   /* Backslash indicates statement continues in new line */
-      (p)->px = (x);                 	   \
+      (p)->px = (x);                     \
       (p)->py = (y);                     \
   }while(0)                                 /* 2 statements. No semicolon after while loop */
   ```
@@ -346,12 +346,12 @@ char *p, *n;
 
   ```c
   #if defined(XYZ)
-  	/* Do when XYZ defined */
-  	#if defined(ABC)
-  		/* do when ABC defined */
-  	#endif
+      /* Do when XYZ defined */
+      #if defined(ABC)
+          /* do when ABC defined */
+      #endif
   #else
-  	/* Do when XYZ not defined */
+      /* Do when XYZ not defined */
   #endif
   ```
 
@@ -384,18 +384,18 @@ char *p, *n;
    /********************************
    *描述：函数详细描述
    *参数：   1、第一个形参名 描述
-   		2、第二个形参名 描述
+            2、第二个形参名 描述
    		...
-   *返回：	返回值类型 		描述
+   *返回：  返回值类型    描述
    ********************************/
    
    /*____________运行错误提示和打印______________________________*/
    /********************************
    *描述：表示某步骤运行有问题，串口提示，灯提示，声提示
-   *参数：   1、errmsg 	错误或者警告信息
-   		2、errid 	故障代号
-   		3、err_flag 错误类别（可选flag_Fault或flag_Warning）
-   *返回：	NULL
+   *参数：   1、errmsg    错误或者警告信息
+            2、errid     故障代号
+            3、err_flag 错误类别（可选flag_Fault或flag_Warning）
+   *返回：   NULL
    ********************************/
    ```
 
@@ -415,9 +415,9 @@ char *p, *n;
 
 ```c
 /*宏定义的形式规范
-	宏定义使用全大写（尽量），并遵循"属什么 _ 是什么 _ 做什么"的命名形式；
-	尽量把常数数字用宏定义代替；
-	对宏定义中的所有输入和输出（整个结果语句）用括号保护起来，长句用 do{ }while(0);
+    宏定义使用全大写（尽量），并遵循"属什么 _ 是什么 _ 做什么"的命名形式；
+    尽量把常数数字用宏定义代替；
+    对宏定义中的所有输入和输出（整个结果语句）用括号保护起来，长句用 do{ }while(0);
 */
 
 /*得到指定地址上的一个字节或字*/
@@ -439,8 +439,8 @@ char *p, *n;
 
 /*按照LSB格式把一个 unsigned short 的 val 转化为两个字节 ray[0] 和 ray[1]*/
 #define FLOPW( ray, val ) \
-(ray)[0] = ((val) / 256); \
-(ray)[1] = ((val) & 0xFF)
+    (ray)[0] = ((val) / 256); \
+    (ray)[1] = ((val) & 0xFF)
 
 /*得到一个字的高位和低位字节*/
 #define WORD_LO(xxx) ((unsigned char) ((unsigned short)(xxx) & 255))
@@ -457,8 +457,8 @@ char *p, *n;
 
 /*判断一个字符是不是16进制的数字*/
 #define HEXCHK( c ) ( ((c) >= '0' && (c) <= '9') ||\
-					  ((c) >= 'A' && (c) <= 'F') ||\
-					  ((c) >= 'a' && (c) <= 'f') )
+                      ((c) >= 'A' && (c) <= 'F') ||\
+                      ((c) >= 'a' && (c) <= 'f') )
 
 /*带防止溢出数据类型最大值的自加一*/
 #define INC_SAT( val ) (val = ((val)+1 > (val)) ? (val)+1 : (val))
