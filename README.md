@@ -44,15 +44,35 @@
 ## 1.5 日常素养
 
 - 维护干净整洁的编程环境（保持愉悦的心情，干净整洁的桌面，友好和蔼的同事等等）。
+
 - 身体坐直，按时走走，保证睡眠，计划运动。
+
 - 要学习或使用新东西，全网搜集到好的手册和资料，就已经成功了一半。
+
 - 习惯去看源代码（熏陶优秀代码风格，有时还能发现新东西）。
+
 - 先搞清楚需求，再构思，再开发，顺序不能错。
+
 - 不要重复造轮子，时常逛开源网站，有新想法可以先去找轮子，也许比自己写的更好，相信前人的智慧和同行们雪亮的眼光。
+
+- 编译错误，如果不明白哪错了，直接无脑复制编译器的错误信息扔到搜索引擎框，然后点“搜索”按钮（大部分报错都是语法错误）。
+
+- 关于提问，是一门艺术：
+
+    [谈谈提问的艺术 | How To Ask Questions The Smart Way](https://zhuanlan.zhihu.com/p/133763900)
+
+    [《提问的艺术：如何快速获得答案》（精读版）](https://blog.csdn.net/ajian005/article/details/81006663)
+
+    [如何问出一个好问题？| 提问的艺术](https://zhuanlan.zhihu.com/p/95536926)
+
 - 有结对编程，协作开发的能力。
+
 - 有写文档的习惯（对项目写文档，或者日常写博客，或者没事就画一画流程图梳理想法），条理清晰，简化描述（Keep it stupid simple），并且一定要写上用例，写上例子，写上实例！
+
 - 做好版本管理，有备份的意识（打压缩包写上时间也好，使用git工具也好，放到U盘里也好，传到私人网盘也好）。
+
 - 时常看书，时常看看同行的文章，常读常新。
+
 - 不止技术，不想当将军的士兵不是好士兵（有的人领导能力强，有的人能开发有竞争力的产品，有的人能把知识讲地透彻，有的人理论功底强），时常把视角拉远看一看。
 
 
@@ -82,12 +102,16 @@
 
 ## 3 代码格式化工具列举
 
-*p.s 针对较乱的"祖传代码"做初步治疗使用。(@TODO)下面部分条目尚未补全。*
+*p.s 针对较乱的"祖传代码"做初步治疗使用。代码格式化工具还可以把代码中的 tab 符变成四个空格，这样，当代码在不同的编辑器中打开时不会产生格式错误，所以可以用 AStyle 自己定制一份配置文件，在每次码完代码之后顺手运行一下 AStyle 即可。*
+
+(@TODO)下面部分条目尚未补全。
+
+(@TODO)查一查astyle配置文件的用法，按照自己的规范形式，写一个配置文件
 
 - 通用工具 AStyle：
 
-  ​	配置文件：  [c-code-style仓库](https://github.com/MaJerle/c-code-style)中的 astyle-code-format.cfg
-  ​	[AStyle官网](http://astyle.sourceforge.net/)
+  ​	配置文件：  [c-code-style仓库](https://github.com/MaJerle/c-code-style)中的 astyle-code-format.cfg 文件
+  ​	AStyle官网：[AStyle官网](http://astyle.sourceforge.net/)
   ​	AStyle is a great piece of software that can help with formatting the code based on input configuration.
   ​	This repository contains `astyle-code-format.cfg` file which can be used with `AStyle` software as command line below.
 
@@ -120,15 +144,13 @@
 
 3. 一个 tab 四个空格。
 
-4. 编译错误，如果不明白哪错了，直接无脑复制编译器的错误信息扔到搜索引擎框，然后点“搜索”按钮（大部分报错都是语法错误）。
-
 5. 运算符前后空一格，给函数传递的多个变量之间在逗号后空一格，下面为例：
 
    ```c
-   for (a = 0; a < 5; ++a)              /* OK */
-   a = 3 + 4;
-   int32_t a = sum(4, 3);
-   func_name(5, 4);
+   for (i = 0; i < 5; ++i)              /* i 永远滴神 */
+   tempNum = 3 + 4;
+   int32_t tempNum = sys_example_sum(4, 3);
+   sys_example_func(5, 4);
    ```
 
 6. 注释里，字母和数字的两边空一格，例如：
@@ -151,10 +173,10 @@
     if( )             for (i = 0; i < 5; ++i)    do                switch (check()) 
     {                 {                          {                 {	
                                                                           case 0:	
-    }else if( )       }                          }while( );                   do_a();
+    }else if( )       }                          }while( );                   fsm_do_a();
     {                                                                         break;
                                                                           case 1:	
-    }else                                                                     do_b();
+    }else                                                                     fsm_do_b();
     {                                                                         break;
                                                                           default:
     }                                                                         break;
@@ -251,13 +273,12 @@
 - 命名遵循"属什么 _ 是什么 _ 做什么"的形式。
 
 ```c
-void            my_func(void);
-void            myfunc(void);
-const char*     my_func(void);
-my_struct_t*    my_func(int32_t a, int32_t b);
-void            set(int32_t a);
-my_type_t       get(void);
-my_ptr_t*       get_ptr(void);
+void            sys_example_init(void);
+const char*     sys_string_generate(void);
+my_struct_t*    sys_example_func(int32_t para1, int32_t para2);
+void            fsm_state_set(int32_t fsm_ID);
+my_type_t       fsm_state_get(void);
+my_ptr_t*       menu_get_current_ptr(void);
 ```
 ### 关于变量定义形式（Variables）
 
@@ -507,7 +528,9 @@ _STDC_		如果实现是标准的，则含有十进制常量1，否则为其他
 ## 8 ST HAL 的编写形式
 
 相关文章：
-	STM32注释风格参考：https://blog.csdn.net/wanshiyingg/article/details/51923352
+
+-   STM32注释风格参考：https://blog.csdn.net/wanshiyingg/article/details/51923352
+
 ST HAL 的各个文件编写风格非常一致，下面以 F4 SPI 为例：
 
 .h文件：
