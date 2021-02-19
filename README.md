@@ -14,34 +14,11 @@
 
 [TOC]
 
-------
 
-## 1 本文参考源
-
-1. [c-code-style](https://github.com/MaJerle/c-code-style)
-2. [20个成熟软件中常用的宏定义](https://jishuin.proginn.com/p/763bfbd35604)
-3. [ST HAL](https://www.stmcu.com.cn/)
-4. [知乎问题页：程序员们有什么好的编程习惯？](https://www.zhihu.com/question/440136872)
-5. 本人长时摸索的经验
-
-*p.s 本 C 规范系广泛约取而成，参考并非照搬。*
-*p.s 此文件系业余整理而成，远不及"Google C/C++编程规范"、"华为编程规范"等文件的专业程度，以下列举后者的参考链接：*
-
-1. *[Google C++风格指南](http://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/contents/)*
-2. *华为 C语言编程规范*
-   - *[华为C语言编程规范（精华总结）](https://blog.csdn.net/m0_38106923/article/details/105042594)*
-   - *[C语言编程规范（一）（华为标准要求）](https://zhuanlan.zhihu.com/p/346160926)*
-   - *[C语言编程规范（二）（华为标准要求）](https://zhuanlan.zhihu.com/p/346689923)*
-3. *[MISRA C Coding Standard](https://www.misra.org.uk/Publications/tabid/57/Default.aspx)*
-
-以下是不错的关于规范的文章：
-
-- [比较优雅地编码](https://www.cnblogs.com/zzy0471/p/coderule.html)
-- 
 
 ------
 
-## 1.5 日常素养
+## 1 日常素养
 
 - 维护干净整洁的编程环境（保持愉悦的心情，干净整洁的桌面，友好和蔼的同事等等）。
 
@@ -91,7 +68,7 @@
 
   *p.s 以下为项目 "stm32_framework" 编写时由经验形成的一部分规范，具体形式以此项目的源码和架构为准！*
 
-  - 本"C 编写形式规范"的全部都适用。
+  - 本"C 编写规范"的全部规则都适用。
   - 中断优先级分组选用分组4，即16级抢占优先级，不用0级响应优先级。
   - IO的低电平为有效电平，高电平截止或者无效；按键IO尽量都使用外部中断。
   - 至少用一个定时器提供1ms或者10ms的时基，再用软件分频为 50ms/100ms/300ms/1s 等。
@@ -147,7 +124,7 @@
 5. 运算符前后空一格，给函数传递的多个变量之间在逗号后空一格，下面为例：
 
    ```c
-   for (i = 0; i < 5; ++i)              /* i 永远滴神 */
+   for (i = 0; i < 5; ++i)    /* i 永远滴神 */
    tempNum = 3 + 4;
    int32_t tempNum = sys_example_sum(4, 3);
    sys_example_func(5, 4);
@@ -156,7 +133,7 @@
 6. 注释里，字母和数字的两边空一格，例如：
 
    ```c
-   /* 用 3 这个数字代替洋文 three 了解了吗  */
+   /* 用 3 这个数字代替洋文 three 了解了吗 */
    ```
 
 7. 变量和函数的命名都只用小写（尽量），宏定义使用全大写（尽量），并遵循"属什么 _ 是什么 _ 做什么"的命名形式，如：sys_irq_disable()，属于 sys 级别函数，是 irq 管理，做 dsiable 的功能。
@@ -167,7 +144,7 @@
 
 10. 变量如果是低有效，变量名加尾缀"_n"，比如使能 en 是低有效（en 上面有一横），则命名为"en_n"。
 
-11. 控制语句总加括号（即使一句），括号在竖方向对齐，用 tab 把层次分地清清楚楚，例如：（代码横向写技术~）
+11. 控制语句总加括号（即使一句），括号在竖方向对齐，用 tab 把层次分地清清楚楚，例如：（为了节省空间，下面示例横向写~）
 
     ```c
     if( )             for (i = 0; i < 5; ++i)    do                switch (check()) 
@@ -180,7 +157,7 @@
     {                                                                         break;
                                                                           default:
     }                                                                         break;
-                                                                          }
+                                                                    }
     ```
 
 12. 层次分明，多用tab划分层次关系（预编译代码也不例外），例如：
@@ -193,7 +170,7 @@
     #endif
     ```
 
-13. 用 if (check_func()) { ... } 代替 if (check_func() == 1)，判断是否为'0'可以用后者的写法，判断'1'用前者写法。
+13. 用 if (check_func()) { ... } 代替 if (check_func() == 1)，判断是否为'0'可以用后者的写法（或者用 !check_func()），判断'1'用前者写法。
 
 14. 判断指针是否为空只用"NULL"，即 void* ptr; if (ptr == NULL || ptr != NULL) { ... }。
 
@@ -219,7 +196,7 @@
 19. 长运算语句尽量多的用括号（每一步运算都用括号括起来），并做好空格增加可读性，例如：
 
     ```c
-    temp = (0x7F << ((xByte - 1) * 8) );
+    temp = ( 0x7F << ((xByte - 1) * 8) );
     #define MAX( x, y ) ( ((x) > (y)) ? (x) : (y) )
     ```
 
@@ -661,3 +638,52 @@ extern "C" {
 最后加一个 COPYRIGHT
 ```
 
+## 9 本文参考源
+
+1. [c-code-style](https://github.com/MaJerle/c-code-style)
+2. [20个成熟软件中常用的宏定义](https://jishuin.proginn.com/p/763bfbd35604)
+3. [ST HAL](https://www.stmcu.com.cn/)
+4. [知乎问题页：程序员们有什么好的编程习惯？](https://www.zhihu.com/question/440136872)
+5. 本人长时摸索的经验
+
+*p.s 本 C 规范系广泛约取而成，参考并非照搬。*
+*p.s 此文件系业余整理而成，远不及"Google C/C++编程规范"、"华为编程规范"等文件的专业程度*
+
+## 10 大厂规范和名设计模式
+
+以下强烈建议空闲时认真学一学
+
+### 大厂规范
+
+1. *[Google C++风格指南](http://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/contents/)*
+2. *华为 C语言编程规范*
+    - *[华为C语言编程规范（精华总结）](https://blog.csdn.net/m0_38106923/article/details/105042594)*
+    - *[C语言编程规范（一）（华为标准要求）](https://zhuanlan.zhihu.com/p/346160926)*
+    - *[C语言编程规范（二）（华为标准要求）](https://zhuanlan.zhihu.com/p/346689923)*
+3. *[MISRA C Coding Standard](https://www.misra.org.uk/Publications/tabid/57/Default.aspx)*
+
+### 设计定律、原则和模式
+
+1.  [比较优雅地编码（良好的命名，清晰的结构和不差的算法）](https://www.cnblogs.com/zzy0471/p/coderule.html)
+2.  [nusr](https://github.com/nusr)/[hacker-laws-zh 对开发人员有用的定律、理论、原则和模式。](https://github.com/nusr/hacker-laws-zh)
+3.  etc.
+
+## 11 尾记
+
+### 关于软硬件标准化
+
+这是 ZLG致远电子 在2018年的一篇肺腑文章
+
+<img src="assets/QQ图片20210219140201.jpg" alt="QQ图片20210219140201" style="zoom:50%;" />
+
+### 开光保护
+
+[佛祖保佑永无BUG 神兽护体 代码注释(各种版本)](https://blog.csdn.net/vbirdbest/article/details/78995793)
+
+[厉害了word程序猿，进寺庙给服务器开光保永不宕机](https://www.sohu.com/a/116621959_430930) 
+
+以下是效果图
+
+<img src="assets/QQ图片20210219140545.jpg" alt="QQ图片20210219140545" style="zoom: 80%;" />
+
+<img src="assets/QQ图片20210219140542.jpg" alt="QQ图片20210219140542" style="zoom: 50%;" />
