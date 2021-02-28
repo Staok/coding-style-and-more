@@ -10,6 +10,14 @@
 
 ------
 
+按：引用观视频工作室视频[【大师计划·林宝军03】北斗三号总师：我来跟你说说，...](https://www.bilibili.com/video/BV1BA411K7FJ)里面总师受访时所说的话：
+
+5:48：“...所以我经常讲，要把一个产品做好，其实有三方面，一个是**技术**，一个是**质量**，一个是**管理**，这三方面；技术水平，质量保障能力和管理能力，三条腿哪个都少不了，少一个，这个东西（航天）也做不上去，其实技术只是一方面，...”
+
+6:44：“...光是技术上去了，不见得能做出一个系统。对我们工程来讲，就是（需要）**规范的文化**，什么意思呢，比如我们几十年的航天经验，我把这个经验总结成文字，总结成规范，不管是谁做，只要有一定的经验，按这个规范做出来，做得卫星出来，打到天上去就能好用，这就是规范文化。包括匠人文化和规范文化，最后都是按规矩去做，它强调的是解决了怎么做的问题，但它有一个缺点，没强调为什么，其实我认为在做的过程中，**加个为什么可能更好**。”
+
+------
+
 ## O 目录
 
 [TOC]
@@ -25,6 +33,8 @@
 - 身体坐直，按时走走，保证睡眠，计划运动。
 
 - 要学习或使用新东西，全网搜集到好的手册和资料，就已经成功了一半。
+
+- 循序渐进，由浅入深。对什么也不感兴趣、不深入是浮躁，而且不经过深入全面的了解就硬扛大型项目也是一种浮躁。
 
 - 习惯去看源代码（熏陶优秀代码风格，有时还能发现新东西）。
 
@@ -355,7 +365,7 @@ char *p, *n;
 
 ### 关于注释的形式（Comments）
 
-1. 注释里尽量写为什么，而不是做了什么。
+1. 注释里**尽量写为什么**，而不是做了什么。
 
 2. Doxygen 的注释语法规范和文档产生
 
@@ -367,9 +377,10 @@ char *p, *n;
 
    - 使用Doxygen软件生成注释文档：https://blog.csdn.net/tuwenqi2013/article/details/70050849
 
+   - Vs Code Doxygen 格式注释生成插件：https://blog.csdn.net/wang0huan/article/details/103107472/
+
      *p.s 关于 Doxygen 文档的更多具体写法用时再详看*
-     *Documented code allows doxygen to parse and general html/pdf/latex output,* 
-     *thus it is very important to do it properly.*
+     *Documented code allows doxygen to parse and general html/pdf/latex output, thus it is very important to do it properly.*
      *目测目前我见过的用源文件产生手册的大型项目有：LWIP、FreeRTOS、ST HAL、CMSIS等*
      *ST HAL 库里面的注释形式，看文末总结的其编写形式！*
 
