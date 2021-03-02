@@ -1,4 +1,4 @@
-# C 编写规范和其他（coding style and more）
+# C & MCU编写规范和其他（coding style and more）
 
 ***p.s 温馨提示：推荐点个 star 收藏一下后头慢慢看；或者下(白)载(嫖)下来，在 Typora 中阅读；或者在  [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)  阅读***      
 
