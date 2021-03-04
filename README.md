@@ -1,12 +1,12 @@
 # C & MCU编写规范和其他（coding style and more）
 
-***p.s 温馨提示：推荐点个 star 收藏一下后头慢慢看；或者下(白)载(嫖)下来，在 Typora 中阅读；或者在  [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)  阅读***      
+***p.s 温馨提示：推荐点个 star 收藏一下回头慢慢看；或者下(白)载(嫖)下来，在 Typora 中阅读；或者在  [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)  阅读***      
 
-编辑整理 by [Staok](https://github.com/Staok)，始于 2021.2 且无终稿
+编辑整理 by [Staok](https://github.com/Staok)，始于 2021.2 且无终稿。转载请注明作者及出处。
 
 本文件是“瞰百易”计划的一部分，尽量遵循[“二项玻”定则](https://github.com/Staok/Please-stay-in-the-future)，致力于与网络上碎片化严重的现象泾渭分明！（这中二魂...）
 
-本文适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。
+本文系广泛撷取、借鉴和整理，适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！
 
 ------
 
@@ -73,6 +73,8 @@
 - 做好预编译设置。方便于切换调试版本和执行版本，方便于切换行为模式，方便于剪裁功能块；功能剪裁用一个名字带"_config"的文件集中管理，供用户修改各种剪裁用的宏定义，就像总控台。
 
 - 关于 MCU 的编写框架，我目前大抵就认我自己的开源项目 "stm32_framework" 的吧，规范都对齐这个项目。
+
+- MCU系统的安全内容。[STM32信息安全概览：是时候KO安全问题了！](https://zhuanlan.zhihu.com/p/351366807) 内容包含“STM32 MCU底层硬件具备的安全能力能够覆盖存储访问保护、代码/系统隔离、启动入口限定、防篡改检测、密码学算法加速等多方面的安全需求”。慢慢的学一点用一点。
 
 - MCU C 的一些规范：
 
@@ -344,10 +346,10 @@ char *p, *n;
   
   #define SET_POINT(p, x, y)  do{ (p)->px = (x); (p)->py = (y); }while(0)
   /*或者下句更好：*/
-      #define SET_POINT(p, x, y)  do{    \   /* Backslash indicates statement continues in new line */
-      (p)->px = (x);                     \
-      (p)->py = (y);                     \
-  }while(0)                                 /* 2 statements. No semicolon after while loop */
+  #define SET_POINT(p, x, y)  do{        \   /* Backslash indicates statement continues in new line */
+          (p)->px = (x);                 \
+          (p)->py = (y);                 \
+      }while(0)                             /* 2 statements. No semicolon after while loop */
   ```
 
 - 预编译指令语句使用tab标识好层次：
