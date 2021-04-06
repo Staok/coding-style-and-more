@@ -31,11 +31,25 @@
 
 有关C++的详看 [这里](https://blog.csdn.net/lyw851230/article/details/89352839)
 
+## Vscode 代替 Source insight
+
+需装插件：
+
+1.  C/C++: C/C++代码,智能感知,debugger,和代码浏览
+
+2.  CSS Peak: 代码跳转工具
+
+3.  code outline： 显示函数列表
+
+4.  cpptools ：调试使用 参考：https://blog.csdn.net/bat67/article/details/76095813
+5.  Beautify: 代码格式化
+6.  Sublime Babel: 代码高亮
+
 ## 其他可选扩展
 
 -   [嵌入式应用中所使用的vscode 插件](https://www.zcxbb.com/index.php/2021/03/24/嵌入式应用中所使用的vscode-插件/)
 
-    \1. ARM :识别arm 汇编语言
+    \1. ARM :识别 arm 汇编语言
     \2. Auto Comment Blocks :自动注释
     \3. Beautify ：美化花括号
     \4. Binary :二进制文件预览

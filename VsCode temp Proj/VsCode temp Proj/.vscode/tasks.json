@@ -4,10 +4,10 @@
         {
             "label": "build & debug file",      // 任务名称，与launch.json的preLaunchTask相对应
             "type": "shell",                    // 可以为shell或process，前者相当于先打开shell再输入命令，后者是直接运行命令
-            "command": "g++",                   // 要使用的编译器，C++用clang++；如果想用MinGW就分别是gcc和g++，但注意把--target那条删去。
+            "command": "gcc",                   // 要使用的编译器，C++用clang++；如果想用MinGW就分别是gcc和g++，但注意把--target那条删去。
             "args": [
                 "-g",                           // 生成和调试有关的信息
-                //"-Wall",                        // 开启额外警告
+                //"-Wall",                        // 列出所有警告
                 "-o",                           // 指定输出文件名，不加该参数则默认输出a.exe，Linux下默认a.out
                 "${fileBasenameNoExtension}",
                 "${file}"
@@ -20,7 +20,7 @@
         {
             "label": "build & run file",
             "type": "shell",
-            "command": "g++",
+            "command": "gcc",
             "args": [
                 "-o",
                 "${fileBasenameNoExtension}",
