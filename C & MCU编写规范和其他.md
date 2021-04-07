@@ -105,6 +105,8 @@
 
 *p.s 针对较乱的"祖传代码"做初步治疗使用。代码格式化工具还可以把代码中的 tab 符变成四个空格，这样，当代码在不同的编辑器中打开时不会产生格式错误，所以可以用 AStyle 自己定制一份配置文件，在每次码完代码之后顺手运行一下 AStyle 即可。*
 
+
+
 (@TODO)下面部分条目尚未补全。
 
 (@TODO)查一查astyle配置文件的用法，按照自己的规范形式，写一个配置文件
@@ -122,7 +124,7 @@
 
 - VS Code：在 VS Code 中搜索软件包即可
 
-- MDK：
+- MDK：关于“把代码中的 tab 符变成四个空格”，在 MDK 的 Edit 的 Configuration 中，把 “Insert spaces for tab” 都勾上即可。
 
 - IAR：
 
@@ -426,7 +428,45 @@ char *p, *n;
    *_______________________///                               \\\___________________________*/
    ```
 
-   ------
+### 其他常用写法汇集（不定期更新）
+
+-   置位和清位
+
+    ```c
+    static volatile unsigned int *reg_temp = (volatile unsigned int *)(0x20E0084);
+    
+    /* 置位的标准写法 */
+    *reg_temp |= ( (1 << 14) | (1 << 5) | (1 << 2) | (1 << 1) );    /* 表示把 内存中 0x20E0084 位置的 第1、2、5、14位进行置1，其他位不变 */
+    
+    /* 清位的标准写法 */
+    *reg_temp &= ( ~( (1 << 3) | (1 << 0) ) );    /* 表示把 内存中 0x20E0084 位置的 第0、3位进行清0，其他位不变 */
+    
+     /* 读寄存器 */
+    volatile unsigned int val = *reg_temp;
+    ```
+
+-   创建内存地址上连续区域的结构体
+
+    ```c
+    typedef struct 
+    {
+        volatile unsigned int  URXD;            /**< UART Receiver Register, offset: 0x00 */
+                 unsigned char RESERVED_0[60];
+        volatile unsigned int  UTXD;            /**< UART Transmitter Register, offset: 0x40 */
+        volatile unsigned int  UCR1;            /**< UART Transmitter Register, offset: 0x44 */
+    } Periph_x_Type;
+    
+    /* Periph_x 这个外设的寄存器的基地址为 0x2020000 */
+    #define Periph_x_BASE          (0x2020000u)
+    /* 设置结构体 Periph_x 的地址为 Periph_x_BASE */
+    #define Periph_x    ((Periph_x_Type *)Periph_x_BASE)
+    /* 读取和设置寄存器（这里以置位举例） */
+    Periph_x->UCR1 |= (1 << 2);
+    ```
+
+    
+
+------
 
 ## 6 常用宏定义
 
