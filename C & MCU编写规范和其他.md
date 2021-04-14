@@ -778,12 +778,6 @@ extern "C" {
 
 ## 11 尾记
 
-### 关于软硬件标准化
-
-这是 ZLG致远电子 在2018年的一篇肺腑文章
-
-<img src="assets/QQ图片20210219140201.jpg" alt="QQ图片20210219140201" style="zoom:50%;" />
-
 ### 开光保护
 
 [佛祖保佑永无BUG 神兽护体 代码注释(各种版本)](https://blog.csdn.net/vbirdbest/article/details/78995793)
