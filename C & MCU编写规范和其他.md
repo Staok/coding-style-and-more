@@ -247,13 +247,13 @@
 15. 合理的常用 const 修饰符，防止变量或指针在层层传递过程中被篡改，或者定义函数的时候永远加上 const 修饰符，例：
 
     ```c
-    const unsigned char xByte; /* xByte 的内容不能变 */
-    const char *p; char const *p; /* 二者一样，都是 p 所指向的内容不能变 */
-    char * const p; /* const 修饰的是 p ， p 不能修改，即地址不能修改，其指向的内容可以修改 */
-    const void* const p; /* p 所指向的内容和 p 地址本身都不能改变 */
+    const unsigned char xByte;      /* xByte 的内容不能变 */
+    const char *p; char const *p;   /* 二者一样，都是 p 所指向的内容不能变 */
+    char * const p;                 /* const 修饰的是 p ， p 不能修改，即地址不能修改，其指向的内容可以修改 */
+    const void* const p;            /* p 所指向的内容和 p 地址本身都不能改变 */
     /*
-    p.s	char* c 与 char *c 没有任何区别
-        signed int 和 unsigned int 区别很大，前者是可以表达正负数的源码，后者是从0开始的正数或是一串参与逻辑运算的二进制
+    p.s    char* c 与 char *c 没有任何区别
+           signed int 和 unsigned int 区别很大，前者是可以表达正负数的源码，后者是从0开始的正数或是一串参与逻辑运算的二进制
     */
     ```
 
@@ -446,9 +446,7 @@ char *p, *n;
 
    Doxygen 从源码工程注释中自动化生成软件工程的说明文档。
 
-3. 下面列举几种花哨的，其中有我自己“创造”的。
-
-   函数定义的注释：
+3. 下面列举几种花哨的，其中有我自己“创造”的。函数定义的注释，主任务函数的注释，用于显眼！
 
    ```c
    /*__________函数简述_____________*/
@@ -469,17 +467,11 @@ char *p, *n;
    *返回：   NULL
    ********************************/
    
-   ```
-
-/*************\
+   /*************\
    * Multi-line  *
-* comment     *
+   * comment     *
    \*************/
-   ```
    
-   主任务函数的注释：用于显眼！
-   
-   ​```c
    /*______________________\\\                               ///__________________________*
    *___________________________________外设初始化函数_______________________________________*
    *_______________________///                               \\\__________________________*/
@@ -508,19 +500,21 @@ char *p, *n;
     typedef struct 
     {
         volatile unsigned int  URXD;            /**< UART Receiver Register, offset: 0x00 */
-                 unsigned char RESERVED_0[60];
+        volatile unsigned char RESERVED_0[60];
         volatile unsigned int  UTXD;            /**< UART Transmitter Register, offset: 0x40 */
         volatile unsigned int  UCR1;            /**< UART Transmitter Register, offset: 0x44 */
     } Periph_x_Type;
     
     /* Periph_x 这个外设的寄存器的基地址为 0x2020000 */
-    #define Periph_x_BASE          (0x2020000u)
+    #define Periph_x_BASE      (0x2020000u)
+    
     /* 设置结构体 Periph_x 的地址为 Periph_x_BASE */
-    #define Periph_x    ((Periph_x_Type *)Periph_x_BASE)
+    #define Periph_x           ((Periph_x_Type *)Periph_x_BASE)
+    
     /* 读取和设置寄存器（这里以置位举例） */
     Periph_x->UCR1 |= (1 << 2);
     ```
-
+    
     
 
 ------
@@ -530,59 +524,59 @@ char *p, *n;
 *p.s 以下有一些在 C 标准库里有实现，资源紧张可以用下面的宏定义，不紧张推荐全部使用标准库*
 
 ```c
-/*宏定义的形式规范
+/* 宏定义的形式规范
     宏定义使用全大写（尽量），并遵循"属什么 _ 是什么 _ 做什么"的命名形式；
     尽量把常数数字用宏定义代替；
     对宏定义中的所有输入和输出（整个结果语句）用括号保护起来，长句用 do{ }while(0);
 */
 
-/*得到指定地址上的一个字节或字*/
+/* 得到指定地址上的一个字节或字 */
 #define MEM_B( x ) ( *( (unsigned char*) (x) ) )
 #define MEM_W( x ) ( *( (unsigned short*) (x) ) )
 
-/*求最大值和最小值*/
+/* 求最大值和最小值 */
 #define MAX( x, y ) ( ((x) > (y)) ? (x) : (y) )
 #define MIN( x, y ) ( ((x) < (y)) ? (x) : (y) )
 
-/*得到一个field在结构体(struct)中的偏移量*/
+/* 得到一个field在结构体(struct)中的偏移量 */
 #define FPOS( type, field ) ( (unsigned long) &(( type *) 0)-> field )
 
-/*得到一个结构体中field所占用的字节数*/
+/* 得到一个结构体中field所占用的字节数 */
 #define FSIZ( type, field ) sizeof( ((type *) 0)->field )
 
-/*按照LSB格式把两个字节转化为一个 unsigned short */
+/* 按照LSB格式把两个字节转化为一个 unsigned short */
 #define FLIPW( ray ) ( (((unsigned short) (ray)[0]) * 256) + (ray)[1] )
 
-/*按照LSB格式把一个 unsigned short 的 val 转化为两个字节 ray[0] 和 ray[1]*/
+/* 按照LSB格式把一个 unsigned short 的 val 转化为两个字节 ray[0] 和 ray[1] */
 #define FLOPW( ray, val ) \
     (ray)[0] = ((val) / 256); \
     (ray)[1] = ((val) & 0xFF)
 
-/*得到一个字的高位和低位字节*/
+/* 得到一个字的高位和低位字节 */
 #define WORD_LO(xxx) ((unsigned char) ((unsigned short)(xxx) & 255))
 #define WORD_HI(xxx) ((unsigned char) ((unsigned short)(xxx) >> 8))
 
-/*返回一个比X大的最接近8的倍数的数*/
+/* 返回一个比X大的最接近8的倍数的数 */
 #define RND8( x ) ((((x) + 7) / 8 ) * 8 )
 
-/*将一个字母转换为大写*/
+/* 将一个字母转换为大写 */
 #define UPCASE( c ) ( ((c) >= 'a' && (c) <= 'z') ? ((c) - 0x20) : (c) )
 
-/*判断一个字符是不是10进制的数字*/
+/* 判断一个字符是不是10进制的数字 */
 #define DECCHK( c ) ((c) >= '0' && (c) <= '9')
 
-/*判断一个字符是不是16进制的数字*/
+/* 判断一个字符是不是16进制的数字 */
 #define HEXCHK( c ) ( ((c) >= '0' && (c) <= '9') ||\
                       ((c) >= 'A' && (c) <= 'F') ||\
                       ((c) >= 'a' && (c) <= 'f') )
 
-/*带防止溢出数据类型最大值的自加一*/
+/* 带防止溢出数据类型最大值的自加一 */
 #define INC_SAT( val ) (val = ((val)+1 > (val)) ? (val)+1 : (val))
 
-/*返回数组元素的个数*/
+/* 返回数组元素的个数 */
 #define ARR_SIZE( a ) ( sizeof( (a) ) / sizeof( (a[0]) ) )
 
-/*编译时的信息字符串
+/* 编译时的信息字符串
 _FILE_		表示当前所在文件名的字符串
 _LINE_		表示当前所在行的数字
 _DATE_		表示编译时的 月/日/年 字符串信息
@@ -598,22 +592,28 @@ _STDC_		如果实现是标准的，则含有十进制常量1，否则为其他
 *p.s 资源不紧张推荐全部使用标准库（除了malloc和free）*
 
 - 最常用的：
+  
+  ```c
   #include  <stdio.h>
   #include  <stdlib.h>
   #include  <ctype.h>
   #include  <string.h>
   #include  <math.h>
+  ```
+  
   参考这两个地方齐活了：
   		https://blog.csdn.net/best_xiaolong/article/details/108957688
   		https://www.runoob.com/cprogramming/c-standard-library.html
+  
 - 可能会用到的：
-  	      <time.h> 提供储存时间的结构体和计算时间差等函数
-        <limits.h> <float.h> 这两个库包含了各种变量类型的最大、最小值等信息
+  	          <time.h> 提供储存时间的结构体和计算时间差等函数；
+             <limits.h>  <float.h> 这两个库包含了各种变量类型的最大、最小值等信息；
+        
 - 不常用的：
-  	      <stdarg.h>	用于函数定义变长形参
-        <assert.h> 提供了一个名为 assert 的宏，仅在 debug 模式有效，判断一个表达式是否为 FALSE(即 0)，如果是则报告错误并终止程序
-        	<errno.h> 被其他库文件调用，提供一些返回值定义
-        	<locale.h> 定义了特定地域的设置，比如日期格式和货币符号
+  	         <stdarg.h>    用于函数定义变长形参；
+            <assert.h>    提供了一个名为 assert 的宏，仅在 debug 模式有效，判断一个表达式是否为 FALSE(即 0)，如果是则报告错误并终止程序；
+        	<errno.h>     被其他库文件调用，提供一些返回值定义；
+        	<locale.h>    定义了特定地域的设置，比如日期格式和货币符号；
         	<setjmp.h>
         	<signal.h>
         	<stddef.h>
@@ -624,7 +624,7 @@ _STDC_		如果实现是标准的，则含有十进制常量1，否则为其他
 
 相关文章：
 
--   STM32注释风格参考：https://blog.csdn.net/wanshiyingg/article/details/51923352
+-   STM32 注释风格参考：https://blog.csdn.net/wanshiyingg/article/details/51923352
 
 ST HAL 的各个文件编写风格非常一致，下面以 F4 SPI 为例：
 
@@ -758,11 +758,12 @@ extern "C" {
 
 ## 9 本文参考源
 
-1. [c-code-style](https://github.com/MaJerle/c-code-style)
-2. [20个成熟软件中常用的宏定义](https://jishuin.proginn.com/p/763bfbd35604)
-3. [ST HAL](https://www.stmcu.com.cn/)
-4. [知乎问题页：程序员们有什么好的编程习惯？](https://www.zhihu.com/question/440136872)
-5. 本人长时摸索的经验
+1. [c-code-style](https://github.com/MaJerle/c-code-style)；
+2. [20个成熟软件中常用的宏定义；](https://jishuin.proginn.com/p/763bfbd35604)
+3. [ST HAL](https://www.stmcu.com.cn/)；
+4. [知乎问题页：程序员们有什么好的编程习惯？](https://www.zhihu.com/question/440136872)；
+5. 本人长时摸索的经验。
+6. 其他。
 
 *p.s 本 C 规范系广泛约取而成，参考并非照搬。*
 
@@ -774,24 +775,24 @@ extern "C" {
 
 ### 大厂规范
 
-1. *[Google C++风格指南](http://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/contents/)*
+1. *[Google C++风格指南](http://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/contents/)*；
 2. *华为 C语言编程规范*
-    - *[华为C语言编程规范（精华总结）](https://blog.csdn.net/m0_38106923/article/details/105042594)*
-    - *[C语言编程规范（一）（华为标准要求）](https://zhuanlan.zhihu.com/p/346160926)*
-    - *[C语言编程规范（二）（华为标准要求）](https://zhuanlan.zhihu.com/p/346689923)*
-3. *[MISRA C Coding Standard](https://www.misra.org.uk/Publications/tabid/57/Default.aspx)*
-4. [CodingStyle] Linux内核源代码目录下的 Documentation/CodingStyle 文件
+    - *[华为C语言编程规范（精华总结）](https://blog.csdn.net/m0_38106923/article/details/105042594)*；
+    - *[C语言编程规范（一）（华为标准要求）](https://zhuanlan.zhihu.com/p/346160926)*；
+    - *[C语言编程规范（二）（华为标准要求）](https://zhuanlan.zhihu.com/p/346689923)*；
+3. *[MISRA C Coding Standard](https://www.misra.org.uk/Publications/tabid/57/Default.aspx)*；
+4. [CodingStyle] Linux 内核源代码目录下的 Documentation/CodingStyle 文件。
 
 ### 设计定律、原则和模式
 
-1.  [比较优雅地编码（良好的命名，清晰的结构和不差的算法）](https://www.cnblogs.com/zzy0471/p/coderule.html)
-2.  [nusr](https://github.com/nusr)/[hacker-laws-zh 对开发人员有用的定律、理论、原则和模式](https://github.com/nusr/hacker-laws-zh)
-3.  etc
+1.  [比较优雅地编码（良好的命名，清晰的结构和不差的算法）](https://www.cnblogs.com/zzy0471/p/coderule.html)；
+2.  [nusr](https://github.com/nusr)/[hacker-laws-zh 对开发人员有用的定律、理论、原则和模式](https://github.com/nusr/hacker-laws-zh)；
+3.  etc。
 
 ### 提高代码运行效率
 
-- [提高代码运行效率](https://mp.weixin.qq.com/s/5mzknQZyZU2bimO6oZUnyQ)
-- etc
+- [提高代码运行效率](https://mp.weixin.qq.com/s/5mzknQZyZU2bimO6oZUnyQ)；
+- etc。
 
 ## 11 尾记
 
