@@ -2,13 +2,7 @@
 
 # C & MCU编写规范和其他（coding style and more）
 
-***p.s 温馨提示：点个 star 收藏一下回头慢慢看；或者下(白)载(嫖)下来，在 Typora 中阅读；或者在  [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)  阅读；整理不易，请多支持。***      
-
-编辑整理 by [Staok](https://github.com/Staok)，始于 2021.2 且无终稿。转载请注明作者及出处。
-
-本文件是“瞰百易”计划的一部分，尽量遵循[“二项玻”定则](https://github.com/Staok/Please-stay-in-the-future)，致力于与网络上碎片化严重的现象泾渭分明（这中二魂...）！
-
-本文系广泛撷取、借鉴和整理，适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！
+***p.s 温馨提示：点个 star 收藏一下回头慢慢看；或者下(白)载(嫖)下来，在 Typora 中阅读；或者在  [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)  阅读。***
 
 ------
 
@@ -257,28 +251,43 @@
     */
     ```
 
-16. 对于函数可能传入的参数是不定的任意类型，定义形参用 void* 修饰。
+13. 变量有大小限制的，在注释里写明；在其他调用此变量的时候要进行检查或限幅：
 
-17. 不用变长数组，用内存分配释放函数 malloc() 和 free()。
+    ```c
+    /* 幅值系数，范围 0~1 */
+    float wave_point_A = 0.8;
+    
+    /* 检查：*/
+    if( wave_point_A > 1 ) wave_point_A = 1.0f;
+    if( wave_point_A < 0 ) wave_point_A = 0;
+    
+    /* 限幅：*/
+    wave_point_A > 1 ? 1.0f : wave_point_A;
+    wave_point_A < 0 ? 0   : wave_point_A;
+    ```
 
-18. 循环尽量用 for(;;) 替代 while 等，无论有限次循环还是无限次循环，条件循环语句用后者。
+14. 对于函数可能传入的参数是不定的任意类型，定义形参用 void* 修饰。
 
-19. 长运算语句尽量多的用括号（每一步运算都用括号括起来），并做好空格增加可读性，例如：
+15. 不用变长数组，用内存分配释放函数 malloc() 和 free()。
+
+16. 循环尽量用 for(;;) 替代 while 等，无论有限次循环还是无限次循环，条件循环语句用后者。
+
+17. 长运算语句尽量多的用括号（每一步运算都用括号括起来），并做好空格增加可读性，例如：
 
     ```c
     temp = ( 0x7F << ((xByte - 1) * 8) );
     #define MAX( x, y ) ( ((x) > (y)) ? (x) : (y) )
     ```
 
-20. 尽量减少数据传输过程中的拷贝。
+18. 尽量减少数据传输过程中的拷贝。
 
-21. 大块内存使用请用内存管理（自实现的malloc和free）。
+19. 大块内存使用请用内存管理（自实现的malloc和free）。
 
-22. 返回值 0 表示成功，正数表示失败，此正数可以表示错误代码。
+20. 返回值 0 表示成功，正数表示失败，此正数可以表示错误代码。
 
-23. 每一个文件在最后留有至少一个空行。
+21. 每一个文件在最后留有至少一个空行。
 
-24. 对于 C 语言的文件，其.h文件的主体文件包含在下面的括号之内（标有 "..." 的位置）：
+22. 对于 C 语言的文件，其.h文件的主体文件包含在下面的括号之内（标有 "..." 的位置）：
 
     私有变量不要放在.h里面声明，公有变量的声明（加 extern 修饰符）放在.h文件里面以供其他文件调用。
 
@@ -451,20 +460,20 @@ char *p, *n;
    ```c
    /*__________函数简述_____________*/
    /********************************
-   *描述：函数详细描述
-   *参数：   1、第一个形参名 描述
+   * 描述：函数详细描述
+   * 参数：   1、第一个形参名 描述
             2、第二个形参名 描述
    		...
-   *返回：  返回值类型    描述
+   * 返回：  返回值类型    描述
    ********************************/
    
    /*____________运行错误提示和打印______________________________*/
    /********************************
-   *描述：表示某步骤运行有问题，串口提示，灯提示，声提示
-   *参数：   1、errmsg    错误或者警告信息
+   * 描述：表示某步骤运行有问题，串口提示，灯提示，声提示
+   * 参数：   1、errmsg    错误或者警告信息
             2、errid     故障代号
             3、err_flag 错误类别（可选flag_Fault或flag_Warning）
-   *返回：   NULL
+   * 返回：   NULL
    ********************************/
    
    /*************\
@@ -612,11 +621,11 @@ _STDC_		如果实现是标准的，则含有十进制常量1，否则为其他
 - 不常用的：
   	         <stdarg.h>    用于函数定义变长形参；
             <assert.h>    提供了一个名为 assert 的宏，仅在 debug 模式有效，判断一个表达式是否为 FALSE(即 0)，如果是则报告错误并终止程序；
-        	<errno.h>     被其他库文件调用，提供一些返回值定义；
-        	<locale.h>    定义了特定地域的设置，比如日期格式和货币符号；
-        	<setjmp.h>
-        	<signal.h>
-        	<stddef.h>
+                	<errno.h>     被其他库文件调用，提供一些返回值定义；
+                	<locale.h>    定义了特定地域的设置，比如日期格式和货币符号；
+                	<setjmp.h>
+                	<signal.h>
+                	<stddef.h>
 
 ------
 
@@ -781,7 +790,7 @@ extern "C" {
     - *[C语言编程规范（一）（华为标准要求）](https://zhuanlan.zhihu.com/p/346160926)*；
     - *[C语言编程规范（二）（华为标准要求）](https://zhuanlan.zhihu.com/p/346689923)*；
 3. *[MISRA C Coding Standard](https://www.misra.org.uk/Publications/tabid/57/Default.aspx)*；
-4. [CodingStyle] Linux 内核源代码目录下的 Documentation/CodingStyle 文件。
+4. [CodingStyle] Linux 内核源代码目录下的 Documentation/CodingStyle 文件。中文：[Linux 内核代码风格 — The Linux Kernel documentation](https://www.kernel.org/doc/html/latest/translations/zh_CN/process/coding-style.html)。
 
 ### 设计定律、原则和模式
 
@@ -807,3 +816,14 @@ extern "C" {
 <img src="assets/QQ图片20210219140545.jpg" alt="QQ图片20210219140545" style="zoom: 80%;" />
 
 <img src="assets/QQ图片20210219140542.jpg" alt="QQ图片20210219140542" style="zoom: 50%;" />
+
+## 署名
+
+- 编辑整理：[Github 页](https://github.com/Staok)，[知乎页](https://www.zhihu.com/people/xuhaoyang)
+- 发表时间：始于 2021.2 且无终稿
+- 首发平台：https://zhuanlan.zhihu.com/p/350839857 and https://github.com/Staok/coding-style-and-more
+- 遵循协议：[CC-BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)
+- 其他说明：
+  1. 本文件是“瞰百易”计划的一部分，尽量遵循 [“二项玻”定则](https://github.com/Staok/Please-stay-in-the-future)，致力于与网络上碎片化严重的现象泾渭分明（这中二魂...）！
+  2. 本文系广泛撷取、借鉴和整理，适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！
+  3. 转载请注明作者及出处。整理不易，请多支持。
