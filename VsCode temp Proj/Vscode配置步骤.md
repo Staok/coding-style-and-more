@@ -17,9 +17,17 @@
 
 安装插件 “Code Runner”，然后然后依次打开：文件>首选项>设置>用户>拓展>Run Code Configuration，找到**`Run In Terminal`**勾选上。然后在VsCode里面点开一个c程序文件，在右上角有一个箭头符号，是Code Runner的运行按钮，会在控制台显示程序输出信息。点控制台右上角的垃圾箱图标为停止运行。
 
+添加多文件支持：（临时用）
+
+1. 参考：[vscode: Code Runner如何直接运行多文件C程序-百度经验 (baidu.com)](https://jingyan.baidu.com/article/2f9b480d7ceb3d01ca6cc224.html)；
+2. 所有 .c  和 对应的 .h 文件都放到 main 文件的同目录，然后 修改 Code Runner 的 ExecutorMap 设置（在 .json 中打开）；
+3. 修改其中的 `"c"` 这一行中的 `gcc $filename` 为 gcc *.c ，在 main 文件  Vscode 右上角 点击 Code Runner 的运行即可。
+
 ### 正经 C 调试
 
 #### 快速运行
+
+单个 .c 文件快速运行。
 
 1.  在VsCode里面点 “运行->“添加配置”，添加一个gdb.exe配置，就会出现名为“.vscode”文件夹和里面的“launch.json”和"task.json"两个文件。
 2.  这时程序就会编译跑起来。默认程序在控制台输出信息，可以修改“launch.json”文件里的"externalConsole"为 true 即使用运行程序与新控制台窗口。
@@ -27,9 +35,15 @@
 
 #### 正经的配置文件
 
-简易C编译模板：“.vscode”里面的配置文件直接复制“VsCode temp Proj.zip”里面的。
+说明：tasks.json 文件用于指定编译行为，launch.json 文件用于指定编译之后的启动/调试程序的行为。
 
-有关C++的详看 [这里](https://blog.csdn.net/lyw851230/article/details/89352839)
+- 单文件 C 编译模板：“.vscode”里面的配置文件直接复制“VsCode temp Proj.zip”里面的。
+
+- 添加头文件/添加多文件支持：
+  1. VsCode Temp Proj inc 1 模板， .c 和 .h 文件分散在多个文件夹里面，需要在 tasks.json 中手动指定这些  .c 文件 和 .h 文件所在的目录，launch.json 文件不用动，#include 的时候写上头文件相对路径；
+  2. VsCode Temp Proj inc 2 模板， .c 文件统一放在 src 文件夹里面，.h 文件统一放在 inc 文件夹里面，然后不用改 tasks.json 和 launch.json，即可直接引用头文件，#include 的时候写上头文件相对路径；
+
+有关C++的详看 [这里](https://blog.csdn.net/lyw851230/article/details/89352839)。
 
 ## Vscode 代替 Source insight
 

@@ -1,0 +1,50 @@
+{
+    "version": "0.2.0",
+    "configurations": 
+    [
+        {
+            "name": "Run C/C++",                                // 配置名称，将会在启动配置的下拉菜单中显示
+            "type": "cppdbg",                                   // 配置类型，这里只能为cppdbg
+            "request": "launch",                                // 请求配置类型，可以为launch（启动）或attach（附加）
+            "program": "${workspaceFolder}\\${fileBasenameNoExtension}.exe",    // 将要进行调试的程序的路径，必须和 tasks.json 里的args "-o"参数后面的参数一致
+            "args": [],                                         // 程序调试时传递给程序的命令行参数，一般设为空即可
+            "stopAtEntry": false,                               // 设为true时程序将暂停在程序入口处，我一般设置为true
+            "cwd": "${workspaceFolder}",                        // 调试程序时的工作目录
+            "environment": [],                                  // 环境变量
+            "externalConsole": true,                            // 调试时是否显示控制台窗口，一般设置为true显示控制台
+            "MIMode": "gdb",                                    // 指定连接的调试器，可以为gdb或lldb。一般不用动
+            "miDebuggerPath": "D:\\mingw64\\bin\\gdb.exe",      // 调试器路径
+            "setupCommands": 
+            [                                  
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build & run file"                  // 调试会话开始前执行的任务，一般为编译程序。与 tasks.json 的 label 相对应
+        },
+        {
+            "name": "Debug C/C++",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/${fileBasenameNoExtension}.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "miDebuggerPath": "D:\\mingw64\\bin\\gdb.exe",      // 调试器路径
+            "setupCommands": 
+            [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": false
+                }
+            ],
+            "preLaunchTask": "build & debug file"               // 调试会话开始前执行的任务，一般为编译程序。与 tasks.json 的 label 相对应
+        }
+    ]
+}

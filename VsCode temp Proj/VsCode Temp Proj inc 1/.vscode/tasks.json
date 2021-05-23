@@ -1,0 +1,86 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build & debug file",      // 任务名称，与launch.json的preLaunchTask相对应
+            "type": "shell",                    // 可以为shell或process，前者相当于先打开shell再输入命令，后者是直接运行命令
+            "command": "gcc",                   // 要使用的编译器，C++用clang++；如果想用MinGW就分别是gcc和g++，但注意把--target那条删去。
+            "args": [
+                "${file}",
+                
+                "${workspaceFolder}\\src\\*.c",//这里开始 引用到 所有要编译的 .c 文件
+                "${workspaceFolder}\\libA\\IncA.c",
+                "${workspaceFolder}\\libB\\IncB.c",
+                
+                "-g",                           // 生成和调试有关的信息
+                "-Wall",                        // 开启额外警告
+                
+                "-I",                           //这里开始 引用到 所有要调用的 .h 文件 
+                "${workspaceFolder}\\inc\\",
+                
+                "-I",
+                "${workspaceFolder}\\libA\\",
+                
+                "-I",
+                "${workspaceFolder}\\libB\\",
+                
+                "-o",
+                "${workspaceFolder}\\${fileBasenameNoExtension}.exe"   // 指定输出文件名
+            ],
+            "options": {
+                "cwd": "D:\\mingw64\\bin"        //指定编译器工作目录
+            },
+            //"problemMatcher":["$gcc"], // (可选)用于捕捉编译时终端的报错信息
+            "group": {
+                "kind": "build",
+                "isDefault": true               // 设为false可做到一个tasks.json配置多个编译指令，需要自己修改本文件
+            }
+            // ,
+            // "presentation": {
+            //     "echo": true,
+            //     "reveal": "always", // 执行任务时跳转到终端
+            //     "focus": false, // C/C++必须设为false
+            //     "panel": "shared" // 编译信息只使用一个终端面板
+            // }
+        },
+        {
+            "label": "build & run file",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "${file}",
+                
+                "${workspaceFolder}\\src\\*.c",//这里开始 引用到 所有要编译的 .c 文件
+                "${workspaceFolder}\\libA\\IncA.c",
+                "${workspaceFolder}\\libB\\IncB.c",
+                
+                "-I",                           //这里开始 引用到 所有要调用的 .h 文件 
+                "${workspaceFolder}\\inc\\",
+                
+                "-I",
+                "${workspaceFolder}\\libA\\",
+                
+                "-I",
+                "${workspaceFolder}\\libB\\",
+                
+                "-o",
+                "${workspaceFolder}\\${fileBasenameNoExtension}.exe"   // 指定输出文件名
+            ],
+            "options": {
+                "cwd": "D:\\mingw64\\bin"        //指定编译器工作目录
+            },
+            //"problemMatcher":["$gcc"], // (可选)用于捕捉编译时终端的报错信息
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+            // ,
+            // "presentation": {
+            //     "echo": true,
+            //     "reveal": "always", // 执行任务时跳转到终端
+            //     "focus": false, // C/C++必须设为false
+            //     "panel": "shared" // 编译信息只使用一个终端面板
+            // }
+        }
+    ]
+}
