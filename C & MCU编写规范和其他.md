@@ -4,6 +4,8 @@
 
 ***p.s 温馨提示：点个 star 收藏一下回头慢慢看；或者下(白)载(嫖)下来，在 Typora 中阅读；或者在  [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)  阅读。***
 
+本文系广泛撷取、借鉴和整理，适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！
+
 ------
 
 按：引用观视频工作室视频[【大师计划·林宝军03】北斗三号总师：我来跟你说说，...](https://www.bilibili.com/video/BV1BA411K7FJ)里面总师受访时所说的话：
@@ -34,11 +36,9 @@
 - 编译错误，如果不明白哪错了，直接无脑复制编译器的错误信息扔到搜索引擎框，然后点“搜索”按钮（大部分报错都是语法错误）。
 - 关于提问，是一门艺术：
 
-[谈谈提问的艺术 | How To Ask Questions The Smart Way](https://zhuanlan.zhihu.com/p/133763900)
-
-[《提问的艺术：如何快速获得答案》（精读版）](https://blog.csdn.net/ajian005/article/details/81006663)
-
-[如何问出一个好问题？| 提问的艺术](https://zhuanlan.zhihu.com/p/95536926)
+  - [谈谈提问的艺术 | How To Ask Questions The Smart Way](https://zhuanlan.zhihu.com/p/133763900)
+  - [《提问的艺术：如何快速获得答案》（精读版）](https://blog.csdn.net/ajian005/article/details/81006663)
+  - [如何问出一个好问题？| 提问的艺术](https://zhuanlan.zhihu.com/p/95536926)
 
 - 有结对编程，协作开发的能力。
 - 有写文档的习惯（对项目写文档，或者日常写博客，或者没事就画一画流程图梳理想法）（不要在技术文章里写“日记”、写“小说”。），条理清晰，简化描述（Keep it stupid simple），并且一定要写上用例，写上例子，写上实例（重要的事情讲三遍）！
@@ -56,7 +56,7 @@
 
     <img src="assets/分层思想.png" alt="分层思想" style="zoom:50%;" />
 
-- 划分好文件、功能函数和所需变量。函数"低耦合，可重用，参数化，注释全"，变量尽量用结构体打包；可重用意味着直接复制代码或者直接复制文件到另一个项目上直接就用。
+- 划分好文件、功能函数和所需变量。函数 "低耦合，可重用，参数化，注释全"，变量尽量用结构体打包；可重用意味着直接复制代码或者直接复制文件到另一个项目上直接就用。
 
 - 功能增加裁剪的灵活性：做好预编译设置。方便于切换调试版本和执行版本，方便于切换行为模式，方便于剪裁功能块；功能剪裁用一个名字带"_config"的文件集中管理，供用户修改各种剪裁用的宏定义，就像总控台。
 
@@ -119,9 +119,9 @@
 
 
 
-(@TODO)下面部分条目尚未补全。
+(TODO)下面部分条目尚未补全。
 
-(@TODO)查一查astyle配置文件的用法，按照自己的规范形式，写一个配置文件
+(TODO)查一查astyle配置文件的用法，按照自己的规范形式，写一个配置文件
 
 - 通用工具 AStyle：
 
@@ -189,105 +189,85 @@
 
 3. 一个 tab 四个空格。
 
-5. 运算符前后空一格，给函数传递的多个变量之间在逗号后空一格，下面为例：
+5. 运算符前后空一格，给函数传递的多个变量之间在逗号后空一格，一元操作符后不要加空格，下面为例：
 
    ```c
    for (i = 0; i < 5; ++i)    /* i 永远滴神 */
    tempNum = 3 + 4;
    int32_t tempNum = sys_example_sum(4, 3);
-   sys_example_func(5, 4);
+   sys_example_func(&time_data_struct, !(++is_time_show));
    ```
 
-6. 注释里，字母和数字的两边空一格，例如：
+6. 注释里，字母和数字的两边空一格，尽量用`/* ……… */`注释，而非`//...`，例如：
 
    ```c
    /* 用 3 这个数字代替洋文 three 了解了吗 */
    ```
 
-7. 变量和函数的命名都只用小写（尽量），宏定义使用全大写（尽量），并遵循"属什么 _ 是什么 _ 做什么"的命名形式，如：sys_irq_disable()，属于 sys 级别函数，是 irq 管理，做 dsiable 的功能。
+6. 关于命名：
 
-10. 变量如果是低有效，变量名加尾缀"_n"，比如使能 en 是低有效（en 上面有一横），则命名为"en_n"。
+   - 变量和函数的命名都只用小写（尽量），宏定义使用全大写（尽量），并遵循 "属什么 _ 是什么 _ 做什么" 的命名形式，如：sys_irq_disable()，属于 sys 级别函数，是 irq 管理，做 dsiable 的功能。不要用晦涩的英文缩写甚至拼音就不用讲了吧。
 
-11. 控制语句总加括号（即使一句），括号在竖方向对齐，用 tab 把层次分地清清楚楚，例如：（为了节省空间，下面示例横向写~）
+   - 具有互斥意义的变量或者动作相反的函数应该是用互斥词组命名，如：  
 
-    ```c
-    if( )             for (i = 0; i < 5; ++i)    do                switch (check()) 
-    {                 {                          {                 {	
-                                                                          case 0:	
-    }else if( )       }                          }while( );                   fsm_do_a();
-    {                                                                         break;
-                                                                          case 1:	
-    }else                                                                     fsm_do_b();
-    {                                                                         break;
-                                                                          default:
-    }                                                                         break;
-                                                                    }
-    ```
+     > add/remove      begin/end             create/destroy               insert/delete
+     > first/last            get/release            increment/decrement    put/get add/delete
+     > lock/unlock      open/close             min/max                        old/new
+     > start/stop         next/previous         source/target                 show/hide
+     > send/receive   source/destination  copy/paste                    up/down
 
-12. 层次分明，多用tab划分层次关系（预编译代码也不例外），例如：
+   - 不要使用单字节命名变量，但是允许使用 i， j， k 这样的作为局部循环变量。
+   - 文件统一采用小写命名。
+   - 关于函数、变量、宏定义等的命名看 `5 具体各部分的规范形式`章节。
 
-    ```c
-    #ifdef _DEBUG
-        #define DEBUGMSG(msg,date) printf(msg);printf(“%d%d%d”,date,_LINE_,_FILE_)
-    #else
-        #define DEBUGMSG(msg,date)
-    #endif
-    ```
+7. 控制语句总加括号（即使分支执行语句只有一句），括号在竖方向对齐，用 tab 把层次分地清清楚楚，例如：（为了节省空间，下面示例横向写~）
 
-13. 用 if (check_func()) { ... } 代替 if (check_func() == 1)，判断是否为'0'可以用后者的写法（或者用 !check_func()），判断'1'用前者写法。
+   ```c
+   if( )             for (i = 0; i < 5; ++i)    do                switch (check()) 
+   {                 {                          {                 {	
+                                                                         case 0:	
+   }else if( )       }                          }while( );                   fsm_do_a();
+   {                                                                         break;
+                                                                         case 1:	
+   }else                                                                     fsm_do_b();
+   {                                                                         break;
+                                                                         default:
+   }                                                                         break;
+                                                                   }
+   ```
 
-14. 判断指针是否为空只用"NULL"，即 void* ptr; if (ptr == NULL || ptr != NULL) { ... }。
+8. 层次分明，多用 tab 划分层次关系（预编译代码也不例外），例如：
 
-15. 合理的常用 const 修饰符，防止变量或指针在层层传递过程中被篡改，或者定义函数的时候永远加上 const 修饰符，例：
+   ```c
+   #ifdef _DEBUG
+       #define DEBUGMSG(msg,date) printf(msg);printf(“%d%d%d”,date,_LINE_,_FILE_)
+   #else
+       #define DEBUGMSG(msg,date)
+   #endif
+   ```
 
-    ```c
-    const unsigned char xByte;      /* xByte 的内容不能变 */
-    const char *p; char const *p;   /* 二者一样，都是 p 所指向的内容不能变 */
-    char * const p;                 /* const 修饰的是 p ， p 不能修改，即地址不能修改，其指向的内容可以修改 */
-    const void* const p;            /* p 所指向的内容和 p 地址本身都不能改变 */
-    /*
-    p.s    char* c 与 char *c 没有任何区别
-           signed int 和 unsigned int 区别很大，前者是可以表达正负数的源码，后者是从0开始的正数或是一串参与逻辑运算的二进制
-    */
-    ```
+9. 用 `if (check_func()) { ... }` 代替 `if (check_func() == 1)`，判断是否为 '0' 可以用后者的写法（或者用 `!check_func()`），判断 '1' 用前者写法。
 
-13. 变量有大小限制的，在注释里写明；在其他调用此变量的时候要进行检查或限幅：
+10. 判断指针是否为空只用 "NULL"，即 `void* ptr; if (ptr == NULL || ptr != NULL) { ... }`。
 
-    ```c
-    /* 幅值系数，范围 0~1 */
-    float wave_point_A = 0.8;
-    
-    /* 检查：*/
-    if( wave_point_A > 1 ) wave_point_A = 1.0f;
-    if( wave_point_A < 0 ) wave_point_A = 0;
-    
-    /* 限幅：*/
-    wave_point_A > 1 ? 1.0f : wave_point_A;
-    wave_point_A < 0 ? 0   : wave_point_A;
-    ```
+11. 不用变长数组，用内存分配释放函数 `malloc()` 和 `free()`。
 
-14. 对于函数可能传入的参数是不定的任意类型，定义形参用 void* 修饰。
+12. 循环尽量用 `for(;;)` 替代 `while(1)` 等，无论有限次循环还是无限次循环，条件循环语句用后者。
 
-15. 不用变长数组，用内存分配释放函数 malloc() 和 free()。
-
-16. 循环尽量用 for(;;) 替代 while 等，无论有限次循环还是无限次循环，条件循环语句用后者。
-
-17. 长运算语句尽量多的用括号（每一步运算都用括号括起来），并做好空格增加可读性，例如：
+13. 长运算语句尽量多的用括号（每一步运算都用括号括起来），并做好空格增加可读性，例如：
 
     ```c
     temp = ( 0x7F << ((xByte - 1) * 8) );
     #define MAX( x, y ) ( ((x) > (y)) ? (x) : (y) )
     ```
 
-18. 尽量减少数据传输过程中的拷贝。
+14. 尽量减少数据传输过程中的拷贝。
 
-19. 大块内存使用请用内存管理（自实现的malloc和free）。
+15. 大块内存使用请用内存管理（自实现的malloc和free）。
 
-20. 返回值 0 表示成功，正数表示失败，此正数可以表示错误代码。
+16. 每一个文件在最后留有至少一个空行。
 
-21. 每一个文件在最后留有至少一个空行。
-
-22. 对于 C 语言的文件，其.h文件的主体文件包含在下面的括号之内（标有 "..." 的位置）：
+17. 对于 C 语言的文件，其.h文件的主体文件包含在下面的括号之内（标有 "..." 的位置）：
 
     私有变量不要放在.h里面声明，公有变量的声明（加 extern 修饰符）放在.h文件里面以供其他文件调用。
 
@@ -315,11 +295,11 @@
     
     #endif /* TEMPLATE_H */
     ```
+
     
-    
-    
+
     更多网友总结的杂类细节规范、规则：
-    
+
     - [学C/C++语言，32个必备修养！ (qq.com)](https://mp.weixin.qq.com/s/auLsbmr7SKgoO05HykXpzQ)；
     - 
     - etc...
@@ -330,33 +310,80 @@
 
 ### 关于函数定义形式（Functions）
 
-- 小写；
-- 星号*靠近类型名一端；
-- 对齐以保持良好阅读性；
-- 用" _ "分割语义；
-- 命名遵循"属什么 _ 是什么 _ 做什么"的形式。
+- 小写；星号 * 靠近类型名一端；用" _ "分割语义；对齐以保持良好阅读性；
 
-```c
-void            sys_example_init(void);
-const char*     sys_string_generate(void);
-my_struct_t*    sys_example_func(int32_t para1, int32_t para2);
-void            fsm_state_set(int32_t fsm_ID);
-my_type_t       fsm_state_get(void);
-my_ptr_t*       menu_get_current_ptr(void);
-```
+- 命名遵循 `属什么 _ 是什么 _ 做什么` 的形式；
+
+  ```c
+  void            sys_example_init(void);
+  const char*     sys_string_generater(void);
+  my_struct_t*    sys_example_func(int32_t para1, int32_t para2);
+  void            fsm_state_set(int32_t fsm_ID);
+  my_type_t       fsm_state_get(void);
+  my_ptr_t*       menu_get_current_ptr(void);
+  ```
+
+- 函数的局部变量数量最好不超过 5-10 个，并且不要占用太多的内存/栈资源；
+
+- 一个函数尽量只做一件事，否则划分为多个更小的函数；不要重复，保持各个代码块的独特性；
+
+- **低耦合，可重用，参数化，注释全！**
+
+- 对函数的错误返回要做全面的处理；一般 返回 0 表示正确，返回其他表示错误，具体的值表示错误代号，可用定义了所有错误类型的枚举变量作为函数返回值类型，或者返回值 0 表示成功，正数表示失败，此正数可以表示错误代码；并设计专门的机制对错误标识做处理。
+
+- 对函数的参数做合法性检查；检查指针；检查变量范围，变量有大小限制的，在注释里写明；在其他地方调用此变量的时候要进行检查或限幅：
+
+  ```c
+  /* 幅值系数，范围 0~1 */
+  float wave_point_A = 0.8;
+  
+  /* 检查：*/
+  if( wave_point_A > 1 ) wave_point_A = 1.0f;
+  if( wave_point_A < 0 ) wave_point_A = 0;
+  
+  /* 限幅：*/
+  wave_point_A > 1 ? 1.0f : wave_point_A;
+  wave_point_A < 0 ? 0   : wave_point_A;
+  ```
+
+- 对于函数可能传入的参数是不定的任意类型，定义形参用 `void*` 修饰。
+
 ### 关于变量定义形式（Variables）
 
 - 同类型的变量声明放在一行，变量定义时避免用函数返回值；
-- 小写，星号*靠近类型名一端（除了一行多变量定义的情况），对齐以保持良好阅读性；
-- 用" _ "分割语义，命名遵循"属什么 _ 是什么 _ 做什么"的形式；
-- 避免使用 stdbool.h 里的"true"或"false"，用"1"或"0"代替；
-- 数据类型，除了char float 和 double，都使用 stdint.h 库里面的；
-- 合理的常用 const 修饰符，见 "普适规则" 里的具体说明。
 
-```c
-char* a;
-char *p, *n;
-```
+- 小写，星号 * 靠近类型名一端（除了一行多变量定义的情况），对齐以保持良好阅读性；
+
+  ```c
+  char* a;
+  char *p, *n;
+  ```
+
+- 用" _ "分割语义，命名遵循 "**属什么 _ 是什么 _ 做什么**" 的形式，意义明确，也不容易重名；
+
+- 避免使用 stdbool.h 里的 "true" 或 "false"，用 "1" 或 "0" 代替；
+
+- 数据类型，除了char、float 和 double，都使用 stdint.h 库里面的，统一起来；
+
+- 合理的常用 const 修饰符，防止变量或指针在层层传递过程中被篡改，或者在定义的时候永远加上 const 修饰符，例：
+
+  ```c
+  const unsigned char xByte;      /* xByte 的内容不能变 */
+  const char *p; char const *p;   /* 二者一样，都是 p 所指向的内容不能变 */
+  char* const p;                  /* const 修饰的是 p ， p 不能修改，即地址不能修改，其指向的内容可以修改 */
+  const void* const p;            /* p 所指向的内容和 p 地址本身都不能改变 */
+  /*
+  p.s    char* c 与 char *c 没有任何区别
+         signed int 和 unsigned int 区别很大，前者是可以表达正负数的源码，后者是从 0 开始的正数或是一串参与逻辑运算的二进制
+  */
+  ```
+
+- 变量如果是低有效，变量名加尾缀"_n"，比如使能 en 是低有效（en 上面有一横），则命名为"en_n"；
+
+- 明确全局变量的初始化顺序，系统启动阶段，使用全局变量前，要考虑到全局变量该在什么地方初始化，使用全局变量和初始化全局变量之间的时序关系一定要分析清楚；
+
+- 尽量减少不必要的数据类型转换。
+
 ### 关于结构体、枚举和类型定义形式（Structures, enumerations, typedefs）
 
 - 适用 "关于变量定义形式（Variables）"里面的所有内容；
@@ -365,7 +392,7 @@ char *p, *n;
 
 - 结构体里的成员小写，枚举里的所有成员大写；
 
-- 结构体定义和类型定义后加"_t"；
+- 结构体定义和类型定义后加 "_t" ；
 
   ```c
   typedef enum {
@@ -401,17 +428,58 @@ char *p, *n;
   };
   ```
 
-- 函数指针定义（的类型定义）的写法形式如下，函数指针名加后缀"_fn"：
+- 函数指针定义（的类型定义）的写法形式如下，函数指针名加后缀 "_ fn"，类型定义函数指针加后缀 "_ typedef _ fn"：
 
   ```c
+  unsigned char (*sys_print_compile_time_fn)(unsigned char);
   typedef uint8_t (*my_func_typedef_fn)(uint8_t p1, const char* p2);
+  
+  /* 用法 */
+  unsigned char (*sys_print_compile_time_fn)(unsigned char);
+  typedef unsigned char (*sys_print_compile_time_typedef_fn)(unsigned char is_print_compile_time);
+  
+  unsigned char print_compile_time(unsigned char is_print)
+  {
+      if(is_print)
+      {
+          printf("%s\n",__TIME__);
+          return 0;
+      }
+      return 1;
+  }
+  unsigned char print_compile_date(unsigned char is_print)
+  {
+      if(is_print)
+      {
+          printf("%s\n",__DATE__);
+          return 0;
+      }
+      return 1;
+  }
+  
+  int main()
+  {
+      /* 用法1，给函数指针赋值 */
+      sys_print_compile_time_fn = print_compile_time;
+      
+      /* 用法2，定义一个函数指针变量，并赋值 */
+      sys_print_compile_time_typedef_fn print_compile_time_fn;
+      print_compile_time_fn = print_compile_time;
+      
+      /* 调用 */
+      (*sys_print_compile_time_fn)(1);
+      (*print_compile_time_fn)(1);
+  
+      print_compile_time_fn = print_compile_date;
+      (*print_compile_time_fn)(1);
+  }
   ```
 
 ### 关于宏定义和预编译指令定义形式（Macros and preprocessor directives）
 
 - 宏定义使用全大写（尽量），并遵循"属什么 _ 是什么 _ 做什么"的命名形式；
 
-- 尽量把常数数字用宏定义代替；
+- 尽量把常数数字用宏定义代替；常量建议使用 const 定义来代替宏；前面这两句话实际是矛盾的，因地制宜吧，优化速度用前者，优化空间用后者；
 
 - 对宏定义中的所有输入和输出（整个结果语句）用括号保护起来，长句用 do{   }while(0);
 
@@ -470,8 +538,8 @@ char *p, *n;
    /********************************
    * 描述：函数详细描述
    * 参数：   1、第一个形参名 描述
-            2、第二个形参名 描述
-   		...
+             2、第二个形参名 描述
+   		 ...
    * 返回：  返回值类型    描述
    ********************************/
    
@@ -479,10 +547,17 @@ char *p, *n;
    /********************************
    * 描述：表示某步骤运行有问题，串口提示，灯提示，声提示
    * 参数：   1、errmsg    错误或者警告信息
-            2、errid     故障代号
-            3、err_flag 错误类别（可选flag_Fault或flag_Warning）
+             2、errid     故障代号
+             3、err_flag  错误类别（可选flag_Fault或flag_Warning）
    * 返回：   NULL
    ********************************/
+   
+   /*
+   * @Description: 函数描述，描述本函数的基本功能9
+   * @param 1 – 参数 1.
+   * @param 2 – 参数 2
+   * @return – 返回值
+   */
    
    /*************\
    * Multi-line  *
@@ -493,6 +568,27 @@ char *p, *n;
    *___________________________________外设初始化函数_______________________________________*
    *_______________________///                               \\\__________________________*/
    ```
+   
+   文件说明注释：
+   
+   ```c
+   /*
+    放开源协议 描述
+   */
+   
+   /*************************************************
+   Copyright © xxx Co., Ltd. 1998-2018. All rights reserved.
+   File name:   文件名
+   Author：     作者
+   Version:     版本号
+   Description: 用于详细说明此程序文件完成的主要功能，与其他模块
+   或函数的接口，输出值、取值范围、含义及参数间的控制、顺序、独立或依赖等关系
+   Others:      其它内容的说明
+   Log:         修改日志，包括修改内容，日期，修改人等
+   *************************************************/
+   ```
+   
+   
 
 ### 其他常用写法汇集（不定期更新）
 
@@ -542,7 +638,7 @@ char *p, *n;
 
 ```c
 /* 宏定义的形式规范
-    宏定义使用全大写（尽量），并遵循"属什么 _ 是什么 _ 做什么"的命名形式；
+    宏定义使用全大写（尽量），并遵循 "属什么 _ 是什么 _ 做什么" 的命名形式；
     尽量把常数数字用宏定义代替；
     对宏定义中的所有输入和输出（整个结果语句）用括号保护起来，长句用 do{ }while(0);
 */
@@ -594,11 +690,11 @@ char *p, *n;
 #define ARR_SIZE( a ) ( sizeof( (a) ) / sizeof( (a[0]) ) )
 
 /* 编译时的信息字符串
-_FILE_		表示当前所在文件名的字符串
-_LINE_		表示当前所在行的数字
-_DATE_		表示编译时的 月/日/年 字符串信息
-_TIME_		表示编译时的 时:分:秒 字符串信息
-_STDC_		如果实现是标准的，则含有十进制常量1，否则为其他
+__FILE__		表示当前所在文件名的字符串
+__LINE__		表示当前所在行的数字
+__DATE__		表示编译时的 月/日/年 字符串信息
+__TIME__		表示编译时的 时:分:秒 字符串信息
+__STDC__		如果实现是标准的，则含有十进制常量1，否则为其他
 */
 ```
 
@@ -627,13 +723,13 @@ _STDC_		如果实现是标准的，则含有十进制常量1，否则为其他
              <limits.h>  <float.h> 这两个库包含了各种变量类型的最大、最小值等信息；
         
 - 不常用的：
-  	         <stdarg.h>    用于函数定义变长形参；
-            <assert.h>    提供了一个名为 assert 的宏，仅在 debug 模式有效，判断一个表达式是否为 FALSE(即 0)，如果是则报告错误并终止程序；
-                	<errno.h>     被其他库文件调用，提供一些返回值定义；
-                	<locale.h>    定义了特定地域的设置，比如日期格式和货币符号；
-                	<setjmp.h>
-                	<signal.h>
-                	<stddef.h>
+  	        <stdarg.h>    用于函数定义变长形参；
+           <assert.h>    提供了一个名为 assert 的宏，仅在 debug 模式有效，判断一个表达式是否为 FALSE(即 0)，如果是则报告错误并终止程序；
+           <errno.h>     被其他库文件调用，提供一些返回值定义；
+           <locale.h>    定义了特定地域的设置，比如日期格式和货币符号；
+           <setjmp.h>
+           <signal.h>
+           <stddef.h>
 
 ------
 
@@ -779,8 +875,9 @@ extern "C" {
 2. [20个成熟软件中常用的宏定义；](https://jishuin.proginn.com/p/763bfbd35604)
 3. [ST HAL](https://www.stmcu.com.cn/)；
 4. [知乎问题页：程序员们有什么好的编程习惯？](https://www.zhihu.com/question/440136872)；
-5. 本人长时摸索的经验。
-6. 其他。
+5. 【正点原子】嵌入式Linux C代码规范化V1.0；
+6. 本人长时摸索的经验。
+7. 其他。
 
 *p.s 本 C 规范系广泛约取而成，参考并非照搬。*
 
