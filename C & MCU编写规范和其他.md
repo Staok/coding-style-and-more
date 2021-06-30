@@ -4,7 +4,7 @@
 
 ***p.s 温馨提示：点个 star 收藏一下回头慢慢看；或者下(白)载(嫖)下来，在 Typora 中阅读；或者在  [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)  阅读。***
 
-本文系广泛撷取、借鉴和整理，适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！
+本文系广泛撷取、借鉴和整理，侵删。本文适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！
 
 ------
 
@@ -435,6 +435,7 @@
 - 函数指针定义（的类型定义）的写法形式如下，函数指针名加后缀 "_ fn"，类型定义函数指针加后缀 "_ typedef _ fn"：
 
   ```c
+  /* 函数指针定义写法举例 */
   unsigned char (*sys_print_compile_time_fn)(unsigned char);
   typedef uint8_t (*my_func_typedef_fn)(uint8_t p1, const char* p2);
   
@@ -481,11 +482,11 @@
 
 ### 关于宏定义和预编译指令定义形式（Macros and preprocessor directives）
 
-- 宏定义使用全大写（尽量），并遵循"属什么 _ 是什么 _ 做什么"的命名形式；
+- 宏定义使用全大写（尽量），并遵循 "属什么 _ 是什么 _ 做什么" 的命名形式；
 
 - 尽量把常数数字用宏定义代替；常量建议使用 const 定义来代替宏；前面这两句话实际是矛盾的，因地制宜吧，优化速度用前者，优化空间用后者；
 
-- 对宏定义中的所有输入和输出（整个结果语句）用括号保护起来，长句用 do{   }while(0);
+- 对宏定义中的所有输入和输出（整个结果语句）用括号保护起来，长句用 `do{...}while(0)`。
 
   ```c
   #define MY_MACRO(x)         ((x) * (x))
@@ -499,7 +500,7 @@
       }while(0)                             /* 2 statements. No semicolon after while loop */
   ```
 
-- 预编译指令语句使用tab标识好层次：
+- 预编译指令语句使用 tab 标识好层次：
 
   ```c
   #if defined(XYZ)
@@ -556,13 +557,6 @@
    * 返回：   NULL
    ********************************/
    
-   /*
-   * @Description: 函数描述，描述本函数的基本功能9
-   * @param 1 – 参数 1.
-   * @param 2 – 参数 2
-   * @return – 返回值
-   */
-   
    /*************\
    * Multi-line  *
    * comment     *
@@ -576,11 +570,8 @@
    文件说明注释：
    
    ```c
-   /*
-    放开源协议 描述
-   */
-   
    /*************************************************
+                开头这里放开源协议的描述源文
    Copyright © xxx Co., Ltd. 1998-2018. All rights reserved.
    File name:   文件名
    Author：     作者
@@ -590,9 +581,46 @@
    Others:      其它内容的说明
    Log:         修改日志，包括修改内容，日期，修改人等
    *************************************************/
+   
+   
+   // Doxygen 格式
+   /**
+    * @file main.c
+    * @author your name (you@domain.com)
+    * @brief 
+    * @version 0.1
+    * @date 2021-06-30
+    * 
+    * @copyright Copyright (c) 2021
+    * 
+    */
    ```
    
-   
+4. 程序文件开头的版权信息写法列举：
+
+   > 引用自[软件中声明版权的写法-专业指导文档类资源-CSDN下载](https://download.csdn.net/download/UltraCoder/841110)，侵删。
+   >
+   > 正确的格式应该是：Copyright [dates] by [author/owner] 
+   >
+   > © 通常可以代替Copyright, 但是不可以用(c)。 All Rights Reserved 在某些国家曾经是必须的，但是现在在大多数国家，都不是法律上必须有的字样。 
+   >
+   > 参见下面几个正确的格式： 
+   >
+   > ©1995-2004 Macromedia, Inc. All rights reserved. 
+   >
+   > ©2004 Microsoft Corporation. All rights reserved. 
+   >
+   > Copyright © 2004 Adobe Systems Incorporated. All rights reserved. 
+   >
+   > ©1995-2004 Eric A. and Kathryn S. Meyer. All Rights Reserved. 
+   >
+   > 请注意标点符号和大小写的用法，这也是专业精神的一种体现。 
+   >
+   > 现在流行some rights reserved：creativecommons.org 
+   >
+   > some rights reserved 和copyright 本身并不矛盾，但是其中的界限更多是一个道德问题，真正的保留一部分权力，是指给浏览者fair use 的权利，fair use的界定也决不是随便乱用，或者抄袭。 
+   >
+   > 甚至说，除了copyright, 还有copyleft,它的定义是为了程序员开发能够共享源代码的一个方式，英文里free, 并不仅仅是免费。 而且这种的源码公开免费使用，和版权也一点都不冲突。请大家不要误解。
 
 ### 其他常用写法汇集（不定期更新）
 
@@ -632,7 +660,135 @@
     Periph_x->UCR1 |= (1 << 2);
     ```
     
+-   求取对数：
+
+    ```c
+    /* 实现取 2 为低的对数，计算以 2 为底，x 的对数，即 2 ^ Log_2(x) = x */
+    #define LOG2(x) (((x & 0xaaaaaaaa) ? 1 : 0) + ((x & 0xcccccccc) ? 2 : 0) + \
+             ((x & 0xf0f0f0f0) ? 4 : 0) + ((x & 0xff00ff00) ? 8 : 0) + \
+             ((x & 0xffff0000) ? 16 : 0))
     
+    /* 实现取 10 为低的对数，计算以 10 为底，x 的对数，即 10 ^ Log_10(x) = x */
+    int log10(int n) {  
+      int result = 0;  
+      if(n&0xffff0000) {result += 16; n >>= 16; }  
+      if(n&0x0000ff00) {result += 8; n >>= 8; }  
+      if(n&0x000000f0) {result += 4; n >>= 4; }  
+      if(n&0x0000000c) {result += 2; n >>= 2; }  
+      if(n&0x00000002) {result += 1; n >>= 1; }  
+      return result; 
+    }
+    
+    /* 求 log_2(x) 也相当于求 log_10(x)/log_10(2) */
+    ```
+
+-   若要修改函数的形参的值那么请用一级指针，若要修改形参一级指针的值那么用二级指针，以此类推。
+
+    ```c
+    /* 引用自：https://blog.csdn.net/c243311364/article/details/109619361 */
+    /* 正确的 */
+    void GetMemery(int **p)
+    {
+        /*申请1024个int大小*/
+        *p = malloc(sizeof(int)*1024);
+        if(NULL == *p)
+        {
+            printf("malloc failed\n");
+            *p = NULL;
+        }
+    }
+    int main(void)
+    {
+        int *p = NULL;
+        GetMemery(&p);
+        printf("address of p is %p\n",p);
+        free(p);
+        p = NULL;
+        return 0;
+    }
+    
+    /* 错误的 */
+    #define SIZE 10
+    void EncryptUpdata(int *ctx)
+    {
+    	ctx = (int *)malloc(sizeof(int) * SIZE);
+    	return;
+    }
+    
+    int main() {
+    	int *ctx = NULL;
+    	EncryptUpdata(ctx);
+    	UseCTX(ctx);
+    	return 0;
+    }
+    ```
+
+OS Kernel，游戏引擎，编译器之类的，会用到不少 C 语言的黑魔法。！！！前方高能预警！！！
+
+- 从结构体成员的地址获取结构体地址
+
+  ```c
+  /* 引自 https://blog.csdn.net/c243311364/article/details/110129208 ，其中有详解 */
+  /* 示例程序 */
+  #include <stdio.h>
+  #define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
+  #define  container_of(ptr, type, member) ({                      \
+                        const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
+                         (type *)( (char *)__mptr - offsetof(type,member) );})
+  struct test_struct {
+             int num;
+            char ch;
+            float f1;
+    };
+   int main(void)
+    {
+            struct test_struct *test_struct;
+            struct test_struct init_struct ={12,'a',12.3};
+            char *ptr_ch = &init_struct.ch;
+            test_struct = container_of(ptr_ch,struct test_struct,ch);
+            printf("test_struct->num =%d\n",test_struct->num);
+            printf("test_struct->ch =%c\n",test_struct->ch);
+            printf("test_struct->ch =%f\n",test_struct->f1);
+            return 0;
+    }
+  
+  执行结果：
+  test_struct->num =12
+  test_struct->ch =a
+  test_struct->ch =12.300000
+  ```
+
+-   代码增殖（黑魔法，慎用）
+
+    ```c
+    /* 源文：https://github.com/geekan/cowry/blob/master/code/c/darkmagic/x_macro_simple.c */
+    /* 它定义了一个字段 OFPACT(...)，然后再通过宏 OFPACTS 来批量生成此字段，替换其中每个输入，狂拽酷炫！ */
+    /* 应用网友一句：学名叫做x macro，是节省冗余代码利器，好处是非常好用，跟机关枪一样；坏处是懂的人不多，大家看到一个没有被索引的ofpact_get_GROUP很容易就进入痴呆状态。 */
+    
+    #define OFPACTS                                                         \
+        /* Output. */                                                       \
+        OFPACT(OUTPUT,          ofpact_output,      ofpact, "output")       \
+        OFPACT(GROUP,           ofpact_group,       ofpact, "group")
+    
+    #define OFPACT(ENUM, STRUCT, MEMBER, NAME)                              \
+        BUILD_ASSERT_DECL(offsetof(struct STRUCT, ofpact) == 0);            \
+                                                                            \
+        enum { OFPACT_##ENUM##_RAW_SIZE                                     \
+               = (offsetof(struct STRUCT, MEMBER)                           \
+                  ? offsetof(struct STRUCT, MEMBER)                         \
+                  : sizeof(struct STRUCT)) };                               \
+                                                                            \
+        static inline struct STRUCT *                                       \
+        ofpact_get_##ENUM(const struct ofpact *ofpact)                      \
+        {                                                                   \
+            ovs_assert(ofpact->type == OFPACT_##ENUM);                      \
+            return ALIGNED_CAST(struct STRUCT *, ofpact);                   \
+        }
+    OFPACTS
+    #undef OFPACT
+    ```
+
+-   
 
 ------
 
@@ -693,7 +849,16 @@
 /* 返回数组元素的个数 */
 #define ARR_SIZE( a ) ( sizeof( (a) ) / sizeof( (a[0]) ) )
 
-/* 编译时的信息字符串
+/* 圆周率 */
+#define M_PI  3.14159265358979323846f
+
+/* 在编译时就能够进行条件检查的断言，而不是在运行时进行。下面是个Linux Kernel的例子 */
+/* Force a compilation error if condition is true */
+#define BUILD_BUG_ON(condition) ((void)sizeof(char[1 - 2*!!(condition)]))
+```
+
+```c
+/* 编译时一些信息的字符串，用内建宏调试
 __FILE__		表示当前所在文件名的字符串
 __LINE__		表示当前所在行的数字
 __DATE__		表示编译时的 月/日/年 字符串信息
@@ -743,34 +908,45 @@ __STDC__		如果实现是标准的，则含有十进制常量1，否则为其他
 
 ## 7 C 标准库的使用
 
-*p.s 资源不紧张推荐全部使用标准库（除了malloc和free）*
+*p.s 资源不紧张推荐全部使用标准库（除了 malloc 和 free）*
 
 - 最常用的：
   
   ```c
-  #include  <stdio.h>
-  #include  <stdlib.h>
-  #include  <ctype.h>
-  #include  <string.h>
-  #include  <math.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <ctype.h>
+  #include <string.h>
+  #include <math.h>
   ```
   
   参考这两个地方齐活了：
-  		https://blog.csdn.net/best_xiaolong/article/details/108957688
-  		https://www.runoob.com/cprogramming/c-standard-library.html
+  
+  - [C语言常用标准库解读_张巧龙的博客-CSDN博客](https://blog.csdn.net/best_xiaolong/article/details/108957688)。
+  - [C 标准库 – 参考手册 | 菜鸟教程 (runoob.com)](https://www.runoob.com/cprogramming/c-standard-library.html)。
   
 - 可能会用到的：
-  	          <time.h> 提供储存时间的结构体和计算时间差等函数；
-             <limits.h>  <float.h> 这两个库包含了各种变量类型的最大、最小值等信息；
+  	         
+            ```c
+        #include <time.h> // 提供储存时间的结构体和计算时间差等函数；
+        
+        #include <limits.h> // 这两个库包含了各种变量类型的最大、最小值等信息；
+        #include <float.h> 
+        ```
         
 - 不常用的：
-  	        <stdarg.h>    用于函数定义变长形参；
-           <assert.h>    提供了一个名为 assert 的宏，仅在 debug 模式有效，判断一个表达式是否为 FALSE(即 0)，如果是则报告错误并终止程序；
-           <errno.h>     被其他库文件调用，提供一些返回值定义；
-           <locale.h>    定义了特定地域的设置，比如日期格式和货币符号；
-           <setjmp.h>
-           <signal.h>
-           <stddef.h>
+  	       
+          ```c
+          #include <stdarg.h>    // 用于函数定义变长形参；
+          #include <assert.h>    // 提供了一个名为 assert 的宏，仅在 debug 模式有效，判断一个表达式是否为 FALSE(即 0)，如果是则报告错误并终止程序；
+          #include <errno.h>     // 被其他库文件调用，提供一些返回值定义；
+          #include <locale.h>    // 定义了特定地域的设置，比如日期格式和货币符号；
+          #include <setjmp.h>
+          #include <signal.h>
+          #include <stddef.h>
+          ```
+          
+          
 
 ------
 
@@ -778,7 +954,7 @@ __STDC__		如果实现是标准的，则含有十进制常量1，否则为其他
 
 相关文章：
 
--   STM32 注释风格参考：https://blog.csdn.net/wanshiyingg/article/details/51923352
+-   STM32 注释风格参考：[STM32注释风格参考_wanshiyingg的专栏-CSDN博客](https://blog.csdn.net/wanshiyingg/article/details/51923352)。
 
 ST HAL 的各个文件编写风格非常一致，下面以 F4 SPI 为例：
 
@@ -913,7 +1089,7 @@ extern "C" {
 ## 9 本文参考源
 
 1. [c-code-style](https://github.com/MaJerle/c-code-style)；
-2. [20个成熟软件中常用的宏定义；](https://jishuin.proginn.com/p/763bfbd35604)
+2. [20个成熟软件中常用的宏定义](https://jishuin.proginn.com/p/763bfbd35604)；
 3. [ST HAL](https://www.stmcu.com.cn/)；
 4. [知乎问题页：程序员们有什么好的编程习惯？](https://www.zhihu.com/question/440136872)；
 5. 【正点原子】嵌入式Linux C代码规范化V1.0；
@@ -976,5 +1152,5 @@ extern "C" {
 - 遵循协议：[CC-BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)
 - 其他说明：
   1. 本文件是“瞰百易”计划的一部分，尽量遵循 [“二项玻”定则](https://github.com/Staok/Please-stay-in-the-future)，致力于与网络上碎片化严重的现象泾渭分明（这中二魂...）！
-  2. 本文系广泛撷取、借鉴和整理，适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！
+  2. 本文系广泛撷取、借鉴和整理，侵删。本文适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！
   3. 转载请注明作者及出处。整理不易，请多支持。
