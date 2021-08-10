@@ -14,6 +14,16 @@
 
 6:44：“...光是技术上去了，不见得能做出一个系统。对我们工程来讲，就是（需要）**规范的文化**，什么意思呢，比如我们几十年的航天经验，我把这个经验总结成文字，总结成规范，不管是谁做，只要有一定的经验，按这个规范做出来，做得卫星出来，打到天上去就能好用，这就是规范文化。包括匠人文化和规范文化，最后都是按规矩去做，它强调的是解决了怎么做的问题，但它有一个缺点，没强调为什么，其实我认为在做的过程中，**加个为什么可能更好**。”
 
+
+
+按 2：引用 [雷军写代码水平如何？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/23832952/answer/1798476507)。
+
+> 雷总也在给后辈的寄语中不断强调**代码要整洁，逻辑要无懈可击，自己写的代码要达到例程（示范程序）的程度**。这一点和《代码整洁之道》的作者Bob大叔英雄所见略同了。
+>
+> **Bob大叔就在《代码整洁之道》提出一种观点：代码质量与其整洁度成正比**。
+>
+> 优秀的系统往往有优秀的结构设计，层次清晰，职责单一，模块化，方便拓展和复用。功能的添加往往只是在现有的框架中添加一个个模块和少量代码。
+
 ------
 
 ## O 目录
@@ -108,11 +118,22 @@
     
     如果要自定串口等接口的通信协议，要考虑的点：
     
-    - 一帧有确定的长度；
-    - 一帧有确定的帧头和帧尾，帧头和帧尾可以适当多加几个位增加容错；
+    - 数据帧格式规定：
+    
+      1. 自定义数据帧（数据打包）的一般格式为：帧头 — 命令/数据类型枚举 — 数据区长度 — 数据区 — 校验区。
+    
+         这是一般做法，可以有效避免数据区出现帧头打断接收或解析等等问题；帧头可占一个字节，类型枚举可占两个字节，数据区长度可占四个字节，校验区可占两个字节（可选算法：0xFFFF - 该帧前面的所有字节加和）。
+    
+      2. 如果数据区内有多个数据块，每一块可以按照此一般格式合成：该数据块类型枚举（1个字节） — 该数据块数据长度（1或2个字节） — 该数据块的数据。
+    
+      3. 一帧有确定的长度；如果按照上面的帧格式，可以没有帧尾，也可以加上；帧头和帧尾必须是确定的，帧头和帧尾的选取尽量避免与数据区重合。
+    
     - 保证一帧尽量连续传输，没有中断；
+    
     - 在有限确定的时间内完成发送；
+    
     - 数据的发送接收相关的函数与数据的打包和解析的相关函数，编写规范上应相互解耦，可重用；
+    
     - 接收完成标志位的置位大抵有两种方式：一个是判断有帧头和等待帧尾来判断为一帧，一个是从接收字节开始计时并在一定时间间隔没有接收数据后判断为一帧。
 
 ------
@@ -171,8 +192,8 @@
 
 -   按照存储关系：
 
-    - 顺序存储：如数组；位置连续，要提前申请空间；但会产生内存碎片，改动时前后要跟着变。
-- 链式结构：如链表，链式、离散、节点化，空间可动态分配，改动方便（改节点的指向）；但空间占用大，查找不便。
+    - 顺序存储：如数组。优点：位置连续，要提前申请空间；缺点：会产生内存碎片，改动时前后要跟着变。
+- 链式结构：如链表。优点：链式、离散、节点化，空间可动态分配，改动方便（改节点的指向）；缺点：空间占用大，查找不便。
     - 索引存储：索引-数据 的结构。
 - 散列存储：暂略。
 
@@ -187,13 +208,15 @@
 
 ## 4 普适规则（General rules）
 
+*p.s 以下所有章节中示例代码均以 32/64 位机为运行环境，即 int / long int 占 4 字节。*
+
 1. 第一条，请您重视编写规范！可以有代码洁癖。
 
 2. 使用 C99 标准。
 
 3. 一个 tab 四个空格。
 
-5. 运算符前后空一格，给函数传递的多个变量之间在逗号后空一格，一元操作符后不要加空格，下面为例：
+5. 运算符前后空一格，给函数传递的多个变量之间在逗号后空一格，一元操作符后不要加空格，例子如下。
 
    ```c
    for (i = 0; i < 5; ++i)    /* i 永远滴神 */
@@ -202,17 +225,17 @@
    sys_example_func(&time_data_struct, !(++is_time_show));
    ```
 
-6. 注释里，字母和数字的两边空一格，尽量用`/* ……… */`注释，而非`//...`，例如：
+6. 注释里，字母和数字的两边空一格，尽量用`/* ……… */`注释，而非`//...`，例子如下。
 
    ```c
    /* 用 3 这个数字代替洋文 three 了解了吗 */
    ```
 
-6. 关于命名：
+6. 关于命名。
 
    - 变量和函数的命名都只用小写（尽量），宏定义使用全大写（尽量），并遵循 "属什么 _ 是什么 _ 做什么" 的命名形式，如：sys_irq_disable()，属于 sys 级别函数，是 irq 管理，做 dsiable 的功能。不要用晦涩的英文缩写甚至拼音就不用讲了吧。
 
-   - 具有互斥意义的变量或者动作相反的函数应该是用互斥词组命名，如：  
+   - 具有互斥意义的变量或者动作相反的函数应该是用互斥词组命名，例子如下。  
 
      > add/remove      begin/end             create/destroy               insert/delete
      > first/last            get/release            increment/decrement    put/get add/delete
@@ -224,7 +247,7 @@
    - 文件统一采用小写命名。
    - 关于函数、变量、宏定义等的命名看 `5 具体各部分的规范形式`章节。
 
-7. 控制语句总加括号（即使分支执行语句只有一句），括号在竖方向对齐，用 tab 把层次分地清清楚楚，例如：（为了节省空间，下面示例用横向写~）
+7. 控制语句总加括号（即使分支执行语句只有一句），括号在竖方向对齐，用 tab 把层次分地清清楚楚，例子如下。（为了节省空间，下面示例用横向写~）
 
    ```c
    if( )             for (i = 0; i < 5; ++i)    do                switch (check()) 
@@ -240,7 +263,7 @@
                                                                    }
    ```
 
-8. 层次分明，多用 tab 划分层次关系（预编译代码也不例外），例如：
+8. 层次分明，多用 tab 划分层次关系（预编译代码也不例外），例子如下。
 
    ```c
    #ifdef _DEBUG
@@ -258,57 +281,63 @@
 
 12. 循环尽量用 `for(;;)` 替代 `while(1)` 等，无论有限次循环还是无限次循环，条件循环语句用后者。
 
-13. 长运算语句尽量多的用括号（每一步运算都用括号括起来），并做好空格增加可读性，例如：
+13. 长运算语句尽量多的用括号（每一步运算都用括号括起来），并做好空格增加可读性，例子如下。
 
     ```c
     temp = ( 0x7F << ((xByte - 1) * 8) );
     #define MAX( x, y ) ( ((x) > (y)) ? (x) : (y) )
     ```
 
-14. 尽量减少数据传输过程中的拷贝。
+14. 尽量减少数据传输过程中的拷贝，对于全局变量的字符串、数组和结构体等，采用传递指针的方式。
 
-15. 大块内存使用请用内存管理（自实现的 malloc 和 free）。
+15. 大块内存使用请用内存管理。
 
-16. 每一个文件在最后留有至少一个空行。
+16. 文件操作中 open  和 close 成对使用，内存管理 malloc 和 free 成对使用。
 
-17. 对于 c 语言的文件，其 .h 文件的主体文件包含在下面的括号之内（标有 "..." 的位置）：
+17. 每一个文件在最后留有至少一个空行。
 
-    - 私有变量不要放在 .h 里面声明，公有变量的声明（加 extern 修饰符）放在 .h 文件里面以供其他文件调用。
+18. 对于 c 语言的文件，其 .h 文件的主体文件包含在下面的括号之内（标有 "..." 的位置）。
 
+    - 定义时带有 static 修饰符的变量（无论是声明在在某个函数里还是函数外）是 只在该文件具有作用域的，其他文件不能够访问到。
+    
+    - 一个文件的变量声明都放在 .h 里面，公有变量声明时 加 extern 修饰符 以供其他文件调用，私有变量声明时不加 extern 修饰符。
+    
+      所以一个 .h 内要对外开放的变量完整声明形式为 `extern static int temp_var;`。
     
     - 在 .c 文件中 include 自己对应的 .h 文件和需要用到的 .h 文件，不要引用多余的 .h 文件；.h 文件中同样只引用用到的头文件，但是头文件尽量写成无依赖的，这就考验整个系统的规划和设计。
+    
     - 如果一个模块包含了多个 .c 源文件，那么将它们放入同一个文件夹并用模块名命名，然后只用一个 .h 头文件声明接口。
+    
+    - 关于开源协议，Every file (header or source) must include license (opening comment includes single asterisk as this must be ignored by doxygen). Use the same license as already used by project/library.
 
-    Every file (header or source) must include license (opening comment includes single asterisk as this must be ignored by doxygen).
-    Use the same license as already used by project/library.
-    
-    ```c
-    #ifndef TEMPLATE_H
-    #define TEMPLATE_H
-    	
-    #include <stdint.h>
-    #include "all_other_custom_file.h"
-    
-    /* 当 C 和 C++ 代码混合编译的时候，在下面两个 __cplusplus 标识的中间放 C 部分的声明代码 */
-    #ifdef __cplusplus
-    	extern "C" 
-    	{
-    #endif /* __cplusplus */
-    
-    ... /* C 部分的声明代码 */
-    
-    #ifdef __cplusplus
-    	}
-    #endif /* __cplusplus */
-    
-    #endif /* TEMPLATE_H */
-    ```
-    
-18. ...
+
+```c
+#ifndef TEMPLATE_H
+#define TEMPLATE_H
+
+#include <stdint.h>
+#include "all_other_custom_file.h"
+
+/* 当 C 和 C++ 代码混合编译的时候，在下面两个 __cplusplus 标识的中间放 C 部分的声明代码 */
+#ifdef __cplusplus
+	extern "C" 
+	{
+#endif /* __cplusplus */
+
+/* C 部分的声明代码 */
+
+#ifdef __cplusplus
+	}
+#endif /* __cplusplus */
+
+#endif /* TEMPLATE_H */
+```
+
+19. ...
 
     更多网友总结的杂类细节规范、规则：
 
-    - [学C/C++语言，32个必备修养！ (qq.com)](https://mp.weixin.qq.com/s/auLsbmr7SKgoO05HykXpzQ)；
+    - [学C/C++语言，32个必备修养！ (qq.com)](https://mp.weixin.qq.com/s/auLsbmr7SKgoO05HykXpzQ)。
     - 
     - etc...
 
@@ -318,28 +347,28 @@
 
 ### 关于函数定义形式（Functions）
 
-- 小写；星号 * 靠近类型名一端；用" _ "分割语义；对齐以保持良好阅读性；
+- 小写；星号 * 靠近类型名一端；用" _ "分割语义；对齐以保持良好阅读性。
 
-- 命名遵循 `属什么 _ 是什么 _ 做什么` 的形式；
+- 命名遵循 `属什么 _ 是什么 _ 做什么` 的形式，例子如下。
 
   ```c
   void            sys_example_init(void);
   const char*     sys_string_generater(void);
-  my_struct_t*    sys_example_func(int32_t para1, int32_t para2);
+  my_struct_t*    sys_example_hello(int32_t para1, int32_t para2);
   void            fsm_state_set(int32_t fsm_ID);
   my_type_t       fsm_state_get(void);
   my_ptr_t*       menu_get_current_ptr(void);
   ```
 
-- 函数的局部变量数量最好不超过 5-10 个，并且不要占用太多的内存/栈资源；
+- 函数的局部变量数量最好不超过 5 - 10 个，即不要占用太多的内存/栈资源。
 
-- 一个函数尽量只做一件事，否则划分为多个更小的函数；不要重复，保持各个代码块的独特性；
+- 一个函数尽量只做一件事，否则划分为多个更小的函数；不要重复，保持各个代码块的独特性。
 
 - **低耦合，可重用，参数化，注释全！**
 
 - 对函数的错误返回要做全面的处理；一般 返回 0 表示正确，返回其他表示错误，具体的值表示错误代号，可用定义了所有错误类型的枚举变量作为函数返回值类型，或者返回值 0 表示成功，正数表示失败，此正数可以表示错误代码；并设计专门的机制对错误标识做处理。
 
-- 对函数的参数做合法性检查；检查指针；检查变量范围，变量有大小限制的，在注释里写明；在其他地方调用此变量的时候要进行检查或限幅：
+- 对函数的参数做合法性检查；检查指针；检查变量范围，变量有大小限制的，在注释里写明；在其他地方调用此变量的时候要进行检查或限幅，例子如下。
 
   ```c
   /* 幅值系数，范围 0~1 */
@@ -351,105 +380,29 @@
   
   /* 限幅：*/
   wave_point_A > 1 ? 1.0f : wave_point_A;
-  wave_point_A < 0 ? 0   : wave_point_A;
+  wave_point_A < 0 ? 0    : wave_point_A;
   ```
+
+- 如果函数传入参数（形参）的数量过多（超过 5 个），那么要考虑精简或者用其他办法，即可以将参数打包为全局的 数组 或 结构体 等然后传递其指针；对于返回多个值同理；字符串指针 和 结构体指针 等在定义时若未初始化，则使用前要用 malloc() 为其申请空间。
 
 - 对于函数可能传入的参数是不定的任意类型，定义形参用 `void*` 修饰。
 
-- 函数的嵌套不要过多，一般控制在最多 4 层。
+- 函数的嵌套不要过多，一般控制在最多 4 层。不要用递归这种反阅读便利的写法，用循环语句实现。
 
-### 关于变量定义形式（Variables）
+- 关于 指针函数 和 函数指针。
 
-- 同类型的变量声明放在一行，变量定义时避免用函数返回值；
+  指针函数即指 返回值带指针变量的函数，使用情景上面已说。
 
-- 小写，星号 * 靠近类型名一端（除了一行多变量定义的情况），对齐以保持良好阅读性；
-
-  ```c
-  char* a;
-  char *p, *n;
-  ```
-
-- 用" _ "分割语义，命名遵循 "**属什么 _ 是什么 _ 做什么**" 的形式，意义明确，也不容易重名；
-
-- 避免使用 stdbool.h 里的 "true" 或 "false"，用 "1" 或 "0" 代替；
-
-- 数据类型，除了char、float 和 double，都使用 stdint.h 库里面的，统一起来；
-
-- 合理的常用 const 修饰符，防止变量或指针在层层传递过程中被篡改，或者在定义的时候永远加上 const 修饰符，例：
-
-  ```c
-  const unsigned char xByte;      /* xByte 的内容不能变 */
-  const char *p; char const *p;   /* 二者一样，都是 p 所指向的内容不能变 */
-  char* const p;                  /* const 修饰的是 p ， p 不能修改，即地址不能修改，其指向的内容可以修改 */
-  const void* const p;            /* p 所指向的内容和 p 地址本身都不能改变 */
-  /*
-  p.s    char* c 与 char *c 没有任何区别
-         signed int 和 unsigned int 区别很大，前者是可以表达正负数的源码，后者是从 0 开始的正数或是一串参与逻辑运算的二进制
-  */
-  ```
-
-- 变量如果是低有效，变量名加尾缀"_n"，比如使能 en 是低有效（en 上面有一横），则命名为"en_n"；
-
-- 明确全局变量的初始化顺序，系统启动阶段，使用全局变量前，要考虑到全局变量该在什么地方初始化，使用全局变量和初始化全局变量之间的时序关系一定要分析清楚；
-
-- 明确变量的作用域，防止在预想的作用域外能够调用到具体的某个变量，降低模块间耦合度。
-
-- 尽量减少不必要的数据类型转换。
-
-### 关于结构体、枚举和类型定义形式（Structures, enumerations, typedefs）
-
-- 适用 "关于变量定义形式（Variables）"里面的所有内容；
-
-- 结构体和枚举可以用 typedef 修饰；
-
-- 结构体里的成员小写，枚举里的所有成员大写；
-
-- 结构体定义和类型定义后加 "_t" ；
-
-  ```c
-  typedef enum {
-      MY_ENUM_OK = 0,
-      MY_ENUM_TESTA,
-      MY_ENUM_TESTB,
-  }my_enum_t;
-  
-  struct SIMPLE_struct_t      struct /* 只用一次的结构体 */        typedef struct
-  {                           {                                  {
-      int a;                        int a;                            int a;
-      char b;                       char b;                           char b;
-      double c;                     double c;                         double c;
-  };                          }abc;                              }Simple_struct_t;
-  ```
-
-- 结构体的实例化尽量用"表格"形式，并在每列头部写好注释，例如：
-
-  ```c
-  struct fsm_states_struct_t fsm_XXX1_state[XXX1_State_MAX] = 	/*定义描述名为‘fsm_XXX1’的状态机的状态图*/
-  {                                                 	      /*跳转条件都初始化为0*/
-      /*               状态               执行函数         跳转条件数量     各个条件跳转后的状态（注：根据跳转条件的优先级从高到低往下写）*/
-      {(unsigned int)XXX1_State_1,   fsm_XXX1_state_1_Fun,    2,{     {0,(unsigned int)XXX1_State_5    },
-                                                                      {0,(unsigned int)XXX1_State_2    },    }},
-  
-      {(unsigned int)XXX1_State_4,   fsm_XXX1_state_4_Fun,    1,{     {0,(unsigned int)XXX1_State_5    },    }},
-  };
-  /*或者*/
-  Simple_struct_t simple = 
-  {
-      .a = 4,
-      .b = 5,
-  };
-  ```
-
-- 函数指针定义（的类型定义）的写法形式如下，函数指针名加后缀 "_ fn"，类型定义函数指针加后缀 "_ typedef _ fn"：
+  函数指针即指 函数类型的指针，定义的形式和使用情景如下，函数指针名加后缀 "_ fn"，函数指针类型定义名再追加后缀 "_ t"。
 
   ```c
   /* 函数指针定义写法举例 */
   unsigned char (*sys_print_compile_time_fn)(unsigned char);
-  typedef uint8_t (*my_func_typedef_fn)(uint8_t p1, const char* p2);
+  typedef uint8_t (*my_func_fn_t)(uint8_t p1, const char* p2);
   
   /* 用法 */
-  unsigned char (*sys_print_compile_time_fn)(unsigned char);
-  typedef unsigned char (*sys_print_compile_time_typedef_fn)(unsigned char is_print_compile_time);
+          unsigned char (*sys_print_compile_time_fn)(unsigned char);
+  typedef unsigned char (*sys_print_compile_time_fn_t)(unsigned char);
   
   unsigned char print_compile_time(unsigned char is_print)
   {
@@ -476,25 +429,258 @@
       sys_print_compile_time_fn = print_compile_time;
       
       /* 用法2，定义一个函数指针变量，并赋值 */
-      sys_print_compile_time_typedef_fn print_compile_time_fn;
+      sys_print_compile_time_fn_t print_compile_time_fn;
       print_compile_time_fn = print_compile_time;
       
       /* 调用 */
       (*sys_print_compile_time_fn)(1);
       (*print_compile_time_fn)(1);
-  
+      /* 改变函数指针指向的函数，再调用 */
       print_compile_time_fn = print_compile_date;
       (*print_compile_time_fn)(1);
   }
   ```
 
+- 
+
+### 关于变量定义形式（Variables）
+
+- 同类型的变量声明放在一行，变量定义时避免用函数返回值。
+
+- 小写，星号 * 靠近类型名一端（除了一行多变量定义的情况），对齐以保持良好阅读性，例子如下。
+
+  ```c
+  char* a;
+  char *p, *n;
+  ```
+
+- 用" _ "分割语义，命名遵循 "**属什么 _ 是什么 _ 做什么**" 的形式，意义明确，也不容易重名。
+
+- 避免使用 stdbool.h 里的 "true" 或 "false"，用 "1" 或 "0" 代替。
+
+- 变量类型，除了char* 、float 和 double，都使用 stdint.h 库里面的，统一起来。
+
+  ```c
+  /* 定义一些常用的数据类型短关键字，为兼容性附加，可选 */
+  typedef int32_t  s32;
+  typedef int16_t s16;
+  typedef int8_t  s8;
+  
+  typedef uint32_t  u32;
+  typedef uint16_t u16;
+  typedef uint8_t  u8;
+  
+  typedef const int32_t sc32;  
+  typedef const int16_t sc16;  
+  typedef const int8_t sc8;  
+  
+  typedef const uint32_t uc32;  
+  typedef const uint16_t uc16;  
+  typedef const uint8_t uc8; 
+  /* 以上 12 个的左边的关键字 来自 stdint.h */
+  
+  /* 以下定义要随着平台的切换而有可能切换，
+  比如 8 位机的 51 MCU 中 int 为两个字节，32 位机的 STM32 中 int 为四个字节，
+  64 位机同 32 位机 */
+  typedef unsigned char	        uint8;  /*  8 bits */
+  typedef unsigned short int		uint16; /* 16 bits */
+  typedef unsigned int		    uint32; /* 32 bits ,long int 也为 32 bits*/
+  
+  typedef signed char				int8;   /*  8 bits */
+  typedef short int	        	int16;  /* 16 bits */
+  typedef int		        		int32;  /* 32 bits */
+  
+  typedef volatile int8			vint8;  /*  8 bits */
+  typedef volatile int16			vint16; /* 16 bits */
+  typedef volatile int32			vint32; /* 32 bits */
+  
+  typedef volatile uint8			vuint8;  /*  8 bits */
+  typedef volatile uint16			vuint16; /* 16 bits */
+  typedef volatile uint32			vuint32; /* 32 bits */
+  
+  typedef float   				float32; /*  32 bits */
+  typedef double   				float64; /*  64 bits */
+  
+  typedef unsigned char   		 boolean; /* 8-bit*/
+  ```
+
+- 合理的常用 const 修饰符，防止变量或指针在层层传递过程中被篡改，或者在定义的时候永远加上 const 修饰符，例子如下。
+
+  ```c
+  const unsigned char xByte;      /* xByte 的内容不能变 */
+  const char *p; char const *p;   /* 二者一样，都是 p 所指向的内容不能变 */
+  char* const p;                  /* const 修饰的是 p ， p 不能修改，即地址不能修改，其指向的内容可以修改 */
+  const void* const p;            /* p 所指向的内容和 p 地址本身都不能改变 */
+  /*
+  p.s    char* c 与 char *c 没有任何区别
+         signed int 和 unsigned int 区别很大，前者是可以表达正负数的源码，后者是从 0 开始的正数或是一串参与逻辑运算的二进制
+  */
+  ```
+
+- 为防止编译器优化程序中一些关键/重要的变量的给值顺序等，可在变量定义时加 volatile 声明。
+
+- 对于函数内的局部变量，不希望在函数跳出后局部变量数据丢失那么加上 static 修饰符（指示该变量具有所在文件作用域），static 修饰符的变量若定义在一个文件内当作 “全局变量”，其是 只在该文件具有作用域的，其他文件不能够访问到。
+
+- 玩一下，比较极端的情况，一个完整的变量声明形式：`extern static volatile const unsigned long int* const temp_32bit_reg;`。
+
+- 对于 长度不一样的多个一维数组常用指针数组定义，如 `char* str[]`定义缺省值个不等长的字符串，`int* var[6]`定义留个不等长的整数数组，要么在定义时初始化其值，要么定义时不初始化然后在用的时候使用 malloc() 为其申请空间再幅值；指针传递 `int var[2][10]; int** var_p = var + 1;`或者`int** var_p = &var[1];`。
+
+- 变量如果是低有效，变量名加尾缀"_n"，比如使能 en 是低有效（en 上面有一横），则命名为"en_n"。
+
+- 明确全局变量的初始化顺序，系统启动阶段，使用全局变量前，要考虑到全局变量该在什么地方初始化，使用全局变量和初始化全局变量之间的时序关系一定要分析清楚。
+
+- 明确变量的作用域，防止在预想的作用域外能够调用到具体的某个变量，降低模块间耦合度。
+
+- 尽量减少不必要的数据类型转换。
+
+### 关于结构体、枚举和类型定义形式（Structures, enumerations, typedefs）
+
+- 适用 "关于变量定义形式（Variables）"里面的所有内容。
+
+- 枚举定义形式有直接定义、类型定义、指针和数组等，枚举内可以嵌套定义结构体，结构体内也可以嵌套定义枚举。
+
+- 结构体和枚举可以用 typedef 修饰。
+
+- 结构体里的成员小写，枚举里的所有成员大写。
+
+- 结构体定义后加“_ struct”尾缀，对于类型定义后再追加 "_ t"，例子如下。
+
+  ```c
+  /* 枚举定义 */
+  enum errType_enum
+  {
+      RETURN_OK = 0,
+      RETURN_ERR_1,
+      RETURN_ERR_2,
+      RETURN_LAST /* 值为 3，同时也是所在枚举定义的枚举数量 */
+  };
+  
+  typedef enum
+  {
+      MY_ENUM_OK = 0,
+      MY_ENUM_TESTA,
+      MY_ENUM_TESTB,
+      MY_ENUM_LAST
+  }my_enum_t;
+  
+  /* 两种枚举使用 */
+  enum errType_enum sys_process_hello(my_enum_t my_para);
+  
+  /* 结构体定义 */
+  struct Simple_struct      struct /* 只用一次的结构体 */        typedef struct
+  {                           {                                  {
+      int a;                        int a;                            int a;
+      char b;                       char b;                           char b;
+      double c;                     double c;                         double c;
+  };                          }abc;                              }Simple_struct_t;
+  
+  /* 结构体内还可以对成员声明位段，不过见的不多，不常用 */
+  struct mybitfields
+  {
+  	unsigned short a   :4;
+  	unsigned short b   :5;
+  	unsigned short c   :7;
+  } test;
+  
+  /* 幅值 */
+  test.a = 2;
+  test.b = 31;
+  test.c = 0;
+  
+  /* 赋值后 的实际情形
+  00000001 11110010
+  cccccccb bbbbaaaa
+  */
+  
+  struct date_struct {
+  	unsigned char day :5;
+  	unsigned char month :4;
+  	unsigned short year :14;
+  } date;
+  /*
+  0 | 0 0 0 0 0 0 0 0 0 0 0 0 0 0 | 0 0 0 0 |  0 0 0 0 0 |
+    +--------- year --------------+- month -+---- day ---+
+  */
+  ```
+
+- 结构体的实例化尽量用 "表格" 形式，并在每列头部写好注释，例子如下。
+
+  ```c
+  struct fsm_states_struct fsm_XXX1_state[XXX1_State_MAX] = 	/*定义描述名为‘fsm_XXX1’的状态机的状态图*/
+  {                                                 	      /*跳转条件都初始化为0*/
+      /*               状态               执行函数         跳转条件数量     各个条件跳转后的状态（注：根据跳转条件的优先级从高到低往下写）*/
+      {(unsigned int)XXX1_State_1,   fsm_XXX1_state_1_Fun,    2,{     {0,(unsigned int)XXX1_State_5    },
+                                                                      {0,(unsigned int)XXX1_State_2    },    }},
+  
+      {(unsigned int)XXX1_State_4,   fsm_XXX1_state_4_Fun,    1,{     {0,(unsigned int)XXX1_State_5    },    }},
+  };
+  /*或者*/
+  Simple_struct_t simple = 
+  {
+      .a = 4,
+      .b = 5,
+      .c = 0,
+  };
+  ```
+
+### 关于联合和其类型的定义形式（union）
+
+- 联合的长度为其中最大一个变量/数组的长度，定义形式同样有直接定义、类型定义、指针和数组等，联合内可以嵌套定义结构体，结构体内也可以嵌套定义联合；联合的定义和应用情景举例如下。
+
+  ```c
+  /* 一、四字节整形可以直接取每一个字节 */
+  /* 举例 1 */
+  union simple_union
+  {
+      int var_int;
+      char var_char[4];
+  }
+  
+  union simple_union four_bits.var_int = 0xaabbccdd;
+  /* 即 var_char[0] 为 0xaa，var_char[1] 为 0xbb，以此类推  */
+  
+  /* 举例 2 */
+  union
+  {
+  	int i; /* 占四字节 */
+  	struct /*在联合中定义一个结构*/
+  	{
+  		char first;
+  		char second;
+  	}half; /* 占俩字节 */
+  }number;
+  
+  number.i = 0x44434241; /*联合成员赋值*/
+  /* number.i 的低俩字节给了 half 结构体，即 number.half.first 为 0x42，以此类推  */
+  
+  /* 通过上面两个举例可以看出，在字节 拼接 和 检出 时使用 联合 非常方便 */
+  
+  /* 二、两个 程序/线程 要以不同的最小单位访问同一块内存 */
+  typedef struct{
+      int ram_full_flag;
+      int ram_store_flag;
+      int ad_channels_en;
+      union{
+        char ram_store_data[8][512];
+        u16  ram_send_data[8][256];
+      }_ram;
+  }_RAM_FORMAT;
+  _RAM_FORMAT RAM_Format;
+  /* 
+  可以看出 结构体里面的枚举，同一块区域内分别以 8 位和 16 位划分，
+  以 8 位为最小单位接收，以 16 位为最小单位发送
+  */
+  ```
+
+- 
+
 ### 关于宏定义和预编译指令定义形式（Macros and preprocessor directives）
 
-- 宏定义使用全大写（尽量），并遵循 "属什么 _ 是什么 _ 做什么" 的命名形式；
+- 宏定义使用全大写（尽量），并遵循 "属什么 _ 是什么 _ 做什么" 的命名形式。
 
-- 尽量把常数数字用宏定义代替；常量建议使用 const 定义来代替宏；前面这两句话实际是矛盾的，因地制宜吧，优化速度用前者，优化空间用后者；
+- 尽量把常数数字用宏定义代替；常量建议使用 const 定义来代替宏；前面这两句话实际是矛盾的，因地制宜吧，优化速度用前者，优化空间用后者。
 
-- 对宏定义中的所有输入和输出（整个结果语句）用括号保护起来，长句用 `do{...}while(0)`。
+- 对宏定义中的所有输入和输出（整个结果语句）用括号保护起来，举例如下，长句用 `do{...}while(0)`。
 
   ```c
   #define MY_MACRO(x)         ((x) * (x))
@@ -508,7 +694,7 @@
       }while(0)                             /* 2 statements. No semicolon after while loop */
   ```
 
-- 预编译指令语句使用 tab 标识好层次：
+- 预编译指令语句使用 tab 标识好层次，举例如下。
 
   ```c
   #if defined(XYZ)
@@ -557,18 +743,23 @@
    ********************************/
    
    /*____________运行错误提示和打印______________________________*/
-   /********************************
+   /************************************************************
    * 描述：表示某步骤运行有问题，串口提示，灯提示，声提示
    * 参数：   1、errmsg    错误或者警告信息
              2、errid     故障代号
              3、err_flag  错误类别（可选flag_Fault或flag_Warning）
    * 返回：   NULL
-   ********************************/
+   ************************************************************/
    
    /*************\
    * Multi-line  *
    * comment     *
    \*************/
+   
+                                       /*************\
+   *************************************  Multi-line *****************************************************
+                                       *   comment   *
+                                       \*************/
    
    /*______________________\\\                               ///__________________________*
    *___________________________________外设初始化函数_______________________________________*
@@ -741,7 +932,7 @@
   #define debug(format, args...) fprintf(stdout, format, args) 
   ```
 
--   若要修改函数的形参的值那么请用一级指针，若要修改形参一级指针的值那么用二级指针，以此类推。
+-   若要修改函数的局部变量的值那么请用一级指针，若要修改局部变量一级指针的值那么用二级指针，以此类推。
 
     ```c
     /* 引用自：https://blog.csdn.net/c243311364/article/details/109619361 */
@@ -758,8 +949,8 @@
     }
     int main(void)
     {
-        int *p = NULL;
-        GetMemery(&p);
+        int *p = NULL; /* 定义一个 局部变量 的 空指针（野指针） */
+        GetMemery(&p); /* 为其申请空间，即让其他函数修改 本函数中的局部变量的值，注意是传入 指针 p 的指针 */
         printf("address of p is %p\n",p);
         free(p);
         p = NULL;
@@ -776,7 +967,7 @@
     
     int main() {
     	int *ctx = NULL;
-    	EncryptUpdata(ctx);
+    	EncryptUpdata(ctx); /* 其他函数无法直接修改本函数的局域变量的值 */
     	UseCTX(ctx);
     	return 0;
     }
@@ -1389,7 +1580,7 @@ extern "C" {
 3. [ST HAL](https://www.stmcu.com.cn/)；
 4. [知乎问题页：程序员们有什么好的编程习惯？](https://www.zhihu.com/question/440136872)；
 5. 【正点原子】嵌入式Linux C代码规范化V1.0；
-6. 本人长时摸索的经验。
+6. 本人长期摸索的经验；
 7. 其他。
 
 *p.s 本 C 规范系广泛约取而成，参考并非照搬。*
@@ -1430,9 +1621,9 @@ extern "C" {
 
 ### 开光保护
 
-[佛祖保佑永无BUG 神兽护体 代码注释(各种版本)](https://blog.csdn.net/vbirdbest/article/details/78995793)
+[佛祖保佑永无BUG 神兽护体 代码注释(各种版本)](https://blog.csdn.net/vbirdbest/article/details/78995793)。
 
-[厉害了word程序猿，进寺庙给服务器开光保永不宕机](https://www.sohu.com/a/116621959_430930) 
+[厉害了word程序猿，进寺庙给服务器开光保永不宕机](https://www.sohu.com/a/116621959_430930)。
 
 以下是效果图。
 

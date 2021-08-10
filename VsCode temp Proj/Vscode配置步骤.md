@@ -11,7 +11,7 @@
 
 新建一个文件夹当作工程文件夹，添加程序文件，然后在当前目录右击鼠标，选用VsCode打开（或则先打开VsCode再打开此目录）。工程路径不能有中文。
 
-### 单文件快速编译运行
+### 快速编译运行
 
 此方法只对单文件（没有调用工程文件夹内其他用户文件）快速看个结果有效。
 
@@ -23,9 +23,9 @@
 2. 所有 .c  和 对应的 .h 文件都放到 main 文件的同目录，然后 修改 Code Runner 的 ExecutorMap 设置（在 .json 中打开）；
 3. 修改其中的 `"c"` 这一行中的 `gcc $filename` 为 gcc *.c ，在 main 文件  Vscode 右上角 点击 Code Runner 的运行即可。
 
-### 正经 C 调试
+### 正式 C 工程建立
 
-#### 快速运行
+#### 快速建立
 
 单个 .c 文件快速运行。
 
@@ -58,6 +58,11 @@
 4.  cpptools ：调试使用 参考：https://blog.csdn.net/bat67/article/details/76095813
 5.  Beautify: 代码格式化
 6.  Sublime Babel: 代码高亮
+
+## 软件设置
+
+- 防止打开新文件覆盖窗口：打开设置，找到"workbench.editor.enablePreview"并设为false。
+- [vscode怎么设置代码格式化缩进为4个空格-百度经验 (baidu.com)](https://jingyan.baidu.com/article/870c6fc3343686f13fe4befd.html)。
 
 ## 其他可选扩展
 
@@ -92,4 +97,21 @@
 
 -   Clang-Format：只有想自定义代码风格时才装，比如大括号不换行。需要另外学习如何使用
 
--   [10款VS Code插件神器，第7款超级实用！](https://mp.weixin.qq.com/s/E3Emku5IW9p8VlM1BiVC8Q)
+- [10款VS Code插件神器，第7款超级实用！](https://mp.weixin.qq.com/s/E3Emku5IW9p8VlM1BiVC8Q)。
+
+正点原子推荐的插件清单：
+
+1)、 C/C++，这个肯定是必须的。
+2)、 C/C++ Snippets，即 C/C++重用代码块。
+3)、 C/C++ Advanced Lint,即 C/C++静态检测 。
+4)、 Code Runner，即代码运行。
+5)、 Include AutoComplete，即自动头文件包含。
+6)、 Rainbow Brackets，彩虹花括号，有助于阅读代码。
+7)、 One Dark Pro， VSCode 的主题。
+8)、 GBKtoUTF8，将 GBK 转换为 UTF8。
+9)、 ARM，即支持 ARM 汇编语法高亮显示。
+10)、 Chinese(Simplified)，即中文环境。
+11)、 vscode-icons， VSCode 图标插件，主要是资源管理器下各个文件夹的图标。
+12)、 compareit，比较插件，可以用于比较两个文件的差异。
+13)、 DeviceTree，设备树语法插件。
+14)、 TabNine，一款 AI 自动补全插件，强烈推荐，谁用谁知道！  
