@@ -1,6 +1,8 @@
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
-
 # C & MCU编写规范和其他（coding style and more）
+
+<p align="center">
+    <img src="assets/CC-BY-NC-SA-4.0-88x31.png" alt="CC BY-NC-SA 4.0 88x31"  />
+</p>
 
 ***p.s 温馨提示：点个 star 收藏一下回头慢慢看；或者下(白)载(嫖)下来，在 Typora 中阅读；或者在  [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)  阅读。***
 
@@ -54,10 +56,6 @@
 - 做好版本管理，有备份的意识（打压缩包写上时间也好，使用git工具也好，放到U盘里也好，传到私人网盘也好）。
 - 时常看书，时常看看同行的文章，常读常新。
 - 不止技术，不想当将军的士兵不是好士兵（有的人领导能力强，有的人能开发有竞争力的产品，有的人能把知识讲地透彻，有的人理论功底强），时常把视角拉远看一看。
-
-
-
-- C语言三剑客：《C和指针》、《C陷阱与缺陷》和《C专家编程》。
 
 ------
 
@@ -204,7 +202,7 @@
   astyle --options="astyle-code-format.cfg" "input_path/*.c,*.h" "input_path2/*.c,*.h"
   ```
 
-- VS Code：在 VS Code 中搜索 AStyle 插件 即可。
+- VS Code：在 VS Code 中搜索 AStyle 插件 即可。或者 Beautify 插件，代码格式化，都还没试过。
 
 - MDK：关于“把代码中的 tab 符变成四个空格”，在 MDK 的 Edit 的 Configuration 中，把 “Insert spaces for tab” 都勾上即可。
 
@@ -233,9 +231,9 @@
 ## IT 学习路线
 
 1. C语言基础 →
-2. C语言三剑客：《C和指针》、《C陷阱与缺陷》和《C专家编程》 →
-3. 数据结构与算法（顺序表/树/图 + 排序/搜索/规划等等等 按需学） →
-4. 计算机专业科学看的《计算机体系结构》，《计算机操作系统》/《现代操作系统》/《深入理解计算机系统》，《编译原理》，网络协议如《计算机网络》、《TCP-IP详解卷一/卷二/卷三》等，《深入分析GCC》等 →
+2. C语言三剑客：《C和指针》、《C陷阱与缺陷》和《C专家编程》，经典永流传 →
+3. 数据结构与算法（线性表/树/图/哈希 + 排序/搜索/规划等等等 按需学） →
+4. 计算机专业科学看的《计算机组成原理》/《计算机体系结构》，《计算机操作系统》/《现代操作系统》/《深入理解计算机系统》，《编译原理》，《深入分析GCC》，网络协议如《计算机网络》、《TCP-IP详解卷一/卷二/卷三》等 →
 5. 可选 《CPU自制入门》 →
 6. 走向：嵌入式 Linux 方向、FPGA / 芯片设计方向、具体某算法方向等等。
 
@@ -243,22 +241,29 @@
 
 ## 相关坚韧大厚书
 
+没给出链接的 网搜名字即可。
+
 - [哪本《数据结构与算法》最好？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/21628833) 该回答列举了一些不错的数据结构与算法方面的书籍。
 - 《算法导论》（经典）是计算机学科的算法入门书。
-- 《编码的奥秘》，相关介绍/推荐 [想练习《编码的奥秘》里面的知识，有什么软件有帮助？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/28223767)。
-- 《计算机体系结构》（经典），《计算机操作系统》/《现代操作系统》/《深入理解计算机系统》，《编译原理》（经典）。
+- 《计算机体系结构》（经典），《计算机操作系统》/《现代操作系统》/《深入理解计算机系统》。
+- 《编码的奥秘》，相关介绍/推荐 [想练习《编码的奥秘》里面的知识，有什么软件有帮助？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/28223767)。《编译原理》（经典），《深入分析GCC》。
 - 网络协议如《计算机网络》、《TCP-IP详解卷一/卷二/卷三》，[ 想深入了解 HTTP 协议，有哪些值得推荐的书籍？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/19722062)。
-- 《深入分析GCC》。
-- 嵌入式应用相关：《GUN Make》，《Debugging with GDB》，《Linux 高级程序开发》，《POSIX 多线程程序设计》，《嵌入式Linux基础教程》，《嵌入式Linxu应用开发完全手册》，《嵌入式Linxu应用程序开发详解》。
+- 嵌入式应用相关：《GNU Make》，《Debugging with GDB》，《Linux 高级程序开发》，《POSIX 多线程程序设计》，《嵌入式Linux基础教程》，《嵌入式Linxu应用开发完全手册》，《嵌入式Linxu应用程序开发详解》。
 - 嵌入式底层相关：内核相关：《深入理解Linux内核》，《Linux内核源代码情景分析》，《Linux内核设计与实现》；驱动相关：《Linux设备驱动程序》，《Linux设备驱动开发详解》，《Linux驱动开发入门与实践》。
 
-## 相关有趣/耐看书
+## 相关有趣/耐看书或视频
 
-- 《算法新解》开源书。
+- ~~[《算法新解》开源书](https://github.com/liuxinyu95/AlgoXY)。~~《啊哈！算法》。
 - 图解系统 小林。图解网络 小林。
-- 趣谈网络协议。
+- [趣谈网络协议](https://book.douban.com/subject/35013753/)。
 - 手绘图解HTTP。30张图解HTTP常见面试题。
 - [TCP/IP 教程 | 菜鸟教程 (runoob.com)](https://www.runoob.com/tcpip/tcpip-tutorial.html)。[HTTP 教程 | 菜鸟教程 (runoob.com)](https://www.runoob.com/http/http-tutorial.html)。
+- [《嵌入式C语言的自我修养》](https://book.douban.com/subject/35446929/) 从沙子讲到CPU，从编辑器讲到编译器，从高阶C语言讲到内存管理，从GNU讲到多任务编程。
+
+
+
+- [（完结）（小甲鱼）数据结构和算法_ 哔哩哔哩 _bilibili](https://www.bilibili.com/video/BV1os41117Fs)。
+- [国嵌唐老师主讲【数据结构与算法C语言】（非常犀利）_ 哔哩哔哩 _bilibili](https://www.bilibili.com/video/BV1eK4y1J7zh) 讲的慢。
 
 ------
 
@@ -443,7 +448,7 @@
 
 - 对于函数可能传入的参数是不定的任意类型，定义形参用 `void*` 修饰。
 
-- 函数的嵌套不要过多，一般控制在最多 4 层。不要用递归这种反阅读便利的写法，用循环语句实现。
+- 函数的嵌套不要过多，一般控制在最多 4 层。不要用递归这种反阅读便利的写法（并且控制不好易栈溢出），用循环语句实现。
 
 - 关于 指针函数 和 函数指针。
 
@@ -452,11 +457,7 @@
   函数指针即指 函数类型的指针，定义的形式和使用情景如下，函数指针名加后缀 "_ fn"，函数指针类型定义名再追加后缀 "_ t"。
 
   ```c
-  /* 函数指针定义写法举例 */
-  unsigned char (*sys_print_compile_time_fn)(unsigned char);
-  typedef uint8_t (*my_func_fn_t)(uint8_t p1, const char* p2);
-  
-  /* 用法 */
+  /* 函数指针定义写法和用法举例 */
           unsigned char (*sys_print_compile_time_fn)(unsigned char);
   typedef unsigned char (*sys_print_compile_time_fn_t)(unsigned char);
   
@@ -496,8 +497,7 @@
       (*print_compile_time_fn)(1);
   }
   ```
-
-- 
+  
 
 ### 关于变量定义形式（Variables）
 
@@ -579,7 +579,7 @@
 
 - 玩一下，比较极端的情况，一个完整的变量声明形式：`extern static volatile const unsigned long int* const temp_32bit_reg;`。
 
-- 对于 长度不一样的多个一维数组常用指针数组定义，如 `char* str[]`定义缺省值个不等长的字符串，`int* var[6]`定义留个不等长的整数数组，要么在定义时初始化其值，要么定义时不初始化然后在用的时候使用 malloc() 为其申请空间再幅值；指针传递 `int var[2][10]; int** var_p = var + 1;`或者`int** var_p = &var[1];`。
+- 二阶指针的理解用 二维数组 或者 字符串数组 比较直观。对于 长度不一样的 多个 一维数组 常用 指针数组 定义，如 `char* str[]`定义缺省值个不等长的字符串，`int* var[6]`定义 6 个不等长的整数数组，要么在定义时初始化其值，要么定义时不初始化然后在用的时候使用 malloc() 为其申请空间再幅值。指针传递 `int var[2][10]; int** var_p = var + 1;`或者`int** var_p = &var[1];`。
 
 - 变量如果是低有效，变量名加尾缀"_n"，比如使能 en 是低有效（en 上面有一横），则命名为"en_n"。
 
@@ -602,7 +602,7 @@
 - 结构体定义后加“_ struct”尾缀，对于类型定义后再追加 "_ t"，例子如下。
 
   ```c
-  /* 枚举定义 */
+  /************************* 枚举定义 *************************/
   enum errType_enum
   {
       RETURN_OK = 0,
@@ -622,7 +622,7 @@
   /* 两种枚举使用 */
   enum errType_enum sys_process_hello(my_enum_t my_para);
   
-  /* 结构体定义 */
+  /************************* 结构体定义 *************************/
   struct Simple_struct      struct /* 只用一次的结构体 */        typedef struct
   {                           {                                  {
       int a;                        int a;                            int a;
@@ -630,7 +630,9 @@
       double c;                     double c;                         double c;
   };                          }abc;                              }Simple_struct_t;
   
-  /* 结构体内还可以对成员声明位段，不过见的不多，不常用 */
+  /************************* 位段 *************************/
+  /* 结构体内还可以对成员声明位段（有的地方也叫 位域），即声明每个成员占用的 bit 数。不多见 */
+  /* 成员必须为无符号整型 */
   struct mybitfields
   {
   	unsigned short a   :4;
@@ -644,8 +646,8 @@
   test.c = 0;
   
   /* 赋值后 的实际情形
-  00000001 11110010
-  cccccccb bbbbaaaa
+  16bit 的实际值：        00000001 11110010
+  16bit 的 abc 占用位置： cccccccb bbbbaaaa
   */
   
   struct date_struct {
@@ -684,7 +686,7 @@
 - 联合的长度为其中最大一个变量/数组的长度，定义形式同样有直接定义、类型定义、指针和数组等，联合内可以嵌套定义结构体，结构体内也可以嵌套定义联合；联合的定义和应用情景举例如下。
 
   ```c
-  /* 一、四字节整形可以直接取每一个字节 */
+  /************************* 一、四字节整形可以直接取每一个字节 *************************/
   /* 举例 1 */
   union simple_union
   {
@@ -711,7 +713,7 @@
   
   /* 通过上面两个举例可以看出，在字节 拼接 和 检出 时使用 联合 非常方便 */
   
-  /* 二、两个 程序/线程 要以不同的最小单位访问同一块内存 */
+  /************************* 二、两个 程序/线程 要以不同的最小单位访问同一块内存 *************************/
   typedef struct{
       int ram_full_flag;
       int ram_store_flag;
@@ -728,7 +730,6 @@
   */
   ```
 
-- 
 
 ### 关于宏定义和预编译指令定义形式（Macros and preprocessor directives）
 
@@ -782,8 +783,11 @@
      - [Doxygen生成注释文档_destiny的专栏-CSDN博客_doxygen生成文档](https://blog.csdn.net/tuwenqi2013/article/details/70050849)。
      - [代码注释规范之Doxygen - silencehuan - 博客园 (cnblogs.com)](https://www.cnblogs.com/silencehuan/p/11169084.html)。
 
-   - Vs Code Doxygen 格式注释生成插件：[Vs code自动生成Doxygen格式注释_wang0huan的博客-CSDN博客](https://blog.csdn.net/wang0huan/article/details/103107472/)。
+   - Vs Code 的 Doxygen 格式注释生成插件：
 
+     - [Doxygen Documentation Generator - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cschlosser.doxdocgen)，用这个，官方比较全。或者在 VScode 扩展里 安装 C/C++ Extension Pack，里面包含了许多 C/C++ 实用扩展，包括 Doxygen Documentation Generator。
+     - [Vs code自动生成Doxygen格式注释_wang0huan的博客-CSDN博客](https://blog.csdn.net/wang0huan/article/details/103107472/)。
+     
      *p.s 关于 Doxygen 文档的更多具体写法用时再详看进行手写，或者使用生成插件*
 
 3. 下面列举几种花哨的，其中有我自己“创造”的。函数定义的注释，主任务函数的注释，用于显眼！
@@ -861,13 +865,14 @@
    >
    > 参见下面几个正确的格式： 
    >
-   > ©1995-2004 Macromedia, Inc. All rights reserved. 
+   > - ©1995-2004 Macromedia, Inc. All rights reserved. 
    >
-   > ©2004 Microsoft Corporation. All rights reserved. 
+   > - ©2004 Microsoft Corporation. All rights reserved. 
    >
-   > Copyright © 2004 Adobe Systems Incorporated. All rights reserved. 
+   > - Copyright © 2004 Adobe Systems Incorporated. All rights reserved. 
    >
-   > ©1995-2004 Eric A. and Kathryn S. Meyer. All Rights Reserved. 
+   > - ©1995-2004 Eric A. and Kathryn S. Meyer. All Rights Reserved. 
+   >
    >
    > 请注意标点符号和大小写的用法，这也是专业精神的一种体现。 
    >
@@ -883,12 +888,13 @@
 
 #### 实用技巧
 
-- 巧用 按位与或非来 组合想要的二进制。
+- 巧用 按位 与/或/非 来 组合想要的二进制序列。
 
   ```c
   /* 取出 CANid 的 第 28—26 3位 给 temp */
   unsigned int temp,CANid;
   temp = ((CANid & 0x1C000000) >> 26) & 0x00000007;	//0x1C000000 = 0001 1100 0000 0000 0000 0000 0000 0000
+  // 注意，如果不是为了进行 2 的倍数的乘除运算，移位的对象尽量为无符号类型（unsigned），无符号类型左、右移均补 0；而有符号型左移补 0，右移补 符号位。
   
   /* 讲某一变量中的某几位 的二进制 比特 合成到 另一个变量的某个位置  */
   enum deviceType_enum deviceType = Magnetic_unit;
@@ -913,11 +919,11 @@
   static volatile unsigned int *reg_temp = (volatile unsigned int *)(0x20E0084);
   
   /* 置位的标准写法 */
-  /* 下句表示把 内存中 0x20E0084 位置的 第1、2、5、14位进行置1，其他位不变 */
+  /* 下句表示把 内存中 0x20E0084 位置的 第 1、2、5、14 位进行置 1，其他位不变 */
   *reg_temp |= ( (1 << 14) | (1 << 5) | (1 << 2) | (1 << 1) );
   
   /* 清位的标准写法 */
-  /* 下句表示把 内存中 0x20E0084 位置的 第0、3位进行清0，其他位不变 */
+  /* 下句表示把 内存中 0x20E0084 位置的 第 0、3 位进行清 0，其他位不变 */
   *reg_temp &= ( ~( (1 << 3) | (1 << 0) ) );
   
    /* 读寄存器 */
@@ -945,6 +951,21 @@
     Periph_x->UCR1 |= (1 << 2);
     ```
     
+- 使用 结构体 的 位带 来直接对 bit 进行操作。引自 [推荐一种超简单的硬件位带bitband操作方法，让变量，寄存器控制，IO访问更便捷，无需用户计算位置 (qq.com)](https://mp.weixin.qq.com/s?__biz=MzAxNDMxNDU5Ng==&mid=2650385272&idx=1&sn=4db70f486f457f35c541e989d54d9d51&chksm=83983673b4efbf65a491b3ec230f513ea99d418792fb55cecf88383ad46281d7d38e4f9079b1&scene=21#wechat_redirect)。[《安富莱嵌入式周报》第243期：2021.12.06--2021.12.12 (qq.com)](https://mp.weixin.qq.com/s/tnNgk_atZy3lxbxIwtM8xg) 里面 3 硬件位带 小节有订正。
+
+  ```c
+  typedef struct {
+      uint16_t ODR0 : 1;
+      uint16_t ODR1 : 1;
+      uint16_t ODR2 : 1;
+  	...
+      uint16_t Reserved : 16;
+  } GPIO_ORD __attribute__((bitband));
+  
+  GPIO_ORD *GPIOA_ODR = (GPIO_ORD *)(&GPIOA->ODR); /* 这两种写法 */
+  GPIO_ORD GPIOA_ODR __attribute__((at(0x40020014))); /*  */
+  ```
+
 - 关于连接符 “#” 和 “##” 的使用说明，这两个都是预处理命令。
 
   ```c
