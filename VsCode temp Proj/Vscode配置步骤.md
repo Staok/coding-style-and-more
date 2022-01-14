@@ -45,28 +45,30 @@
 
 有关C++的详看 [这里](https://blog.csdn.net/lyw851230/article/details/89352839)。
 
-## Vscode 代替 Source insight
+## VScode 必装扩展
+
+Vscode 代替 Source insight。
 
 需装插件：
 
-1.  C/C++: C/C++代码,智能感知,debugger,和代码浏览
-
-2.  CSS Peak: 代码跳转工具
-
-3.  code outline： 显示函数列表
-
-4.  cpptools ：调试使用 参考：https://blog.csdn.net/bat67/article/details/76095813
-5.  Beautify: 代码格式化
-6.  Sublime Babel: 代码高亮
+1.  C/C++：C/C++代码,智能感知，debugger,和代码浏览
+2.  C/C++ Extension Pack：里面包含了许多 C/C++ 实用扩展，包括 Doxygen Documentation Generator。
+3.  CSS Peak：代码跳转工具
+4.  code outline：显示函数列表
+5.  cpptools：调试使用 参考：https://blog.csdn.net/bat67/article/details/76095813。
+6.  Beautify：代码格式化
+7.  Sublime Babel：代码高亮
 
 ## 软件设置
 
-- 防止打开新文件覆盖窗口：打开设置，找到"workbench.editor.enablePreview"并设为false。
+- 防止打开新文件覆盖窗口：打开设置，找到 "workbench.editor.enablePreview" 并设为 false。
 - [vscode怎么设置代码格式化缩进为4个空格-百度经验 (baidu.com)](https://jingyan.baidu.com/article/870c6fc3343686f13fe4befd.html)。
 
 ## 其他可选扩展
 
--   [嵌入式应用中所使用的vscode 插件](https://www.zcxbb.com/index.php/2021/03/24/嵌入式应用中所使用的vscode-插件/)
+- [VScode中的神仙插件（写代码必备）_知心宝贝的博客-CSDN博客](https://blog.csdn.net/qq_53673551/article/details/122360282)。
+
+-   [嵌入式应用中所使用的vscode 插件](https://www.zcxbb.com/index.php/2021/03/24/嵌入式应用中所使用的vscode-插件/)。
 
     \1. ARM :识别 arm 汇编语言
     \2. Auto Comment Blocks :自动注释
