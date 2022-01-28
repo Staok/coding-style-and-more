@@ -18,4 +18,7 @@
 
 ------
 
-正文请看（白嫖） [C & MCU编写规范和其他](https://github.com/Staok/coding-style-and-more/blob/main/C%20%26%20MCU%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83%E5%92%8C%E5%85%B6%E4%BB%96.md)
+正文请看（白嫖）：
+
+- Github 地址：[C & MCU编写规范和其他](https://github.com/Staok/coding-style-and-more/blob/main/C%20%26%20MCU%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83%E5%92%8C%E5%85%B6%E4%BB%96.md)。
+-  Gitee  地址：[C & MCU编写规范和其他](https://gitee.com/staok/coding-style-and-more)。
