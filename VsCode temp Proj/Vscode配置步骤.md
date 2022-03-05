@@ -1,21 +1,21 @@
-# Vscode 编译 C 配置步骤
+# Vscode 编译 C/C++ 配置步骤
 
 ------
 
 ## 环境配置
 
 1.  先安装和配置“mingw-w64”编译器工具链，到 [这里](https://sourceforge.net/projects/mingw-w64/files/) 下载 “x86_64-posix-sjlj” 版本的 “mingw-w64” ，解压到任意路径比如 “D:\\mingw64\\bin\\”。
-2.  然后添加环境变量的“Path”，让系统 cmd 在任意位置能够运行 gcc -v 等命令，即算成功。具体：系统属性 -> 高级系统设置 -> 环境变量 -> 系统变量，找到 Path，编辑添加一项“D:\mingw64\bin\”即可。
+2.  然后添加环境变量的 “Path”，让系统 cmd 在任意位置能够运行`gcc -v`等命令，即算成功。具体：系统属性 -> 高级系统设置 -> 环境变量 -> 系统变量，找到 Path，编辑添加一项 “D:\mingw64\bin\” 即可。
 
-## 建立VsCode工程
+## 建立 Vscode 工程
 
-新建一个文件夹当作工程文件夹，添加程序文件，然后在当前目录右击鼠标，选用VsCode打开（或则先打开VsCode再打开此目录）。工程路径不能有中文。
+新建一个文件夹当作工程文件夹，添加程序文件，然后在当前目录右击鼠标，选择 “通过 Code 打开”（或者先打开 VsCode 再打开此目录）。工程路径不能有中文。
 
 ### 快速编译运行
 
 此方法只对单文件（没有调用工程文件夹内其他用户文件）快速看个结果有效。
 
-安装插件 “Code Runner”，然后然后依次打开：文件>首选项>设置>用户>拓展>Run Code Configuration，找到**`Run In Terminal`**勾选上。然后在VsCode里面点开一个c程序文件，在右上角有一个箭头符号，是Code Runner的运行按钮，会在控制台显示程序输出信息。点控制台右上角的垃圾箱图标为停止运行。
+安装插件 “Code Runner”，然后然后依次打开：设置>拓展>Run Code Configuration，找到`Run In Terminal`勾选上。然后在 VsCode 里面点开一个 c 程序文件，在右上角有一个箭头符号，是 Code Runner 的运行按钮，会在控制台显示程序输出信息。点控制台右上角的垃圾箱图标为停止运行。
 
 添加多文件支持：（临时用）
 
@@ -29,42 +29,48 @@
 
 单个 .c 文件快速运行。
 
-1.  在VsCode里面点 “运行->“添加配置”，添加一个gdb.exe配置，就会出现名为“.vscode”文件夹和里面的“launch.json”和"task.json"两个文件。
-2.  这时程序就会编译跑起来。默认程序在控制台输出信息，可以修改“launch.json”文件里的"externalConsole"为 true 即使用运行程序与新控制台窗口。
+1.  在 VsCode 里面点 “运行->“添加配置”，添加一个 gdb.exe 配置，就会出现名为 “.vscode” 文件夹和里面的 “launch.json” 和 "task.json" 两个文件。
+2.  这时程序就会编译跑起来。默认程序在控制台输出信息，可以修改 “launch.json” 文件里的 "externalConsole" 为 true 即使用运行程序与新控制台窗口。
 3.  还可以加断点进行单步调试。
 
 #### 正经的配置文件
 
 说明：tasks.json 文件用于指定编译行为，launch.json 文件用于指定编译之后的启动/调试程序的行为。
 
-- 单文件 C 编译模板：“.vscode”里面的配置文件直接复制“VsCode temp Proj.zip”里面的。
+- 单文件 C 编译模板：“.vscode” 里面的配置文件直接复制 “VsCode temp Proj.zip” 里面的。
 
 - 添加头文件/添加多文件支持：
-  1. VsCode Temp Proj inc 1 模板， .c 和 .h 文件分散在多个文件夹里面，需要在 tasks.json 中手动指定这些  .c 文件 和 .h 文件所在的目录，launch.json 文件不用动，#include 的时候写上头文件相对路径；
-  2. VsCode Temp Proj inc 2 模板， .c 文件统一放在 src 文件夹里面，.h 文件统一放在 inc 文件夹里面，然后不用改 tasks.json 和 launch.json，即可直接引用头文件，#include 的时候写上头文件相对路径；
+  1. VsCode Temp Proj inc 1 模板， .c 和 .h 文件分散在多个文件夹里面，需要在 tasks.json 中手动指定这些  .c 文件 和 .h 文件所在的目录，launch.json 文件不用动，#include 的时候写上头文件相对路径。
+  2. VsCode Temp Proj inc 2 模板， .c 文件统一放在 src 文件夹里面，.h 文件统一放在 inc 文件夹里面，然后不用改 tasks.json 和 launch.json，即可直接引用头文件，#include 的时候写上头文件相对路径。
 
-有关C++的详看 [这里](https://blog.csdn.net/lyw851230/article/details/89352839)。
+有关 C++ 的网搜教程详看，模板为 ForTest_C++。
 
 ## VScode 必装扩展
 
-Vscode 代替 Source insight。
+Vscode 代替 Source insight 需装插件：
 
-需装插件：
-
-1.  C/C++：C/C++代码,智能感知，debugger,和代码浏览
+1.  C/C++：C/C++ 代码的 智能感知、debugger 和代码浏览（又名 cpptools）。
 2.  C/C++ Extension Pack：里面包含了许多 C/C++ 实用扩展，包括 Doxygen Documentation Generator。
-3.  CSS Peak：代码跳转工具
-4.  code outline：显示函数列表
-5.  cpptools：调试使用 参考：https://blog.csdn.net/bat67/article/details/76095813。
-6.  Beautify：代码格式化
-7.  Sublime Babel：代码高亮
 
 ## 软件设置
 
+- [vscode: Visual Studio Code 常用快捷键 - 魚魚 - 博客园 (cnblogs.com)](https://www.cnblogs.com/bindong/p/6045957.html)。
 - 防止打开新文件覆盖窗口：打开设置，找到 "workbench.editor.enablePreview" 并设为 false。
 - [vscode怎么设置代码格式化缩进为4个空格-百度经验 (baidu.com)](https://jingyan.baidu.com/article/870c6fc3343686f13fe4befd.html)。
 
 ## 其他可选扩展
+
+- 个人喜欢的一个主题：Dracula Official，扩展中搜索安装即可。但不一定用..
+
+- CSS Peak：代码跳转工具
+
+-   code outline：显示函数列表
+
+-   Beautify：代码格式化
+
+-   Sublime Babel：代码高亮
+
+-   Bracket Pair Colorizer：彩虹花括号
 
 - [VScode中的神仙插件（写代码必备）_知心宝贝的博客-CSDN博客](https://blog.csdn.net/qq_53673551/article/details/122360282)。
 

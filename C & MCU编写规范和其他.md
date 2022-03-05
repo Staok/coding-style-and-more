@@ -294,6 +294,8 @@
 
 6. 关于命名。
 
+   - 文件统一采用小写命名。
+
    - 变量和函数的命名都只用小写（尽量），宏定义使用全大写（尽量），并遵循 "属什么 _ 是什么 _ 做什么" 的命名形式，如：sys_irq_disable()，该 API 属于 sys 级别函数，是 irq 管理，做 dsiable 的功能。不要用晦涩的英文缩写甚至拼音就不用讲了吧。
 
    - 具有互斥意义的变量或者动作相反的函数应该是用互斥词组命名，例子如下。  
@@ -305,7 +307,7 @@
      > send/receive   source/destination  copy/paste                    up/down
 
    - 不要使用单字节命名变量，但是允许使用 i， j， k 这样的作为局部循环变量。
-   - 文件统一采用小写命名。
+
    - 关于函数、变量、宏定义等的命名看 `5 具体各部分的规范形式`章节。
 
 7. 控制语句总加括号（即使分支执行语句只有一句），成对的括号要在竖方向上对齐，用 tab 把层次分地清清楚楚，例子如下（为了节省空间，下面示例用横向写~）。
@@ -358,17 +360,13 @@
 
 16. 文件操作中 open  和 close 成对使用，内存管理 malloc 和 free 成对使用。
 
-17. 每一个文件在最后留有至少一个空行。
+18. 关于源文件、头文件和变量作用域等。[头文件里的大学问，C语言需要注意这些原则... (qq.com)](https://mp.weixin.qq.com/s/UxPdi4-07jonPsJgeSfWow)。
 
-18. 对于 c 语言的文件，其 .h 文件的主体文件包含在下面的括号之内（标有 "..." 的位置）。
-
-    - 定义时带有 static 修饰符的变量（无论是声明在在某个函数里还是函数外）是 只在该文件具有作用域的，其他文件不能够访问到。
-    - 一个文件的变量声明都放在 .h 里面，公有变量声明时 加 extern 修饰符 以供其他文件调用，私有变量声明时不加 extern 修饰符。
-
-    - 在 .c 文件中 include 自己对应的 .h 文件和需要用到的 .h 文件，不要引用多余的 .h 文件；.h 文件中同样只引用用到的头文件，但是头文件尽量写成无依赖的，这就考验整个系统的规划和设计。
-    - 如果一个模块包含了多个 .c 源文件，那么将它们放入同一个文件夹并用模块名命名，然后只用一个 .h 头文件声明接口。
-    - 关于开源协议，Every file (header or source) must include license (opening comment includes single asterisk as this must be ignored by doxygen). Use the same license as already used by project/library.
-    - 对于 .h 文件，其基本格式如下。
+    - 变量、API 的作用域要明确：定义时带有 static 修饰符的变量（无论是声明在在某个函数里还是函数外）是 只在该文件具有作用域的，其他文件不能够访问到。一个文件的变量声明都放在 .h 里面，公有变量声明时 加 extern 修饰符 以供其他文件调用，私有变量声明时不加 extern 修饰符。明确好所有变量和函数在工程中的调用范围，由此来控制其作用域的 缩小 / 尽量最小化，减少不必要的 调用 / 引用，对编译时间和管理都有好处。
+    - 非必要的不引用：在 .c 文件中 include 自己对应的 .h 文件和需要用到的 .h 文件，不要引用多余的 .h 文件；.h 文件中同样只引用用到的头文件；头文件尽量写成无依赖的；尽量减少依赖，这就考验整个系统的规划和设计。
+    - 不一定 一个 .h 文件对应 一个 .c 文件：如果 一个模块 包含了多个 .c 源文件来实现，那么将它们放入同一个文件夹并用模块名命名，然后只用一个 .h 头文件声明 该模块的 接口。
+    - 关于开源协议:Every file (header or source) must include license (opening comment includes single asterisk as this must be ignored by doxygen). Use the same license as already used by project/library.
+    - 对于 .h 文件，其基本格式如下。每一个文件在最后留有至少一个空行。
 
 
 ```c
@@ -446,9 +444,9 @@
   wave_point_A < 0 ? 0    : wave_point_A;
   ```
 
-- 如果函数传入参数（形参）的数量过多（超过 5 个），那么要考虑精简或者用其他办法，即可以将参数打包为全局的 数组 或 结构体 等然后传递其指针；对于返回多个值同理；字符串指针 和 结构体指针 等在定义时若未初始化，则使用前要用 malloc() 为其申请空间。
+- 如果函数传入参数（形参）的数量过多（超过 5 个），那么要考虑精简或者用其他办法，即可以将参数打包为全局的 数组 或 结构体 等 然后传递其指针；对于返回多个值同理；字符串指针 和 结构体指针 等在定义时若未初始化，则使用前要用 malloc() 为其申请空间。
 
-- 对于函数可能传入的参数是不定的任意类型，定义形参用 `void*` 修饰。
+- 对于函数可能传入的参数是不定的任意类型，定义形参用 `void*` 修饰。函数明确 没有/不能 传入/返回 参数时要在形参处用 `void` 指明，如上面的`void            sys_example_init(void);`。
 
 - 函数的嵌套不要过多，一般控制在最多 4 层。不要用递归这种反阅读便利的写法（并且控制不好易栈溢出），用循环语句实现。
 
@@ -522,11 +520,11 @@
 
 - 同类型的变量声明放在一行，变量定义时避免用函数返回值。
 
-- 用" _ "分割语义，命名遵循 "**属什么 _ 是什么 _ 做什么**" 的形式，要意义明确。
+- 命名中 用下划线 `_` 分割语义，命名遵循 "**属什么 _ 是什么 _ 做什么**" 的形式，要意义明确。命名开头以两个下划线或一个下划线的约定俗成保留给系统，因此普通应用中应避免。
 
 - 避免使用 stdbool.h 里的 "true" 或 "false"，用 "1" 或 "0" 代替。
 
-- 变量类型，除了char* 、float 和 double，都使用 stdint.h 库（对于不同位数的机器，使用这个文件里面的类型定义，可以明确每个类型的长度）里面的，统一起来。
+- 变量类型，除了char* 、float 和 double，都使用 stdint.h 库（对于不同位数的机器，使用这个文件里面的类型定义，可以明确每个类型的长度）里面的，统一起来。整文件或整工程中变量定义处的变量关键字修改，可以用 批量替换 来完成，如 统一的将 `INT8` 修改为 `char`。
 
   ```c
   /* 定义一些常用的数据类型短关键字，为兼容性附加，可选 */
@@ -591,7 +589,7 @@
 
 - 对于函数内的局部变量，不希望在函数跳出后局部变量数据丢失那么加上 static 修饰符（指示该变量具有所在文件作用域），static 修饰符的变量若定义在一个文件内当作 “全局变量”，其是 只在该文件具有作用域的，其他文件不能够访问到。
 
-- 玩一下，比较极端的情况，一个完整的变量声明形式：`extern static volatile const unsigned long int* const temp_reg;`。
+- 玩一下，比较极端的情况，一个完整的变量声明形式：`extern static volatile const unsigned long int* const temp_reg[sizeof(int)];`。
 
 - 变量如果是低有效，变量名加尾缀"_n"，比如使能 en 是低有效（en 上面有一横），则命名为 "en_n"。
 
@@ -601,92 +599,7 @@
 
 - 尽量减少不必要的数据类型转换，即 “类型强转”。关于 “类型强转”，要先看位数，低位数类型可以向高位数类型强转，而这个过程反过来的时候，高位数类型直接转换为低位数类型则高位会被丢弃，因此对于高位数类型的数值应该先取低八位/十六位/三十二位等，再强转，这样是比较安全和方便阅读。
 
-- 指针专题：
-
-  - 二阶指针的理解用 二维数组 或者 字符串数组 比较直观。对于 长度不一样的 多个 一维数组 常用 指针数组 定义，如 `char *str[]`定义缺省值个不等长的字符串，`int *var[6]`定义 6 个（6 行）不等长的整数数组，要么在定义时初始化其值，要么定义时不初始化然后在用的时候使用 malloc() 为其申请空间再幅值。初始化可以每一行不同长度，实际存储时候是 最大列数 对齐的，而非 初始化的数据 每一行 紧密排列。对于字符串 " "，编译会给每个字符串的尾部添加 '\0'。
-
-  - 一阶指针花样不多，下面是各种二次指针（二维数组、指针数组 与 数组指针、二阶指针）的传递总结：
-
-    ```c
-        /*  参考：https://blog.csdn.net/u013684730/article/details/46565577
-            实参                                     传递→       所匹配的形参
-    
-            数组的数组            char c[8][10];                 char (*)[10];          数组指针
-    
-            数组指针(行指针)      char (*c)[10];                 char (*c)[10];          自身类型
-    
-            指针数组              char *c[10];                   char **c;              指针的指针
-    
-            指针的指针            char **c;                      char **c;              自身类型
-        */
-    
-        /* 二维数组，实参 x[3][4]，可以传递的/所匹配的形参为 数组的指针 int (*p1)[4]; 即可以给 p1  */
-        int x[3][4] =       /* 3 行 4 列，编译器实际分配了 12 个 int 类型的空间 */
-        {                   /* x[n] 或 *(x + n) 为第 n 行头字节的指针，*(*(x + 2) + 3) 与 x[2][3] 等价 */
-            {1, 3,  5, 7},
-            {9, 11, 2, 4}, 
-            {6, 8, 10, 12}
-        };
-        
-        /* 数组的指针，实参为 int (*p1)[4]，可以传递的/所匹配的形参为 数组的指针 int (*p1)[4]; 即只可以传递给相同类型的 */
-        int (*p1)[4] = x;     /* int 型 array[4] 的指针 */
-    	
-        /* 指针数组，实参为 int *p2[3]，可以传递的/所匹配的形参为 二阶指针 int **p3;，即可以给 p3 */
-        int *p2[3] = {x[0], x[1], x[2]};    /* 3 个 int* 类型的变量组成的数组；取 二维数组 x 的每一行的头地址 幅值给 指针数组 */
-    	
-        /* 指向指针的指针，二阶指针 或叫 二维指针，实参为 int **p3，可以传递的/所匹配的形参为 二阶指针 int **p3; 即只可以传递给相同类型的 */
-        int **p3 = p2;    /* 或写为 int **p3 = &p2[0]; */
-    	
-        int k, m;
-        for(m = 0, k = 1; m < 3; m++, k++)
-        {
-            printf("p1[%d][%d] = %d\t",m,k,p1[m][k]);
-            printf("*(*(p1 + %d) + %d) = %d\n",m,k,*(*(p1 + m) + k));
-    
-            printf("p2[%d][%d] = %d\t",m,k,p2[m][k]);
-            printf("*(*(p2 + %d) + %d) = %d\n",m,k,*(*(p2 + m) + k));
-    
-            printf("p3[%d][%d] = %d\t",m,k,p3[m][k]);
-            printf("*(*(p3 + %d) + %d) = %d\n",m,k,*(*(p3 + m) + k));
-    
-            printf("\n");
-        }
-    
-    /* 打印结果：
-        p1[0][1] = 3    *(*(p1 + 0) + 1) = 3
-        p2[0][1] = 3    *(*(p2 + 0) + 1) = 3
-        p3[0][1] = 3    *(*(p3 + 0) + 1) = 3
-    
-        p1[1][2] = 2    *(*(p1 + 1) + 2) = 2
-        p2[1][2] = 2    *(*(p2 + 1) + 2) = 2
-        p3[1][2] = 2    *(*(p3 + 1) + 2) = 2
-    
-        p1[2][3] = 12   *(*(p1 + 2) + 3) = 12
-        p2[2][3] = 12   *(*(p2 + 2) + 3) = 12
-        p3[2][3] = 12   *(*(p3 + 2) + 3) = 12
-    */
-    
-    /* 综上可以总结：
-    	1、对于开辟空间填充数据，一种静态、一种动态：
-            静态：二维数组，定义时直接声明好静态空间大小，并实际占用这么大：
-                int x[3][4];
-            动态：指针数组，在定义后、使用前，要分别给每一个指针按需申请可大小不等的动态空间，使用后要释放空间 free()：
-                int *p2[3];
-                p2[0] = (int*)malloc(sizeof(int) * 10);
-                p2[1] = (int*)malloc(sizeof(int) * 20);
-                p2[2] = (int*)malloc(sizeof(int) * 30);
-    	
-    	2、而另外两种（数组的指针 int (*p1)[4]; 和 二阶指针 int **p3;）是用来承接前两种（二维数组 int x[3][4]; 和 指针数组 int *p2[3];）的地址的，如：
-    	数组的指针来承接二维数组的地址：（类比 一阶指针来承接一维数组的地址：char a[] = "abc"; char *a_p = a;）
-    		int x[3][4];
-    		int (*p1)[4] = x;
-        二阶指针来承接指针数组的地址：
-        	int *p2[3];
-        	int **p3 = p2;
-    */
-    ```
-  
-  - 
+- 关于指针相关灵活用法更多详见`实用技巧`一节里的 指针专题 部分。
 
 ### 关于结构体、枚举和类型定义形式（Structures, enumerations, typedefs）
 
@@ -735,7 +648,7 @@
   
   struct simple_struct simple, *simple0_p = &simple0; /* 定义结构体变量和其指针一对，并给指针赋值 */
   simple0_p->a = simple0.b;                           /* 取值，赋值 */
-  struct simple_struct simple1[10] =                  /* 结构体数组 */
+  struct simple_struct simple1[10] =                  /* 结构体数组定义，并赋值 */
   {
       {1, 2, 3},
       {3, 2, 1},
@@ -784,12 +697,12 @@
   
       {(unsigned int)XXX1_State_4,   fsm_XXX1_state_4_Fun,    1,{     {0,(unsigned int)XXX1_State_5    },    }},
   };
-  /*或者*/
+  /* 或者 */
   simple_struct_t simple = 
   {
-      .a = 4,
-      .b = 5,
-      .c = 0,
+      .a = 65530,
+      .b = 125,
+      .c = 1.0
   };
   ```
 
@@ -844,6 +757,23 @@
   可以看出 结构体里面的枚举，同一块区域内分别以 8 位和 16 位划分，
   以 8 位为最小单位接收，以 16 位为最小单位发送
   */
+  
+  /************************* 三、联合 和 结构体 + 位域 结合，可以访问一个字节的每一个 bit *************************/
+  typedef union
+  {
+      char Val;
+      struct __packed /* __packed 修饰，结构体字节对齐 */
+      {
+          char b0:1;
+          char b1:1;
+          char b2:1;
+          char b3:1;
+          char b4:1;
+          char b5:1;
+          char b6:1;
+          char b7:1;
+      } bits;
+  }BYTE_VAL, BYTE_BITS;
   ```
 
 
@@ -1082,16 +1012,227 @@
   GPIO_ORD GPIOA_ODR __attribute__((at(0x40020014))); /*  */
   ```
 
+- 指针专题：
+
+  - 若要修改一函数的局部变量的值那么请用一级指针，若要修改一局部变量一级指针的值那么用二级指针，以此类推。
+
+    ```c
+    /* 修改一函数的局部变量的值那么请用一级指针，这个好理解，举例 */
+    void set_to_five(int *val)
+    {
+        *val = 5;
+    }
+    
+    int main(void)
+    {
+        int value = 10;
+        printf("before - value = %d\n",value);
+        set_to_five(&value); /* 修改值，要传入其地址 */
+        printf("after - value = %d\n",value);
+    }
+    
+    /* 依上面类推，传递入地址才能修改值，因此修改一局部变量一级指针的值那么用二级指针，举例 */
+    int ten   = 10;
+    int five  = 5;
+    
+    void set_to_five(int **val)
+    {
+        *val = &five;
+    }
+    
+    int main(void)
+    {
+        int *value = &ten;
+        printf("before - *value = %d\n",*value);
+        test4(&value); /* 修改值，要传入其地址 */
+        printf("after - *value = %d\n",*value);
+    }
+    
+    /* 再一个例子，引用自：https://blog.csdn.net/c243311364/article/details/109619361 */
+    /* 正确的 */
+    void GetMemery(int **p) /* 修改外面的一个局部变量 *P，需要外面传入该局部变量的指针 即 **P */
+    {
+        /*申请1024个int大小*/
+        *p = malloc(sizeof(int)*1024);
+        if(NULL == *p)
+        {
+            printf("malloc failed\n");
+            *p = NULL;
+        }
+    }
+    int main(void)
+    {
+        int *p = NULL; /* 定义一个 局部变量 的 空指针（野指针） */
+        GetMemery(&p); /* 为其申请空间，即让其他函数修改 本函数中的局部变量的值，注意是传入 指针 p 的指针 */
+        printf("address of p is %p\n",p);
+        free(p);
+        p = NULL;
+        return 0;
+    }
+    
+    /* 错误的 */
+    #define SIZE 10
+    void EncryptUpdata(int *ctx)
+    {
+    	ctx = (int *)malloc(sizeof(int) * SIZE);
+    	return;
+    }
+    
+    int main() {
+    	int *ctx = NULL;
+    	EncryptUpdata(ctx); /* 其他函数无法直接修改本函数的局域变量的值 */
+    	UseCTX(ctx);
+    	return 0;
+    }
+    ```
+
+    一阶指针花样不多，下面是各种二次指针总结。
+
+  - 二阶指针的理解用 二维数组 或者 字符串数组 比较直观。对于 长度不一样的 多个 一维数组 常用 指针数组 定义，如 `char *str[]`定义缺省值个不等长的字符串，`int *var[6]`定义 6 个（6 行）不等长的整数数组，要么在定义时初始化其值，要么定义时不初始化然后在用的时候使用 malloc() 为其申请空间再幅值。初始化可以每一行不同长度，实际存储时候是 最大列数 对齐的，而非 初始化的数据 每一行 紧密排列。对于字符串 " "，编译会给每个字符串的尾部添加 '\0'。
+
+    ```c
+    /* 这里介绍一种 字符串数组 的定义方法，引自 https://mp.weixin.qq.com/s/TqNTMAY2gPUcoxlEYijBUw */
+    #define EINVAL 1
+    #define ENOMEM 2
+    #define EFAULT 3
+    
+    #define E2BIG 7
+    #define EBUSY 8
+    
+    #define ECHILD 12
+    
+    char *err_strings[] = {
+        [0] = "Success",
+        [EINVAL] = "Invalid argument",
+        [ENOMEM] = "Not enough memory",
+        [EFAULT] = "Bad address",
+        /* ... */
+        [E2BIG ] = "Argument list too long",
+        [EBUSY ] = "Device or resource busy",
+        /* ... */
+        [ECHILD] = "No child processes"
+        /* ... */
+    };
+    
+    /* 引用某一个字符串可以直接这样：err_strings[EFAULT] */
+    ```
+
+  - 各种二次指针（二维数组、指针数组 与 数组指针、二阶指针）的传递总结：
+
+    ```c
+    /*  参考：https://blog.csdn.net/u013684730/article/details/46565577
+            实参                                     传递→       所匹配的形参
+    
+            数组的数组            char x[3][4];                 char (*p1)[4];          数组指针
+    
+            数组指针(行指针)      char (*p1)[4];                 char (*p1)[4];          自身类型
+    
+            指针数组              char *p2[3];                   char **p3;             指针的指针
+    
+            指针的指针            char **p3;                      char **p3;            自身类型
+    */
+    
+    /* 二维数组，实参 x[3][4]，可以传递的/所匹配的形参为 数组的指针 int (*p1)[4]; 即可以给 p1  */
+    int x[3][4] =       /* 3 行 4 列，编译器实际分配了 12 个 int 类型的空间 */
+    {                   /* x[n] 或 *(x + n) 为第 n 行头字节的指针，*(*(x + 2) + 3) 与 x[2][3] 等价 */
+        {1, 3,  5, 7},  /* 值得一提，x、&x[0]、x[0]、&x[0][0] 是同一个地址，因此 *(*(x + 2) + 3) 与 x[2][3] 等价，均可用于索引 */
+        {9, 11, 2, 4}, 
+        {6, 8, 10, 12}
+    };
+    
+    /* 数组的指针，实参为 int (*p1)[4]，可以传递的/所匹配的形参为 数组的指针 int (*p1)[4]; 即只可以传递给相同类型的 */
+    int (*p1)[4] = x;     /* int 型 array[4] 的指针，即 p1 指向 一个包含 4 个 int 值的数组 */
+    /* 或写为
+    int (*p1)[4];
+    p1 = x;
+    */
+    /* 补充，因二维数组在存储空间中是对其每一行数据紧密排列串在一维地址索引的存储空间里，可以用一阶指针承接二维数组 x：int *p0 = x[0]; 此后索引二维数组 x 用 p0[n]，是一维的，用地址偏移索引，
+        比如 *(p0 + i*4 + j) 等价于 p0[i*4 + j] 等价于 x[i][j] （4 是 数组 x 的列数） */
+    
+    /* 指针数组，实参为 int *p2[3]，可以传递的/所匹配的形参为 二阶指针 int **p3;，即可以给 p3 */
+    int *p2[3] = {x[0], x[1], x[2]};    /* 3 个 int* 类型的变量组成的数组；取 二维数组 x 的每一行的头地址 幅值给 指针数组 */
+    /* 或写为
+    int *p2[3];
+    for(int i = 0;i < 3;i++)
+    	p2[i] = x[i];
+    */
+    
+    /* 指向指针的指针，二阶指针 或叫 二维指针，实参为 int **p3，可以传递的/所匹配的形参为 二阶指针 int **p3; 即只可以传递给相同类型的 */
+    int **p3 = p2;    /* 实际上 int **p3 和 *p3[] 是等价的 */
+    /* 
+    或写为 
+    int **p3 = &p2[0];
+    
+    或写为
+    int **p3;
+    p3 = p2;
+    */
+    
+    int k, m;
+    for(m = 0, k = 1; m < 3; m++, k++)
+    {
+        printf("p1[%d][%d] = %d\t",m,k,p1[m][k]);
+        printf("*(*(p1 + %d) + %d) = %d\n",m,k,*(*(p1 + m) + k));
+    
+        printf("p2[%d][%d] = %d\t",m,k,p2[m][k]);
+        printf("*(*(p2 + %d) + %d) = %d\n",m,k,*(*(p2 + m) + k));
+    
+        printf("p3[%d][%d] = %d\t",m,k,p3[m][k]);
+        printf("*(*(p3 + %d) + %d) = %d\n",m,k,*(*(p3 + m) + k));
+    
+        printf("\n");
+    }
+    
+    /* 打印结果：
+        p1[0][1] = 3    *(*(p1 + 0) + 1) = 3
+        p2[0][1] = 3    *(*(p2 + 0) + 1) = 3
+        p3[0][1] = 3    *(*(p3 + 0) + 1) = 3
+    
+        p1[1][2] = 2    *(*(p1 + 1) + 2) = 2
+        p2[1][2] = 2    *(*(p2 + 1) + 2) = 2
+        p3[1][2] = 2    *(*(p3 + 1) + 2) = 2
+    
+        p1[2][3] = 12   *(*(p1 + 2) + 3) = 12
+        p2[2][3] = 12   *(*(p2 + 2) + 3) = 12
+        p3[2][3] = 12   *(*(p3 + 2) + 3) = 12
+    */
+    
+    /* 综上可以总结：
+    	1、对于开辟空间填充数据，一种静态、一种动态：
+            静态：二维数组，定义时直接声明好静态空间大小，并实际占用这么大：
+                int x[3][4];
+            动态：指针数组，在定义后、使用前，要分别给每一个指针按需申请可大小不等的动态空间，使用后要释放空间 free()：
+                int *p2[3];
+                p2[0] = (int*)malloc(sizeof(int) * 10);
+                p2[1] = (int*)malloc(sizeof(int) * 20);
+                p2[2] = (int*)malloc(sizeof(int) * 30);
+    	
+    	2、而另外两种（数组的指针 int (*p1)[4]; 和 二阶指针 int **p3;）是用来承接前两种（二维数组 int x[3][4]; 和 指针数组 int *p2[3];）的地址的，如：
+            数组的指针来承接二维数组的地址：（类比 一阶指针来承接一维数组的地址：char a[] = "abc"; char *a_p = a;）
+                int x[3][4];
+                int (*p1)[4] = x;
+            二阶指针来承接指针数组的地址：
+                int *p2[3];
+                int **p3 = p2;
+    */
+    ```
+
+  - etc...
+
 - 关于连接符 “#” 和 “##” 的使用说明，这两个都是预处理命令。
 
   ```c
   /*  ## 左右语句原样连接符（concatenator）
-      hello##world 就是 helloworld，直接原样拼接，这并不是字符串，而是预编译时候的字符的替换和拼接 */
+      hello##world 就是 helloworld，直接原样拼接，这并不是字符串，而是预编译时候的程序的字符的替换和拼接 */
   /* 例1： */
   #define A(x)  T_##x
   int A(1) = 10; /* 等效于int T_1 = 10; */
   
-  /*  # 转字符串符，字符串化操作（Stringfication） */
+  /* 拼接 字符串（字符串变量 或者 程序的字符） */
+  #define COMB(str1,str2) str1##str2
+  printf("%s\n", COMB(UART, 1));
+  
+  /*  # 转字符串符，字符串化操作（Stringfication），即将跟在 # 后面的 参数 转成一个 字符串常量 */
   /* 例2： */
   #define WARN_IF(EXP)               \
       do{                            \
@@ -1100,13 +1241,16 @@
   WARN_IF(int devide = 0;);
   /* 会打印：Waring:int devide = 0; */
   
+  #define STR(s) #s
+  printf("%s\n", STR(3.1415));
+  
   /* 例3： */
   #define paster( n ) printf( "token" #n " = %d", token##n )
   paster( 9 )   /* 即 printf( "token" "9" " = %d", token9 ); */
   
   /* 字符串连接，多个双引号的字符串放在一块就是了 */
   printf( "token" "9" " = %d", token9 );
-   fd = open( PATH "/file",flags );
+  fd = open( PATH "/file",flags );
   ```
 
 - 变长参数函数定义的使用说明。变长参数函数性能比较低而且难维护，非必要不建议使用。
@@ -1148,47 +1292,6 @@
   #define debug(format, ...) fprintf(stdout, format, __VA_ARGS__)  
   #define debug(format, args...) fprintf(stdout, format, args) 
   ```
-
--   若要修改函数的局部变量的值那么请用一级指针，若要修改局部变量一级指针的值那么用二级指针，以此类推。
-
-    ```c
-    /* 引用自：https://blog.csdn.net/c243311364/article/details/109619361 */
-    /* 正确的 */
-    void GetMemery(int **p)
-    {
-        /*申请1024个int大小*/
-        *p = malloc(sizeof(int)*1024);
-        if(NULL == *p)
-        {
-            printf("malloc failed\n");
-            *p = NULL;
-        }
-    }
-    int main(void)
-    {
-        int *p = NULL; /* 定义一个 局部变量 的 空指针（野指针） */
-        GetMemery(&p); /* 为其申请空间，即让其他函数修改 本函数中的局部变量的值，注意是传入 指针 p 的指针 */
-        printf("address of p is %p\n",p);
-        free(p);
-        p = NULL;
-        return 0;
-    }
-    
-    /* 错误的 */
-    #define SIZE 10
-    void EncryptUpdata(int *ctx)
-    {
-    	ctx = (int *)malloc(sizeof(int) * SIZE);
-    	return;
-    }
-    
-    int main() {
-    	int *ctx = NULL;
-    	EncryptUpdata(ctx); /* 其他函数无法直接修改本函数的局域变量的值 */
-    	UseCTX(ctx);
-    	return 0;
-    }
-    ```
 
 - C 有一个鲜为人知的运算符叫 ”趋向于”（ “-->” ）。
 
@@ -1502,6 +1605,9 @@ OS Kernel，游戏引擎，编译器之类的，会用到不少 C 语言的黑�
 unsigned int program_flag = 0xAABBCCDD;
 PRINT_HEX_VAR(program_flag);
 
+/* 返回数组元素的个数 */
+#define ARR_SIZE( a ) ( sizeof( (a) ) / sizeof( (a[0]) ) )
+
 /* 打印一个数组 */
 #define ARR_SIZE(arr)               (sizeof(arr)/sizeof(*arr)) // 返回数组元素的个数
 #define PRINT_DIGIT_ARR(arr)    do{\
@@ -1552,8 +1658,8 @@ printf("xx=%f, yy=%f\n",xx,yy);
     (ray)[0] = ((val) / 256); \
     (ray)[1] = ((val) & 0xFF)
 
-/* 得到一个字的高位和低位字节 */
-#define WORD_LO(xxx) ((unsigned char) ((unsigned short)(xxx) & 255))
+/* 得到一个字（这里以16位为例）的高位和低位字节 */
+#define WORD_LO(xxx) ((unsigned char) ((unsigned short)(xxx) & 0xff))
 #define WORD_HI(xxx) ((unsigned char) ((unsigned short)(xxx) >> 8))
 
 /* 返回一个比X大的最接近8的倍数的数 */
@@ -1562,21 +1668,24 @@ printf("xx=%f, yy=%f\n",xx,yy);
 /* 将一个字母转换为大写 */
 #define UPCASE( c ) ( ((c) >= 'a' && (c) <= 'z') ? ((c) - 0x20) : (c) )
 
-/* 判断一个字符是不是10进制的数字 */
+/* 判断一个字符是不是10进制的数字字符 */
 #define DECCHK( c ) ((c) >= '0' && (c) <= '9')
 
-/* 判断一个字符是不是16进制的数字 */
+/* 判断一个字符是不是16进制的数字字符 */
 #define HEXCHK( c ) ( ((c) >= '0' && (c) <= '9') ||\
                       ((c) >= 'A' && (c) <= 'F') ||\
                       ((c) >= 'a' && (c) <= 'f') )
 
-/* 带防止溢出数据类型最大值的自加一 */
-#define INC_SAT( val ) (val = ((val)+1 > (val)) ? (val)+1 : (val))
+/* 数值自加一，并带防止溢出 */
+#define INC_SAT( val ) (val = ((val) + 1 > (val)) ? (val) + 1 : (val))
 
 /* 圆周率 */
 #define M_PI  3.14159265358979323846f
+/* 本文作者整个活，背个圆周率100位
+3.1415926 5358 9793 23846 26433 83279 502 884 1971 693 9937510 582 0974944 592 3078164 062 8620899 86280 3482534 2117067 9
+*/
 
-/* 在编译时就能够进行条件检查的断言，而不是在运行时进行。下面是个Linux Kernel的例子 */
+/* 在编译时就能够进行条件检查的断言，而不是在运行时进行。下面是个 Linux Kernel 中的例子 */
 #define BUILD_BUG_ON_ZERO(e)  (sizeof(struct{int : -!!(e);}))
 #define BUILD_BUG_ON_NULL(e)  ((void*)sizeof(struct{int : -!!(e);}))
 /* Force a compilation error if condition is true */
@@ -1604,7 +1713,12 @@ __TIME__		表示编译时的 时:分:秒 字符串信息
 __STDC__		如果实现是标准的，则是十进制常量1，否则为其他
 
 如下面，Debug 时输出文件名、行号、函数名等 */
-#define DEBUG_INFO() fprintf(stderr,"[DEBUG]%s:%d %s\n", __FILE__, __LINE__, __FUNCTION__)
+#ifdef _DEBUG
+	#define DEBUGMSG(msg,date) printf(msg);printf(“%d%d%d”,date,_LINE_,_FILE_)
+	/* 或可以打印 printf([DEBUG]%s:%d %s\n", __FILE__, __LINE__, __FUNCTION__);*/
+#else
+	#define DEBUGMSG(msg,date)
+#endif
 
 /* 参考 https://blog.csdn.net/cleverhorse/article/details/84655543
    将编译时间转换为int类型作为时间戳 __DATE__ __TIME__ 转INT类型
@@ -1837,7 +1951,8 @@ extern "C" {
 4. [20个成熟软件中常用的宏定义](https://jishuin.proginn.com/p/763bfbd35604)。[ST HAL](https://www.stmcu.com.cn/)。[知乎问题页：程序员们有什么好的编程习惯？](https://www.zhihu.com/question/440136872)。
 5. 【正点原子】嵌入式Linux C代码规范化V1.0。
 6. 本文作者长期摸索的经验。
-7. 其他。
+7. 很多 引用 的源头难考（或 中文互联网 低质量的抄来抄去的 根本就不可考源头）就没有写引用，侵删。
+8. 其他。
 
 这是 ZLG致远电子 在2018年的一篇肺腑文章：
 
