@@ -252,6 +252,7 @@
 
 ## 相关有趣/耐看书或视频
 
+- [13 万字 C 语言从入门到精通保姆级教程2021 年版_极客江南的博客-CSDN博客](https://blog.csdn.net/weixin_44617968/article/details/117656810)。
 - ~~[《算法新解》开源书](https://github.com/liuxinyu95/AlgoXY)。~~《啊哈！算法》。
 - 图解系统 小林。图解网络 小林。
 - [趣谈网络协议](https://book.douban.com/subject/35013753/)。
@@ -272,14 +273,16 @@
 
 1. 第一条，请您重视编写规范！可以有代码洁癖。
 
-2. 使用 C99 标准（某些仅支持 C98 的 IDE 除外）。
+2. 参考 “**10 大厂规范和名设计模式**” 一节里面的更全面的规范总结，这里只点到有限的部分。
 
-3. 一个 tab 四个空格（对于 Vscode、Notepad、Eclipse、Vim 和 MDK/Keil、IAR 等编辑器，都应该设置按一下 tab 为输入四个空格，这样文本样式在不同编辑器里打开尽量不会乱）。
+3. 使用 C99 标准（某些仅支持 C98 的 IDE 除外）。
 
-4. 运算符前后空一格，给函数传递的多个变量之间在逗号后空一格，一元操作符后不要加空格，例子如下。
+4. 一个 tab 四个空格（对于 Vscode、Notepad、Eclipse、Vim 和 MDK/Keil、IAR 等编辑器，都应该设置按一下 tab 为输入四个空格，这样文本样式在不同编辑器里打开尽量不会乱）。
+
+5. 运算符前后空一格，给函数传递的多个变量之间在逗号后空一格，一元操作符后不要加空格，例子如下。
 
    ```c
-   for(i = 0 , tempNum += 3; i < 6; ++i)    /* i，永远滴神 */ /* for(i = 0; i < 6; ++i) 这么写是循环 6 次，可以记住 */
+   for(i = 0 , tempNum += 3; i < 6; ++i)    /* i，j，k 永远滴神 */ /* for(i = 0; i < 6; ++i) 这么写是循环 6 次，可以记住 */
        tempNum = tempNum + 3,
        tempNum += 3;
    int32_t tempNum = sys_example_sum(4, 3);
@@ -292,7 +295,7 @@
    /* 用 3 这个数字代替洋文 three 了解了吗 */
    ```
 
-6. 关于命名。
+7. 关于命名。
 
    - 文件统一采用小写命名。
 
@@ -310,7 +313,7 @@
 
    - 关于函数、变量、宏定义等的命名看 `5 具体各部分的规范形式`章节。
 
-7. 控制语句总加括号（即使分支执行语句只有一句），成对的括号要在竖方向上对齐，用 tab 把层次分地清清楚楚，例子如下（为了节省空间，下面示例用横向写~）。
+8. 控制语句总加括号（即使分支执行语句只有一句），成对的括号要在竖方向上对齐，用 tab 把层次分地清清楚楚，例子如下（为了节省空间，下面示例用横向写~）。
 
    ```c
    if( )             for (i = 0; i < 6; ++i)    do                switch (check()) 
@@ -329,9 +332,9 @@
    - 对于多个条件的 “与”、“或” 等操作，应该将每一个条件都用括号括起来，层次分明，如：`if ( ( (c == ' ') || (c== '\n') ) && (b == '\t') ){;}`。
    - 分支控制语句要写明所有分支情况，每一个条件都有明确的去向，对于 if 必带 else，对于 switch 必带 default，诸如此类。
 
-8. 无限循环尽量用 `for(;;)` 替代 `while(1)` 等；条件循环语句用后者。
+9. 无限循环尽量用 `for(;;)` 替代 `while(1)` 等；条件循环语句用后者。
 
-9. 层次分明，多用 tab 划分层次关系（预编译部分代码也不例外），例子如下。
+10. 层次分明，多用 tab 划分层次关系（预编译部分代码也不例外），例子如下。
 
    ```c
    #ifdef _DEBUG
@@ -341,24 +344,24 @@
    #endif
    ```
 
-10. 长运算语句尽量多的用括号（每一步运算都用括号括起来），并做好空格增加可读性，例子如下。
+11. 长运算语句尽量多的用括号（每一步运算都用括号括起来），并做好空格增加可读性，例子如下。
 
     ```c
     temp = ( 0x7F << ((xByte - 1) * 8) );
     #define MAX( x, y ) ( ((x) > (y)) ? (x) : (y) )
     ```
 
-11. 用 `if (check_func()) { ... }` 代替 `if (check_func() == 1)`，判断是否为 '0' 可以用后者的写法（即`check_func() == 0 或 NULL`，或者用 `!check_func()`），判断 '1' 用前者写法。
+12. 用 `if (check_func()) { ... }` 代替 `if (check_func() == 1)`，判断是否为 '0' 可以用后者的写法（即`check_func() == 0 或 NULL`，或者用 `!check_func()`），判断 '1' 用前者写法。
 
-12. 判断指针是否为空只用 "NULL"，即 `void *ptr0, *ptr1; if ( (ptr0 == NULL) || (ptr1 != NULL) ) { ... }`。
+13. 判断指针是否为空只用 "NULL"，即 `void *ptr0, *ptr1; if ( (ptr0 == NULL) || (ptr1 != NULL) ) { ... }`。
 
-13. 不用变长数组，用内存分配释放函数 `malloc()` 和 `free()`。
+14. 不用变长数组，用内存分配释放函数 `malloc()` 和 `free()`。
 
-14. 大块内存请使用内存管理。
+15. 大块内存请使用内存管理。
 
-15. 尽量减少数据传输过程中的拷贝，对于全局变量的字符串、数组和结构体等，采用传递指针的方式。
+16. 尽量减少数据传输过程中的拷贝，对于全局变量的字符串、数组和结构体等，采用传递指针的方式。
 
-16. 文件操作中 open  和 close 成对使用，内存管理 malloc 和 free 成对使用。
+17. 文件操作中 open  和 close 成对使用，内存管理 malloc 和 free 成对使用。
 
 18. 关于源文件、头文件和变量作用域等。[头文件里的大学问，C语言需要注意这些原则... (qq.com)](https://mp.weixin.qq.com/s/UxPdi4-07jonPsJgeSfWow)。
 
@@ -405,6 +408,8 @@
 ------
 
 ## 5 具体各部分的规范形式
+
+参考 “**10 大厂规范和名设计模式**” 一节里面的更全面的规范总结，这里只点到有限的部分。
 
 ### 关于函数定义形式（Functions）
 
@@ -1994,7 +1999,7 @@ extern "C" {
 
 以下强烈建议空闲时认真学一学。
 
-### 大厂规范
+### 大厂 / 名家规范
 
 1. [Google 开源项目风格指南——中文版 — Google 开源项目风格指南 (zh-google-styleguide.readthedocs.io)](https://zh-google-styleguide.readthedocs.io/en/latest/)。
 2. *华为 C语言编程规范*
@@ -2004,6 +2009,7 @@ extern "C" {
 3. [Qihoo360/safe-rules: 详细的C/C++编程规范指南，由360质量工程部编著，适用于桌面、服务端及嵌入式软件系统。 (github.com)](https://github.com/Qihoo360/safe-rules)。
 4. *[MISRA C Coding Standard](https://www.misra.org.uk/Publications/tabid/57/Default.aspx)*。
 5. [Linux CodingStyle] Linux 内核源代码目录下的 Documentation/CodingStyle 文件。中文：[Linux 内核代码风格 — The Linux Kernel documentation](https://www.kernel.org/doc/html/latest/translations/zh_CN/process/coding-style.html)。
+6. [嵌入式软件编程规范 (qq.com)](https://mp.weixin.qq.com/s/vzydChjPtwUP_wtk1GHpGQ)，对文件架构、函数、变量等的规范均有涉及。
 
 ### 设计定律、原则和模式
 

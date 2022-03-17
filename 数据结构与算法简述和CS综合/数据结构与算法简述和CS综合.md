@@ -19,43 +19,6 @@
 
 ------
 
-## IT 学习路线
-
-1. C语言基础（看书、B站等均可） →
-2. C语言三剑客：《C和指针》、《C陷阱与缺陷》和《C专家编程》，经典永流传 →
-3. 数据结构与算法（线性表/树/图/哈希 + 排序/搜索/规划等等等 按需学） →
-4. 计算机专业学科看。《计算机组成原理》/《计算机体系结构》；《计算机操作系统》/《现代操作系统》/《深入理解计算机系统》；可选《编译原理》、《深入分析GCC》；网络协议如《计算机网络》、《TCP-IP详解卷一/卷二/卷三》等 →
-5. 可选 《CPU自制入门》 →
-6. 走向：嵌入式 Linux 方向、FPGA / 芯片设计 / 验证方向、具体某算法方向（如 CV、ML、DL）等等。
-
-更多学习路线可详细参考 [rd2coding/Road2Coding: 编程之路 (github.com)](https://github.com/rd2coding/Road2Coding) 的总结，比较全面了。
-
-## 相关坚韧大厚书
-
-没给出链接的 网搜名字即可。
-
-- [哪本《数据结构与算法》最好？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/21628833) 该回答列举了一些不错的数据结构与算法方面的书籍。
-- 《算法导论》（经典）是计算机学科的算法入门书。
-- 《计算机体系结构》（经典），《计算机操作系统》/《现代操作系统》/《深入理解计算机系统》。
-- 《编码的奥秘》，相关介绍/推荐 [想练习《编码的奥秘》里面的知识，有什么软件有帮助？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/28223767)。《编译原理》（经典），《深入分析GCC》。
-- 网络协议如《计算机网络》、《TCP-IP详解卷一/卷二/卷三》，[ 想深入了解 HTTP 协议，有哪些值得推荐的书籍？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/19722062)。
-- 嵌入式应用相关：《GNU Make》，《Debugging with GDB》，《Linux 高级程序开发》，《POSIX 多线程程序设计》，《嵌入式Linux基础教程》，《嵌入式Linxu应用开发完全手册》，《嵌入式Linxu应用程序开发详解》。
-- 嵌入式底层相关：内核相关：《深入理解Linux内核》，《Linux内核源代码情景分析》，《Linux内核设计与实现》；驱动相关：《Linux设备驱动程序》，《Linux设备驱动开发详解》，《Linux驱动开发入门与实践》。
-
-## 相关有趣/耐看书或视频
-
-- ~~[《算法新解》开源书](https://github.com/liuxinyu95/AlgoXY)。~~《啊哈！算法》。
-- 图解系统 小林。图解网络 小林。
-- [趣谈网络协议](https://book.douban.com/subject/35013753/)。
-- 手绘图解HTTP。30张图解HTTP常见面试题。
-- [TCP/IP 教程 | 菜鸟教程 (runoob.com)](https://www.runoob.com/tcpip/tcpip-tutorial.html)。[HTTP 教程 | 菜鸟教程 (runoob.com)](https://www.runoob.com/http/http-tutorial.html)。
-- [《嵌入式C语言的自我修养》](https://book.douban.com/subject/35446929/) 从沙子讲到CPU，从编辑器讲到编译器，从高阶C语言讲到内存管理，从GNU讲到多任务编程。
-
-
-
-- [（完结）（小甲鱼）数据结构和算法_ 哔哩哔哩 _bilibili](https://www.bilibili.com/video/BV1os41117Fs)。
-- [国嵌唐老师主讲【数据结构与算法C语言】（非常犀利）_ 哔哩哔哩 _bilibili](https://www.bilibili.com/video/BV1eK4y1J7zh) 讲的慢。
-
 ## 时间、空间复杂度
 
 时间复杂度表示一个算法内执行语句的数量在最坏的情况下随着循环次数 n 的增加而增长的数量级。一个算法内语句的使用次数（频度）表示为 f(n)，n 为算法内循环语句的循环数，n 的变化直接改变 整个算法的语句使用次数；时间复杂度 O(g(n)) 的定义为，对于一个算法，当且仅当存在正整数 c 和 n0，使得 f(n) ≤ cg(n) 对于所有 n ≥ n0 成立，则该算法的渐进时间复杂度为 f(n) = O(g(n))，g(n) 为 n 的函数。
@@ -73,6 +36,7 @@
 ### 数据结构学习网站推荐
 
 - [数据结构部分简介 - OI Wiki (oi-wiki.org)](https://oi-wiki.org/ds/)。
+- [算法入门教程（多语言实现） (biancheng.net)](http://c.biancheng.net/algorithm/)。
 
 ### 基本概念
 
