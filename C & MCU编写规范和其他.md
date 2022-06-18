@@ -1,11 +1,15 @@
-# C & MCU 编写规范和其他（coding style and more）
+# C & MCU 编写规范和技巧（coding style and more）
 
 <p align="center">
     <img src="assets/CC-BY-NC-SA-4.0-88x31.png" alt="CC BY-NC-SA 4.0 88x31"  />
 </p>
 ***p.s 温馨提示：点个 star 收藏一下回头慢慢看；或者下(白)载(嫖)下来，在 Typora 中阅读；或者在  [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)  阅读。一个人整理不易，此文如此丰富不值忘记 star。***
 
-本文系广泛撷取、借鉴和整理，侵删。本文适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！
+本文系广泛撷取、借鉴和整理，侵删。本文适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！本文已经是长期积累和堆叠而形成一定规模，不必按照从前到后的顺序去看，可以挑感兴趣的章节去看。
+
+本文内容较多，推荐从 `4 普适规则（General rules）` 一节开始看起。
+
+本文对应的 [Github](https://github.com/Staok/coding-style-and-more)/[Gitee](https://gitee.com/staok/coding-style-and-more) 仓库地址，本文最新的原文 和 一些源码、备查手册等等 均放在里面。
 
 ------
 
@@ -663,7 +667,7 @@
       MY_ENUM_LAST
   }my_enum_t;
   
-  /* 两种枚举使用，一个作为形参，一个作为返回值 */
+  /* 定义一个函数，使用两种枚举，一个作为形参，一个作为返回值 */
   enum errType_enum sys_process_hello(my_enum_t my_para);
   
   /************************* 结构体定义 *************************/
@@ -1252,7 +1256,7 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
   Periph_x->UCR1 |= (1 << 2);
   ```
 
-- 使用 结构体 的 位带 来直接对 bit 进行操作。引自 [推荐一种超简单的硬件位带bitband操作方法，让变量，寄存器控制，IO访问更便捷，无需用户计算位置 (qq.com)](https://mp.weixin.qq.com/s?__biz=MzAxNDMxNDU5Ng==&mid=2650385272&idx=1&sn=4db70f486f457f35c541e989d54d9d51&chksm=83983673b4efbf65a491b3ec230f513ea99d418792fb55cecf88383ad46281d7d38e4f9079b1&scene=21#wechat_redirect)。[《安富莱嵌入式周报》第243期：2021.12.06--2021.12.12 (qq.com)](https://mp.weixin.qq.com/s/tnNgk_atZy3lxbxIwtM8xg) 里面 3 硬件位带 小节有订正。
+- 使用 结构体 的 位带 来直接对 bit 进行操作。引自 [推荐一种超简单的硬件位带bitband操作方法，让变量，寄存器控制，IO访问更便捷，无需用户计算位置 (qq.com)](https://mp.weixin.qq.com/s?__biz=MzAxNDMxNDU5Ng==&mid=2650385272&idx=1&sn=4db70f486f457f35c541e989d54d9d51&chksm=83983673b4efbf65a491b3ec230f513ea99d418792fb55cecf88383ad46281d7d38e4f9079b1&scene=21#wechat_redirect)。[《安富莱嵌入式周报》第243期：2021.12.06--2021.12.12 (qq.com)](https://mp.weixin.qq.com/s/tnNgk_atZy3lxbxIwtM8xg) 里面 `3 硬件位带` 小节有订正。
 
   ```c
   typedef struct {
@@ -1267,7 +1271,7 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
   GPIO_ORD GPIOA_ODR __attribute__((at(0x40020014))); /*  */
   ```
 
-- 指针专题：
+- **指针专题**
 
   - 若要修改一函数的局部变量的值那么请用一级指针，若要修改一局部变量一级指针的值那么用二级指针，以此类推。
 
@@ -1524,6 +1528,8 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
   printf( "token" "9" " = %d", token9 );
   fd = open( PATH "/file",flags );
   ```
+
+  更多 [C 语言 #、##、__VA_ARGS__、#__VA_ARGS__、##__VA_ARGS__ ~ Murphy's Blog](https://murphy.tech/posts/40137057.html)。
 
 - 变长参数函数定义的使用说明。变长参数函数性能比较低而且难维护，非必要不建议使用。
 
@@ -1844,6 +1850,11 @@ OS Kernel，游戏引擎，编译器之类的，会用到不少 C 语言的黑�
 - [C PUZZLES, Some interesting C problems (gowrikumar.com)](http://www.gowrikumar.com/c/index.php)，C programming questions/puzzles，做了这些题，会学到很多的奇技。
 - [code (uguu.org)](http://uguu.org/sources.html)，可编译的源码字符画；[C 语言有什么奇技淫巧？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/27417946/answer/36555570)，源码字符画 CP。
 
+### C 语言面向对象实现
+
+- [lw_oopc（C语言的面向对象） - robert_cai - 博客园 (cnblogs.com)](https://www.cnblogs.com/robert-cai/archive/2013/12/04/3456785.html)，作者做了大量的工作实现了 c 语言的封装、多态、继承这三种面向对象特征，还实现了所谓的虚函数。[OOPC-C面向对象 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/25997811)。
+- [C语言的高级用法，面向对象 (qq.com)](https://mp.weixin.qq.com/s/cwl4o-JJ0ZmLaq77_80A_w)。
+
 ### 用 C 实现高阶特性
 
 - 将 C 语言变成支持动态类型的函数式编程语言，[Cello • High Level C (libcello.org)](http://libcello.org/)。
@@ -1852,17 +1863,141 @@ OS Kernel，游戏引擎，编译器之类的，会用到不少 C 语言的黑�
 
   受 Python 等高级语言的启发，实现了通用数据结构/动态函数/类等等，比较全和丰富。
 
-- [lw_oopc（C语言的面向对象） - robert_cai - 博客园 (cnblogs.com)](https://www.cnblogs.com/robert-cai/archive/2013/12/04/3456785.html)，作者做了大量的工作实现了 c 语言的封装、多态、继承这三种面向对象特征，还实现了所谓的虚函数。[OOPC-C面向对象 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/25997811)。
-
 - [C 语言有什么奇技淫巧？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/27417946/answer/1412733677)，介绍 Morn 库，用 C 实现 “函数重载” 和 “泛型”。
+
+### 字符画生产工具/注释的图形化描述
+
+**字符画生成/集子**
+
+- [Asciiworld.com : Pictures of Ascii Art !](http://www.asciiworld.com/index.html)。
+
+- [在线生成ascii字符画网站字符图案在线生成工具_JaneYork的博客-CSDN博客_字符画生成器](https://blog.csdn.net/qq_31708763/article/details/119712041)。
+
+  - 根据文字生成字符画：
+    http://patorjk.com/software/taag。可以生成超多的类型的文字字符画。我的 [这个项目](https://gitee.com/staok/stm32_framework) 的 README 的开头标题字符画就是在这里生成的。
+    http://www.network-science.de/ascii/。
+  - 根据图片生成字符画：
+    http://www.degraeve.com/img2txt.php。
+    http://life.chacuo.net/convertphoto2char。
+- 图片转字符画软件 ASCIIGenerator。可调节图片明暗和对比度等等，可以自定义生成字符画的字符，可以导出彩色字符画，可以导出字符画 文本或图片，可以批量导出！
+
+**注释的图形化描述**
+
+- 下面几个网站的展示在这里 [自动生成代码注释的工具，用上头了！ (qq.com)](https://mp.weixin.qq.com/s/m4U-tluPIaQ_SzxOcAEN3w)。
+
+- JavE [JavE - Java Ascii Versatile Editor](http://www.jave.de/)。插画字符画。
+
+  <img src="assets/jave.de.png" alt="jave.de" style="zoom: 80%;" />
+
+- AACircuit [AACircuit - Willkommen bei www.tech-chat.de (josoansi.de)](https://josoansi.de/download.php)。原理图字符画。
+
+  ![Screenshot AACircuit 1.28](assets/AACircuit.jpg)
+
+- CodePlotter [CodePlotter 1.6 - Add and edit diagrams in your code with this 'Visio-like' tool - CodeProject](https://www.codeproject.com/Articles/4514/CodePlotter-1-6-Add-and-edit-diagrams-in-your-code)。
+
+  ![CodePlotter](assets/CodePlotter.jpeg)
+
+- [ASCIIFlow](https://asciiflow.com/#/)。手画生成字符画。
+
+  比如生成下面状态图的字符画，用于清晰的展现状态机的状态图设计。引自 [我的这个项目](https://gitee.com/staok/stm32_framework) 里面 fsm.c 文件里的注释。
+
+  ```c
+  /*状态图示例：
+  +-------------------+
+  |                   |e
+  v  b        d       +
+  1+------.2+------.3
+  +         +         ^
+  |         |c        |g
+  |a        v  f      +
+  |         4+------.5
+  |                   ^
+  |                   |
+  +-------------------+   */
+  ```
 
 ------
 
 ## 9 C 组件收集-学习或实用
 
 - Github & Gitee 等 上面 有很多 “轮子”。
+
 - [有哪些值得推荐的小型 C 语言开源项目？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/20792016/answer/2246289103)。
-- ...
+
+- [C 语言内存 dump 函数 ~ Murphy's Blog](https://murphy.tech/posts/de9ea2d9.html)，引到下面：
+
+  > ```c
+  > #define __is_print(ch) ((unsigned int)((ch) - ' ') < 127u - ' ')
+  > 
+  > /**
+  >  * dump_hex
+  >  * 
+  >  * @brief dump data in hex format
+  >  * 
+  >  * @param buf: User buffer
+  >  * @param size: Dump data size
+  >  * @param number: The number of outputs per line
+  >  * 
+  >  * @return void
+  > */
+  > void dump_hex(const uint8_t *buf, uint32_t size, uint32_t number)
+  > {
+  >     int i, j;
+  > 
+  >     for (i = 0; i < size; i += number)
+  >     {
+  >         printf("%08X: ", i);
+  > 
+  >         for (j = 0; j < number; j++)
+  >         {
+  >             if (j % 8 == 0)
+  >             {
+  >                 printf(" ");
+  >             }
+  >             if (i + j < size)
+  >                 printf("%02X ", buf[i + j]);
+  >             else
+  >                 printf("   ");
+  >         }
+  >         printf(" ");
+  > 
+  >         for (j = 0; j < number; j++)
+  >         {
+  >             if (i + j < size)
+  >             {
+  >                 printf("%c", __is_print(buf[i + j]) ? buf[i + j] : '.');
+  >             }
+  >         }
+  >         printf("\n");
+  >     }
+  > }
+  > 
+  > /* 测试代码 */
+  > int main(void)
+  > {
+  >     uint8_t i, buff[128];
+  > 
+  >     for (i = 0; i < sizeof(buff); i++)
+  >     {
+  >         buff[i] = i;
+  >     }
+  > 
+  >     dump_hex((const uint8_t *)buff, sizeof(buff), 16);
+  >     return 0;
+  > }
+  > 
+  > /* 测试效果 */
+  > 00000000:  00 01 02 03 04 05 06 07  08 09 0A 0B 0C 0D 0E 0F  ................
+  > 00000010:  10 11 12 13 14 15 16 17  18 19 1A 1B 1C 1D 1E 1F  ................
+  > 00000020:  20 21 22 23 24 25 26 27  28 29 2A 2B 2C 2D 2E 2F   !"#$%&'()*+,-./
+  > 00000030:  30 31 32 33 34 35 36 37  38 39 3A 3B 3C 3D 3E 3F  0123456789:;<=>?
+  > 00000040:  40 41 42 43 44 45 46 47  48 49 4A 4B 4C 4D 4E 4F  @ABCDEFGHIJKLMNO
+  > 00000050:  50 51 52 53 54 55 56 57  58 59 5A 5B 5C 5D 5E 5F  PQRSTUVWXYZ[\]^_
+  > 00000060:  60 61 62 63 64 65 66 67  68 69 6A 6B 6C 6D 6E 6F  `abcdefghijklmno
+  > 00000070:  70 71 72 73 74 75 76 77  78 79 7A 7B 7C 7D 7E 7F  pqrstuvwxyz{|}~.
+  > ```
+
+- .etc
 
 ------
 
@@ -2002,7 +2137,9 @@ extern "C" {
 最后加一个 COPYRIGHT
 ```
 
-## 9 本文参考源
+## 9 本文参考源/更多参考
+
+**本文参考源**
 
 1. [c-code-style](https://github.com/MaJerle/c-code-style)，受此启发，而积此文。
 2. 不计的众多网络文章资料，大块引用的已经在文中标出出处。
@@ -2022,6 +2159,11 @@ extern "C" {
 *p.s 正文中部分小的内容段落的引用源有在其旁边有标注，这里列出正文的其余引用原。*
 
 *p.s 此文件系业余整理而成，远不及"Google C/C++编程规范"、"华为编程规范"等文件的专业程度。*
+
+**更多参考**
+
+- [C 语言编程规范 ~ Murphy's Blog](https://murphy.tech/posts/f55a6415.html)。[基于 Markdown 的中文文档排版规范 ~ Murphy's Blog](https://murphy.tech/posts/eaf5273.html)。
+- .etc
 
 ## 10 大厂规范和名设计模式
 
@@ -2062,6 +2204,7 @@ extern "C" {
 
 - [佛祖保佑永无BUG 神兽护体 代码注释(各种版本)](https://blog.csdn.net/vbirdbest/article/details/78995793)。
 - [厉害了word程序猿，进寺庙给服务器开光保永不宕机](https://www.sohu.com/a/116621959_430930)。
+- 获取更多字符画 / 定制字符画 可见 `字符画生产工具/注释的图形化描述` 一节。
 
 以下是效果图。
 
@@ -2106,6 +2249,18 @@ extern "C" {
 29. 才有了现代信息社会。
 
 （太多了不想写，就这么发了吧）
+
+### 花式点灯
+
+娱乐一把：
+
+1. 写流水灯。
+2. 写一个状态机，实现任意模式的流水灯。
+3. 写一个实时操作系统，充分利用汇编实现高效调度算法，然后点灯。
+4. 在FPGA上实现一个sopc软核，在核内运行我写的实时操作系统，然后点灯。
+5. 在RSIC-V架构实现一个内核，其外部总线连着FPGA，内核跑我写的操作系统，通过总线控制FPGA实现时序逻辑状态机，然后点灯。
+6. 设计一套包含前后端的物联网系统，视觉识别马路上的行人姿态，当有人摔倒时，然后点灯。
+7. 把旧安卓手机的cpu从主板上吹下来，再吹焊到我设计的8层板上，跑个安卓系统，然后点灯。
 
 ## 署名
 
