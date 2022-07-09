@@ -38,3 +38,8 @@ struct simple_ll_struct
 */
 
 
+/*
+    一个用 宏 实现的双链表，很实用
+    https://mp.weixin.qq.com/s/q31_MlmHH7pgYdQqI5q6KQ
+*/
+

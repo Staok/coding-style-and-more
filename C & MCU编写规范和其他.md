@@ -37,7 +37,7 @@
 
 ## 1 日常素养
 
-- 维护干净整洁的编程环境（保持愉悦的心情，干净整洁的桌面，友好和蔼的同事等等）。
+- 维护干净整洁的编程环境（保持愉悦的心情，干净整洁的桌面，友好和蔼（或者憨厚）的同事等等）。
 
 - 身体坐直，按时走走，保证睡眠，计划运动。
 
@@ -49,7 +49,7 @@
 
 - 先搞清楚需求，再构思，再开发，顺序不能错。
 
-- 不要重复造轮子，时常逛开源网站，有新想法可以先去找轮子，也许比自己写的更好，相信前人的智慧和同行们雪亮的眼光。
+- 尽量不要重复造轮子，时常逛开源网站，有新想法可以先去找轮子（注意遵守其开源协议），也许比自己写的更好，相信前人的智慧和同行们雪亮的眼光。
 
 - 关于调试：
   
@@ -58,15 +58,15 @@
 
 - 关于提问，是一门艺术：
   
-  - [谈谈提问的艺术 | How To Ask Questions The Smart Way](https://zhuanlan.zhihu.com/p/133763900)
-  - [《提问的艺术：如何快速获得答案》（精读版）](https://blog.csdn.net/ajian005/article/details/81006663)
-  - [如何问出一个好问题？| 提问的艺术](https://zhuanlan.zhihu.com/p/95536926)
+  - [谈谈提问的艺术 | How To Ask Questions The Smart Way](https://zhuanlan.zhihu.com/p/133763900)。
+  - [《提问的艺术：如何快速获得答案》（精读版）](https://blog.csdn.net/ajian005/article/details/81006663)。
+  - [如何问出一个好问题？| 提问的艺术](https://zhuanlan.zhihu.com/p/95536926)。
 
-- 有结对编程，协作开发的能力。
+- 有结对编程，协作开发的意识。
 
 - 有写文档的习惯（对项目写文档，或者日常写博客，或者没事就画一画流程图梳理想法）（不要在技术文章里写“日记”、写“小说”。），条理清晰，简化描述（Keep it stupid simple），并且一定要写上用例，写上例子，写上实例（重要的事情讲三遍）！
 
-- 做好版本管理，有备份的意识（打压缩包写上时间也好，使用git工具也好，放到U盘里也好，传到私人网盘也好）。
+- 做好版本管理，有备份的意识（打压缩包写上时间也好，使用 git 工具 也好，放到 U 盘 里也好，传到 个人 NAS 也好）。
 
 - 时常看书，时常看看同行的文章，常读常新。
 
@@ -125,25 +125,25 @@
 
 - 系统外设功能的启用与否均用宏定义 SYSTEM_SUPPORT_XX 来管理剪裁。
 
-- RTOS任务函数均使用 os_task_xx_xx() 命名，属于"os_task"。
+- RTOS 任务函数均使用 os_task_xx_xx() 命名，属于"os_task"。
 
-- 中断优先级分组选用分组4，即16级抢占优先级，不用0级响应优先级。
+- 中断优先级分组选用分组 4，即 16 级抢占优先级，不用 0 级响应优先级。
 
-- IO的低电平为有效电平，高电平截止或者无效；按键IO尽量都使用外部中断。
+- IO 的低电平为有效电平，高电平截止或者无效；按键IO尽量都使用外部中断。
 
-- 至少用一个定时器提供1ms或者10ms的时基，再用软件分频为 50ms/100ms/300ms/1s 等。
+- 至少用一个定时器提供 1ms 或者 10ms 的时基，再用软件分频为 50ms/100ms/300ms/1s 等。
 
 - 外设（Periph）和设备（Devices）分别初始化，外设的启停**成对**编写，命名统一。
 
-- 通讯外设的发送和接收都使用中断，并尽量使用上DMA，以串口为例如下：
+- 通讯外设的发送和接收都使用中断，并尽量使用上 DMA，以串口为例如下：
   
     接收：（依时间间隔区分帧为例）
   
-    接收中断->打接收标志位，记当前时间（定时器计数器），比较上次接收的时间，启动DMA->接收缓冲区（足够大，大于2帧）->送解析函数。
+    接收中断 -> 打接收标志位，记当前时间（定时器计数器），比较上次接收的时间，启动 DMA -> 接收缓冲区（足够大，大于2帧） -> 送解析函数。
   
-    发送：（类 lwip 的发送逻辑，事件驱动）
+    发送：（类 lwip 的 tcp 的发送逻辑，事件驱动）
   
-    要发送的串放入 发送缓冲区，检查发送启动标志位是否就绪，若就绪就打 发送启动标志位->发送中断中，检测发送启动标志位，判断是否发送 发送缓冲区 的串，发完清此标志位，即设为就绪态。
+    要发送的串放入 发送缓冲区，检查发送启动标志位是否就绪，若就绪就打 发送启动标志位 -> 发送中断中，检测发送启动标志位，判断是否发送 发送缓冲区 的串，发完清此标志位，即设为就绪态。
 
 - 等等等等。
 
@@ -159,7 +159,7 @@
 
 **分级状态机**
 
-1. 系统的顶层状态机一般设计有包括初始化（init）、运行（run）、待机/空闲（standby）和停机（halt）状态等这几个最基本的状态，在每个基本状态下又可细分多个状态组成子层状态机。
+1. 系统的顶层状态机一般设计有包括 初始化（init）、运行（run）、待机/空闲（standby）和停机（halt）状态 等这几个最基本的状态，在每个基本状态下又可细分多个状态组成子层状态机。
 2. 在这里，顶层状态机使用 “一个状态对应一个函数” 的模板来实现，子层状态机使用 “switch-case” 来实现。
 
 **并发状态机**
@@ -172,7 +172,7 @@
 
 - 通讯尽量使用成熟的协议来封装数据。
 
-  以打包、解包形式进行通讯。鉴于见识有限，协议选择还需要广泛调研和商榷，以下仅为举例
+  以打包、解包形式进行通讯。鉴于见识有限，协议选择还需要广泛调研和商榷，以下仅为举例：
 
   - 串口通讯协议可以上 Modbus。
   - CAN 通讯协议可以上 CANOpen。
@@ -202,7 +202,7 @@
 
     这篇提到 通讯协议设计中，一帧消息的结构：Head——Type——DataSize——Data——SUM——Tail。
 
-    > 其 强烈建议您采用“状态机”来解析UART数据帧，并且把解析工作放在ISR（中断服务程序）完成，仅当接收到最后一个字节（0x0D）时，再将整个数据帧提交给进程处理。
+    > 其 强烈建议您采用“状态机”来解析UART数据帧，并且把解析工作放在 ISR（中断服务程序）完成，仅当接收到最后一个字节（0x0D）时，再将整个数据帧提交给进程处理。
 
     只要设计得当，每次进中断只执行 比较接收数据 -> 更新状态变量 -> 存储接收数据 这三个处理动作，设计其处理的快速而高效就可以。
 
@@ -377,7 +377,7 @@
 
 13. 判断指针是否为空只用 "NULL"，即 `void *ptr0, *ptr1; if ( (ptr0 == NULL) || (ptr1 != NULL) ) { ... }`。
 
-14. 不用变长数组，用内存分配释放函数 `malloc()` 和 `free()`。
+14. 不用变长数组，用内存 分配/释放 函数 `malloc()` 和 `free()`。
 
 15. 大块内存请使用内存管理。
 
@@ -418,12 +418,11 @@
 ```
 
 19. 理论上讲，任何递归算法都可以通过循环等方法实现，尽量不用递归，不好查阅和容易栈溢出。
-    
-    更多网友总结的杂类细节规范、规则：
-    
-    - [学C/C++语言，32个必备修养！ (qq.com)](https://mp.weixin.qq.com/s/auLsbmr7SKgoO05HykXpzQ)。
-    - 
-    - etc...
+20. 更多网友总结的杂类细节规范、规则：
+
+- [学C/C++语言，32个必备修养！ (qq.com)](https://mp.weixin.qq.com/s/auLsbmr7SKgoO05HykXpzQ)。
+- 
+- etc...
 
 ------
 
@@ -436,7 +435,7 @@
 - 小写；星号 * 靠近类型名一端；用" _ "分割语义；对齐以保持良好阅读性。
 
 - 命名遵循 `属什么 _ 是什么 _ 做什么` 的形式，例子如下。
-  
+
   ```c
   void            sys_example_init(void);
   const char*     sys_string_generater(void);
@@ -455,7 +454,7 @@
 - 对函数的错误返回要做全面的处理；一般 返回 0 表示 正确 或 运行正常终止，返回其他表示错误，具体的值表示错误代号，可用定义了所有错误类型的枚举变量作为函数返回值类型，或者返回值 0 表示成功，正数表示失败，此正数可以表示错误代码；并设计专门的机制对错误标识做处理。
 
 - 对函数的参数做合法性检查；检查指针；检查变量范围，变量有大小限制的，在注释里写明；在其他地方调用此变量的时候要进行检查或限幅，例子如下。
-  
+
   ```c
   /* 幅值系数，范围 0~1 */
   float wave_point_A = 0.8;
@@ -469,18 +468,18 @@
   wave_point_A < 0 ? 0    : wave_point_A;
   ```
 
-- 如果函数传入参数（形参）的数量过多（超过 5 个），那么要考虑精简或者用其他办法，即可以将参数打包为全局的 数组 或 结构体 等 然后传递其指针；函数形参为一个指针变量应用 `int* i`，形参为一个数组应写为 `int i[]`（并且另一个形参要传入数组的最大长度，因函数内无法获知，字符串除外，因其结尾会被补充 `\0`），在此时应做区分而避免混用；对于返回多个值同理；字符串指针 和 结构体指针 等在定义时若未初始化，则使用前要用 `malloc()` 为其申请空间。
+- 如果函数传入参数（形参）的数量过多（超过 5 个），那么要考虑精简或者用其他办法，即可以将参数打包为全局的 数组 或 结构体 等 然后传递其指针；函数形参为一个指针变量则用 `int* i`形式，形参为一个数组应写为 `int i[]`（并且另一个形参要传入数组的最大长度，因函数内无法获知，字符串除外，因其结尾会被补充 `\0`），在此时应做区分而避免混用；对于返回多个值同理；字符串指针 和 结构体指针 等在定义时若未初始化，则使用前要用 `malloc()` 为其申请空间，否则就是野指针，对其赋值将直接导致 “宕机”（so weak）。
 
-- 对于函数可能传入的参数是不定的任意类型，定义形参用 `void*` 修饰。函数明确 没有/不能 传入/返回 参数时要在形参处用 `void` 指明，如上面的`void            sys_example_init(void);`。
+- 对于函数可能传入的参数是不定的任意类型，对于指针类型定义形参用 `void* x` ，对于变量用`void x`。函数明确 没有/不能 传入/返回 参数时要在形参处用 `void` 指明，如上面的`void sys_example_init(void);`。
 
 - 函数的嵌套不要过多，一般控制在最多 4 层。不要用递归这种反阅读便利的写法（并且控制不好易栈溢出），用循环语句实现。
 
 - 关于 指针函数 和 函数指针。
-  
+
   指针函数即指 返回值带指针变量的函数，使用情景参看上面。
-  
+
   函数指针即指 函数类型的指针，定义的形式和使用情景如下，函数指针名加后缀 "_ fn"，函数指针类型定义名再追加后缀 "_ t"。
-  
+
   ```c
   /* 函数指针定义写法和用法举例 */
           unsigned char (*sys_print_compile_time_fn)(unsigned char);
@@ -522,7 +521,7 @@
       (*print_compile_time_fn)(1);
   }
   
-  /* 再举一个例子，引自《C程序设计语言》 */
+  /* 再举一个例子，引自 《C程序设计语言》 */
   /* 一些声明 */
   char *lineptr[500];
   int numcmp0(char *, char *); /* API 声明时形参可以不带变量名 */
@@ -534,9 +533,11 @@
       ...
   }
   
-  /* 调用，三段式写法来选择传入哪个API */
+  /* 调用，三段式写法来选择传入哪个API，再强转为一个函数指针类型 (int (*)(void*,void*)) */
   qsort((void**) lineptr, 0, nlines-1, (int (*)(void*,void*))(numeric ? numcmp : strcmp));
   ```
+
+- 内联函数。可以将 频繁被调用的、代码量较少的 函数用 inline 关键字修饰为内联函数，编译器将 该函数内容直接复制到 被调用的地方，减少频繁进出函数的处理器开销，但如果调用的地方极多则整体代码量急速膨胀。
 
 ### 关于变量定义形式（Variables）
 
@@ -572,27 +573,27 @@
   /* 以上 12 个的左边的关键字 来自 对于 32 位机的 stdint.h */
   
   /* 以下定义要随着平台的切换而有可能切换，
-      比如 8 位机的 8051 MCU 中 int 为两个字节，
+      比如 8 位机的 8051 MCU 中 int 为两个字节，Nios II 处理器 中 int 为 两个字节
       32 位机（如 STM32）中 int 为四个字节，
       64 位机同 32 位机 */
   /* 这里针对的是 32位/64位 机器而言，即 int/float 为 4 字节 */
   typedef unsigned char            uint8;  /*  8 bits */
-  typedef unsigned short int        uint16; /* 16 bits */
-  typedef unsigned int            uint32; /* 32 bits ,long int 也为 32 bits*/
+  typedef unsigned short int       uint16; /* 16 bits */
+  typedef unsigned int             uint32; /* 32 bits ,long int 也为 32 bits */
   
-  typedef signed char                int8;   /*  8 bits */
+  typedef signed char              int8;   /*  8 bits */
   typedef short int                int16;  /* 16 bits */
-  typedef int                        int32;  /* 32 bits */
+  typedef int                      int32;  /* 32 bits */
   
   typedef volatile int8            vint8;  /*  8 bits */
-  typedef volatile int16            vint16; /* 16 bits */
-  typedef volatile int32            vint32; /* 32 bits */
+  typedef volatile int16           vint16; /* 16 bits */
+  typedef volatile int32           vint32; /* 32 bits */
   
-  typedef volatile uint8            vuint8;  /*  8 bits */
-  typedef volatile uint16            vuint16; /* 16 bits */
-  typedef volatile uint32            vuint32; /* 32 bits */
+  typedef volatile uint8           vuint8;  /*  8 bits */
+  typedef volatile uint16          vuint16; /* 16 bits */
+  typedef volatile uint32          vuint32; /* 32 bits */
   
-  typedef float                   float32; /*  32 bits */
+  typedef float                    float32; /*  32 bits */
   typedef double                   float64; /*  64 bits */
   
   typedef unsigned char            boolean; /* 8-bit*/
@@ -615,9 +616,9 @@
   
   > const 默认作用于其左边的东西，否则作用于其右边的东西。
   
-- 定义变量 `int i = ‘0’;`，注意 `int* i_ptr = &i;` 与 `char *i_ptr = &i;` 的区别，前者是将 i 的地址赋给 int 类型指针变量 i_ptr，后者是 将 i 的地址赋给 整形变量 `*i_ptr`，注意 C 编译器并不认为 该 二者的不同，都是 `将 i 的地址赋给 int 类型指针变量 i_ptr` ，只是对于人从惯用语法来讲会觉得不同。因此对于写法规范，定义指针的三种写法 `int* i_ptr;` 、`unsigned int * i_ptr;` 、 `int *i_ptr, l_ptr, a_ptr;`，分清这三种场合，第一个 单独定义一个指针，第二个 指针类型名 超过一个单词，第三个 多个指针定义。（我怎么感觉我在讲 “茴” 的几种写法，，搞编程嘛，这里需要细致一些）
+- 定义变量 `int i = ‘0’;`，注意 `int* i_ptr = &i;` 与 `char *i_ptr = &i;` 的区别，前者是将 i 的地址赋给 int 类型 `指针变量 i_ptr`，后者是 将 i 的地址赋给 `整形变量 *i_ptr`，注意 C 编译器并不认为 该 二者的不同，都是 `将 i 的地址赋给 int 类型指针变量 i_ptr` ，只是对于人从惯用语法来讲会觉得不同。因此对于写法规范，定义指针的三种写法 `int* i_ptr;` 、`unsigned int * i_ptr;` 、 `int *i_ptr, l_ptr, a_ptr;`，分清这三种场合，第一个 单独定义一个指针（把 * 靠近类型名），第二个 指针类型名 超过一个单词（则把 * 写在中间），第三个 多个指针定义（把 * 靠近变量名）。（我怎么感觉我在讲 “茴” 的几种写法，，搞编程嘛，这里需要细致一些）
 
-- 指针变量在 定义 的时候就应给给确定的地址变量 而 防止 其称为 野指针的可能；尽量避免野指针。
+- 指针变量在 定义 的时候就 尽量 给确定的地址变量 而 防止 其成为 野指针 的可能；尽量避免野指针。
 
 - 明确全局变量的初始化顺序，系统启动阶段，使用全局变量前，要考虑到全局变量该在什么地方初始化，使用全局变量和初始化全局变量之间的时序关系一定要分析清楚。
 
@@ -625,19 +626,19 @@
 
 - 对于函数内的局部变量，不希望在函数跳出后局部变量数据丢失那么加上 static 修饰符（指示该变量具有所在文件作用域），static 修饰符的变量若定义在一个文件内当作 “全局变量”，其是 只在该文件具有作用域的，其他文件不能够访问到。
 
-- 为防止编译器优化程序中一些关键/重要的变量的给值顺序等，可在变量定义时加 volatile 声明，即不要优化掉这里。
+- 为防止编译器优化程序中一些 关键/重要 的变量的给值顺序等，可在变量定义时加 volatile 声明，即不要优化掉这里。
 
-- 玩一下，比较极端的情况，一个完整的变量声明形式：`extern static volatile const unsigned long int* const temp_reg[sizeof(int)];`。
+- 玩一下，比较极端的情况，一个完整的变量声明形式：`extern static volatile const unsigned long int * const temp_reg[sizeof(int)];`。
 
-- 变量如果是低有效，变量名加尾缀"_n"，比如使能 en 是低有效（en 上面有一横），则命名为 "en_n"。
+- 变量如果是低有效，变量名加尾缀 "_n"，比如使能 en 是低有效（en 上面有一横），则命名为 "en_n"。
 
-- 尽量减少不必要的数据类型转换，即 “类型强转”。关于 “类型强转”，要先看位数，低位数类型可以向高位数类型强转，而这个过程反过来的时候，高位数类型直接转换为低位数类型则高位会被丢弃，因此对于高位数类型的数值应该先取低八位/十六位/三十二位等，再强转，这样是比较安全和方便阅读。
+- 尽量减少不必要的数据类型转换，即 “类型强转”。关于 “类型强转”，要先看位数，低位数类型可以向高位数类型强转，而这个过程反过来的时候，高位数类型直接转换为低位数类型则高位会被丢弃，因此对于高位数类型的数值应该先取 低 八位/十六位/三十二位 等，再强转，这样是比较安全和方便阅读。
 
-- 关于指针相关灵活用法更多详见`实用技巧`一节里的 指针专题 部分。
+- 关于指针相关灵活用法更多详见 `实用技巧` 一节里的 `指针专题` 部分。
 
 ### 关于结构体、枚举和类型定义形式（Structures, enumerations, typedefs）
 
-- 适用 "关于变量定义形式（Variables）"里面的内容。
+- 适用 "关于变量定义形式（Variables）" 一节里面的内容。
 
 - 枚举定义形式有直接定义、类型定义、指针和数组等，枚举内可以嵌套定义结构体，结构体内也可以嵌套定义枚举。
 
@@ -647,7 +648,7 @@
 
 - 结构体应尽量不作为函数的形参或返回值等，而是用其指针替代，减少数据拷贝。
 
-- 结构体定义后加“_ struct”尾缀，对于类型定义后再追加 "_ t"，例子如下。
+- 结构体定义后加“_ struct”尾缀，对于类型定义后再追加 "_ t"，对于枚举同理，例子如下。
   
   ```c
   /************************* 枚举定义 *************************/
@@ -673,13 +674,15 @@
   /************************* 结构体定义 *************************/
   struct simple_struct      struct /* 只用一次的结构体 */        typedef struct
   {                         {                                  {
-      int a;                        int a;                            int a;
-      char b;                       char b;                           char b;
-      double c;                     double c;                         double c;
+      int a;                    int a;                            int a;
+      char b;                   char b;                           char b;
+      double c;                 double c;                         double c;
   }simple, *simple_p;       }abc;                              }simple_struct_t;
   
-  /* 使用 sizeof() 获取结构体大小（字节为单位），而实际存储占用长度会因字节对齐而不确定 */
+  /* 使用 sizeof() 获取结构体大小（字节为单位），而实际存储占用长度会因字节对齐而不确定
+   	可以使用 gcc 扩展关键字 pack() 来将结构体或其它数据结构 按字节/按四字节 等方式 对齐 */
   
+  struct simple_struct simple0;
   struct simple_struct* simple0_p = &simple0;   /* 定义结构体变量和其指针一对，并给指针赋值 */
   simple0_p->a = simple0.b;                     /* 取值，赋值 */
   struct simple_struct simple1[10] =            /* 结构体数组定义，并赋值 */
@@ -705,8 +708,8 @@
   test.c = 0;
   
   /* 赋值后 的实际情形
-  16bit 的实际值：        00000001 11110010
-  16bit 的 abc 占用位置： cccccccb bbbbaaaa
+      16bit 的实际值：       0000 0001 1111 0010
+      16bit 的 abc 占用位置： ccc ccccb bbbb aaaa
   */
   
   struct date_struct {
@@ -715,11 +718,11 @@
       unsigned short year :14;
   }date;
   /*
-  0 | 0 0 0 0 0 0 0 0 0 0 0 0 0 0 | 0 0 0 0 |  0 0 0 0 0 |
-    +--------- year --------------+- month -+---- day ---+
+      0 | 0 0 0 0 0 0 0 0 0 0 0 0 0 0 | 0 0 0 0 |  0 0 0 0 0 |
+        |--------- year --------------|- month -|---- day ---|
   */
   ```
-
+  
 - 结构体的实例化尽量用 "表格" 形式，并在每列头部写好注释，例子如下。
   
   ```c
@@ -758,7 +761,7 @@
   }
   
   union simple_union four_bits.var_int = 0xaabbccdd;
-  /* 即 var_char[0] 为 0xaa，var_char[1] 为 0xbb，以此类推  */
+  /* 即 var_char[0] 为 0xaa，var_char[1] 为 0xbb，以此类推，按数组从左到右增长的方式排列对齐 */
   
   /* 举例 2 */
   union
@@ -768,10 +771,10 @@
       {
           char first;
           char second;
-      }half; /* 占俩字节 */
+      }half; /* 占俩字节，与 四字节的 i 低位对齐 */
   }number;
   
-  number.i = 0x44434241; /*联合成员赋值*/
+  number.i = 0x44434241; /* 联合成员赋值 */
   /* number.i 的低俩字节给了 half 结构体，即 number.half.first 为 0x42，以此类推  */
   
   /* 通过上面两个举例可以看出，在字节 拼接 和 检出 时使用 联合 非常方便 */
@@ -782,14 +785,14 @@
       int ram_store_flag;
       int ad_channels_en;
       union{
-        char ram_store_data[8][512];
+        u8 ram_store_data[8][512];
         u16  ram_send_data[8][256];
       }_ram;
   }_RAM_FORMAT;
   _RAM_FORMAT RAM_Format;
   /* 
-  可以看出 结构体里面的枚举，同一块区域内分别以 8 位和 16 位划分，
-  以 8 位为最小单位接收，以 16 位为最小单位发送
+      可以看出 结构体里面的枚举，同一块区域内分别以 8 位和 16 位划分，
+      以 8 位为最小单位接收，以 16 位为最小单位发送
   */
   
   /************************* 三、联合 和 结构体 + 位域 结合，可以访问一个字节的每一个 bit *************************/
@@ -1006,7 +1009,7 @@ var(s, 1LL); /* 用法举例，这里相当于 long long s = 1LL; */
 /* 获取大于 size 的最近的且是 val_size 倍数的值，可用于 Flas h的 page 大小对齐的时候 */
 #define VAL_ROUNDUP(size, val_size)     (((size)+val_size-1)/val_size*val_size)
 
-/* 得到指定地址上的一个字节或字 */
+/* 得到指定地址上的 一个字节 或 short 类型大小的值 */
 #define MEM_B( x ) ( *( (unsigned char*) (x) ) )
 #define MEM_W( x ) ( *( (unsigned short*) (x) ) )
 
@@ -1018,14 +1021,14 @@ double xx = 1.0;
 double yy = MIN(xx++, 1.5);
 printf("xx=%f, yy=%f\n",xx,yy);
 
-以下放大招了，看看 GNU 的实现...用下面这句就不会出错，那当然了...
+以下放大招了，看看 GNU 的实现...用下面这句就不会出错，那当然了...（但实际有这么用的吗？）
 #define MIN(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __a : __b; })
 */
 
-/* 得到一个field在结构体(struct)中的偏移量 */
+/* 得到一个 field 在 结构体(struct) 中的偏移量 */
 #define FPOS( type, field ) ( (unsigned long) &(( type *) 0)-> field )
 
-/* 得到一个结构体中field所占用的字节数 */
+/* 得到一个结构体中 field 所占用的字节数 */
 #define FSIZ( type, field ) sizeof( ((type *) 0)->field )
 
 /* 按照LSB格式把两个字节转化为一个 unsigned short */
@@ -1069,26 +1072,26 @@ printf("xx=%f, yy=%f\n",xx,yy);
 /* Force a compilation error if condition is true */
 #define BUILD_BUG_ON(condition) ((void)sizeof(char[1 - 2 * !!(condition)]))
 
-/* 检测a和b是不是同一类型，不是同一类型编译不过 */
+/* 检测 a 和 b 是不是同一类型，不是同一类型编译不过 */
 (void) (&a == &b)
 
-/*Author: MaxwellXyao*/
-#define BIT(n)                  (1 << (n))               //位mask
-#define bit_SetTrue(x,mask)     ((x) |= (mask))          //该位设置为真
-#define bit_SetFalse(x,mask)    ((x) &= ~(mask))         //该位设置为假
-#define bit_Toggle(x,mask)      ((x) ^= (mask))          //位切换
-#define bit_IsTrue(x,mask)      (((x) & (mask)) != 0)    //该位是否真
-#define bit_IsFalse(x,mask)     (((x) & (mask)) == 0)    //该位是否假
+/* 引自 Author: MaxwellXyao */
+#define BIT(n)                  (1 << (n))               // 位mask
+#define bit_SetTrue(x,mask)     ((x) |= (mask))          // 该位设置为真
+#define bit_SetFalse(x,mask)    ((x) &= ~(mask))         // 该位设置为假
+#define bit_Toggle(x,mask)      ((x) ^= (mask))          // 位切换
+#define bit_IsTrue(x,mask)      (((x) & (mask)) != 0)    // 该位是否真
+#define bit_IsFalse(x,mask)     (((x) & (mask)) == 0)    // 该位是否假
 ```
 
 ```c
 /* 编译时一些信息的字符串，用内建宏调试
-__FILE__        表示当前所在文件名的字符串
-__LINE__        表示当前所在行的整形数字
-__FUNCTION__     表当前所在函数的函数名字字符串
-__DATE__        表示编译时的 月/日/年 字符串信息
-__TIME__        表示编译时的 时:分:秒 字符串信息
-__STDC__        如果实现是标准的，则是十进制常量1，否则为其他
+    __FILE__        表示当前所在文件名的字符串
+    __LINE__        表示当前所在行的整形数字
+    __FUNCTION__     表当前所在函数的函数名字字符串
+    __DATE__        表示编译时的 月/日/年 字符串信息
+    __TIME__        表示编译时的 时:分:秒 字符串信息
+    __STDC__        如果实现是标准的，则是十进制常量1，否则为其他
 
 如下面，Debug 时输出文件名、行号、函数名等 */
 #ifdef _DEBUG
@@ -1099,7 +1102,7 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
 #endif
 
 /* 参考 https://blog.csdn.net/cleverhorse/article/details/84655543
-   将编译时间转换为int类型作为时间戳 __DATE__ __TIME__ 转INT类型
+   将编译时间转换为int类型作为时间戳 __DATE__ __TIME__ 转 int 类型
 */
 #define YEAR ((((__DATE__[7]-'0')*10+(__DATE__[8]-'0'))*10+ \
               (__DATE__[9]-'0'))*10+(__DATE__[10]-'0'))
@@ -1277,14 +1280,14 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
 
     ```c
     /* 修改一函数的局部变量的值那么请用一级指针，这个好理解，举例 */
-    void set_to_five(int *val)
+    void set_to_five(int* val)
     {
         *val = 5;
     }
     
     int main(void)
     {
-        int value = 10;
+        int value = 10; /* 要修改 main() 函数的局部变量 value */
         printf("before - value = %d\n",value);
         set_to_five(&value); /* 修改值，要传入其地址 */
         printf("after - value = %d\n",value);
@@ -1294,7 +1297,7 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
     int ten   = 10;
     int five  = 5;
     
-    void set_to_five(int **val)
+    void set_to_five(int** val)
     {
         *val = &five;
     }
@@ -1308,7 +1311,7 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
     }
     
     /* 再一个例子，引用自：https://blog.csdn.net/c243311364/article/details/109619361 */
-    void GetMemery(int **p) /* 修改外面的一个局部变量 *P，需要外面传入该局部变量的指针 即 **P */
+    void GetMemery(int** p) /* 修改外面的一个局部变量 *P，需要外面传入该局部变量的指针 即 **P */
     {
         /*申请1024个int大小*/
         *p = malloc(sizeof(int)*1024);
@@ -1357,7 +1360,7 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
     /* 这里介绍一种 字符串数组 的定义方法，引自 https://mp.weixin.qq.com/s/TqNTMAY2gPUcoxlEYijBUw */
     #define EINVAL 1
     #define ENOMEM 2
-    #define EFAULT 3 /* 这些量 或者使用枚举 */
+    #define EFAULT 3 /* 这些量 或可使用枚举 */
     
     #define E2BIG 7
     #define EBUSY 8
@@ -1386,19 +1389,20 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
     /*  参考：https://blog.csdn.net/u013684730/article/details/46565577
             实参                                     传递→       所匹配的形参
     
-            数组的数组            char x[3][4];                 char (*p1)[4];          数组指针
+            数组的数组            char x[3][4];                 char (*p1)[4];         数组指针
     
-            数组指针(行指针)      char (*p1)[4];                 char (*p1)[4];          自身类型
+            数组指针(行指针)       char (*p1)[4];                char (*p1)[4];         自身类型
     
-            指针数组              char *p2[3];                   char **p3;             指针的指针
+            指针数组              char *p2[3];                  char **p3;             指针的指针
     
-            指针的指针            char **p3;                      char **p3;            自身类型
+            指针的指针            char **p3;                     char **p3;            自身类型
     */
     
     /* 二维数组，实参 x[3][4]，可以传递的/所匹配的形参为 数组的指针 int (*p1)[4]; 即可以给 p1  */
     int x[3][4] =       /* 3 行 4 列，编译器实际分配了 12 个 int 类型的空间 */
     {                   /* x[n] 或 *(x + n) 为第 n 行头字节的指针，*(*(x + 2) + 3) 与 x[2][3] 等价 */
-        {1, 3,  5, 7},  /* 值得一提，x、&x[0]、x[0]、&x[0][0] 是同一个地址，因此 *(*(x + 2) + 3) 与 x[2][3] 等价，均可用于索引 */
+        {1, 3,  5, 7},  
+            /* 值得一提，x、&x[0]、x[0]、&x[0][0] 是同一个地址，因此 *(*(x + 2) + 3) 与 x[2][3] 等价，均可用于索引 */
         {9, 11, 2, 4}, 
         {6, 8, 10, 12}
     };
@@ -1407,8 +1411,8 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
     int (*p1)[4] = x;     /* 包含 4 个 int 型 数组 的指针，即 p1 指向 一个包含 4 个 int 值的数组 */ 
     /* 有的说可以写为 int p1[][4] = x，可读性更强 */
     /* 该初始化或写为
-    int (*p1)[4];
-    p1 = x;
+        int (*p1)[4];
+        p1 = x;
     */
     /* 加深对 数组的指针 的理解
         short int tell[10];
@@ -1428,20 +1432,19 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
     /* 指针数组，实参为 int *p2[3]，可以传递的/所匹配的形参为 二阶指针 int **p3;，即可以给 p3 */
     int *p2[3] = {x[0], x[1], x[2]};    /* 3 个 int* 类型的变量组成的数组；取 二维数组 x 的每一行的头地址 幅值给 指针数组 */
     /* 或写为
-    int *p2[3];
-    for(int i = 0;i < 3;i++)
-        p2[i] = x[i];
+        int *p2[3];
+        for(int i = 0;i < 3;i++)
+            p2[i] = x[i];
     */
     
     /* 指向指针的指针，二阶指针 或叫 二维指针，实参为 int **p3，可以传递的/所匹配的形参为 二阶指针 int **p3; 即只可以传递给相同类型的 */
     int **p3 = p2;    /* 实际上 int **p3 和 *p3[] 是等价的 */
-    /* 
-    或写为 
-    int **p3 = &p2[0];
+    /* 或写为 
+    	int **p3 = &p2[0];
     
-    或写为
-    int **p3;
-    p3 = p2;
+       或写为
+        int **p3;
+        p3 = p2;
     */
     
     int k, m;
@@ -1483,7 +1486,7 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
                 p2[1] = (int*)malloc(sizeof(int) * 20);
                 p2[2] = (int*)malloc(sizeof(int) * 30);
     
-        2、而另外两种（数组的指针 int (*p1)[4]; 和 二阶指针 int **p3;）是用来承接前两种（二维数组 int x[3][4]; 和 指针数组 int *p2[3];）的地址的，如：
+        2、而另外两种（数组的指针 int (*p1)[4]; 和 二阶指针 int **p3;）是用来分别承接上面两种（二维数组 int x[3][4]; 和 指针数组 int *p2[3];）的地址的（常用于函数形参，用指针来传递 二维数组/指针数据 以减少拷贝），如：
             数组的指针来承接二维数组的地址：（类比 一阶指针来承接一维数组的地址：char a[] = "abc"; char *a_p = a;）
                 int x[3][4];
                 int (*p1)[4] = x;
@@ -1630,6 +1633,54 @@ __STDC__        如果实现是标准的，则是十进制常量1，否则为其
   sscanf(s,"%*[^/]/ %[^@]", buf);
   ```
 
+- C 的 结构体 内 定义 函数指针 ，引自 [利用C语言结构体封装函数 (qq.com)](https://mp.weixin.qq.com/s/DiH7Ye2eE6Ft62rH1YerjQ)。
+
+  ```c
+  /* serial.h 文件 */
+  // 定义封装函数的结构体，并声明外部引用
+  // 对串口操作函数封装
+  typedef struct 
+  {
+    /* 定义一些 函数指针，将来填入函数，可以直接从结构体这里调用，仿面向对象方法开发，看着紧凑 */
+    void begin(long);
+    void end();
+    int (*peek)();
+    uint8_t (*read)(void);
+    void (*flash)();
+    int (*availiable)();
+    void (*checkRx)();
+  }MarlinSerial;
+  
+  extern MarlinSerial MSerial;
+  
+  /* serial.c 文件 */
+   uint8_t Serial_Read(void)
+  { 
+     printf("hello word!"); //在这里仅作测试所用，未列出真正的串口读取函数
+  }
+  
+  MarlinSerial MSerial; // 定义 MarlinSerial 类型的结构体 MSerial
+  
+  Serial_Init()
+  {
+    MSerial.read = &Serial_Read; /* 给函数指针赋值 */
+  }
+  
+  int main(void)
+  {
+      Serial_Init();
+      MSerial.read(); // 调用串口读取函数
+      while(1)
+      {
+         // ...
+      }
+  }
+  ```
+
+  
+
+- etc.
+
 ### 黑魔法
 
 OS Kernel，游戏引擎，编译器之类的，会用到不少 C 语言的黑魔法。你会惊叹于各种人类智慧的精华！！！前方高能预警！！！
@@ -1672,17 +1723,26 @@ OS Kernel，游戏引擎，编译器之类的，会用到不少 C 语言的黑�
   }
   
   执行结果：
-  test_struct->num =12
-  test_struct->ch =a
-  test_struct->ch =12.300000
+      test_struct->num =12
+      test_struct->ch =a
+      test_struct->ch =12.300000
+  
+  /* 引用 https://blog.csdn.net/Sunnyside_/article/details/119616976
+      假设存在一个虚拟地址 0，将该地址强制转换成为该结构体指针类型（struct stru_name*）0。那么地址 0 开始到 sizeof(stru_name) - 1 长度的内存区域就可以视为一个结构体的内存。这样结构体中任何一个元素都可以通过对该结构体指针解引用得到。由于该结构体的起始地址为 0， 因此任何一个成员的地址应该等于其相对于结构体起始地址的偏移，这也就是计算 结构体 某个成员 element 相对于 结构体起始地址的 偏移量的方法：
+      (unsigned long)&((struct stru_name*)0) -> element。
+  	假设 struct stru_name 结构体 里面有 变量成员 element，且 
+  	element_addr = bf81b82c offset = 12，
+  		element_addr 为 成员 element 在内存中的绝对地址，offset 即 element 相对于 结构体 struct stru_name 起始地址的偏移
+  	那么 结构体的 绝对地址 就是 (element_typc *)element_addr - offset
+  */
   ```
 
-- 代码增殖（黑魔法，慎用）。
+- 代码增殖（黑魔法，慎用）（也更能帮助你理解 `#define` 的 “原样替换” 的含义）。
 
   ```c
   /* 源文：https://github.com/geekan/cowry/blob/master/code/c/darkmagic/x_macro_simple.c */
   /* 它定义了一个字段 OFPACT(...)，然后再通过宏 OFPACTS 来批量生成此字段，替换其中每个输入，狂拽酷炫！ */
-  /* 引用网友一句：学名叫做x macro，是节省冗余代码利器，好处是非常好用，跟机关枪一样；坏处是懂的人不多，大家看到一个没有被索引的ofpact_get_GROUP很容易就进入痴呆状态。 */
+  /* 引用网友一句：学名叫做x macro，是节省冗余代码利器，好处是非常好用，跟机关枪一样；坏处是懂的人不多，大家看到一个没有被索引的 ofpact_get_GROUP 很容易就进入痴呆状态。 */
   
   #define OFPACTS                                                         \
       /* Output. */                                                       \
@@ -1710,15 +1770,17 @@ OS Kernel，游戏引擎，编译器之类的，会用到不少 C 语言的黑�
 - 达夫设备（Duff's Device）。
 
   ```c
-  /*这个回答 https://www.zhihu.com/question/27417946/answer/36572141 
-    如是说到：
+  /* void send(char *to, char *from, int count)
+  	即将 from 位置的 count 数量的 字节数据 拷贝到 to 处 */
+  
+  /* 这个回答 https://www.zhihu.com/question/27417946/answer/36572141 如是说到：
     看以为不能通过编译，后来以为是滥用编译器，但其实是完全符合C标准的，而且真实项目里有用。Google 上搜“duff's device filetype:c”和“duff's device filetype:h”都能找到很多。LLVM 还专门有个用例测试对 Duff's device 的支持：SingleSource/Regression/C/DuffsDevice.c，还很开心哒地说“Guess what, it does.  :)”
   
     另有：https://blog.csdn.net/kingmax26/article/details/5252657 达夫设备（Duff's Device）的详细说明
     这篇文章内说，达夫设备的拷贝数据运行效率的编译体积虽大，但是比循环拷贝写法效率高的多（至少 8 倍）。
-    */
-    void send(char *to, char *from, int count)
-    {
+  */
+  void send(char *to, char *from, int count)
+  {
       int n = (count + 7 ) / 8;
       switch (count % 8)
       {
@@ -1744,11 +1806,11 @@ OS Kernel，游戏引擎，编译器之类的，会用到不少 C 语言的黑�
   
   static unsigned short stopwatch[] =
   {
-  s _ _ _ _ _ X X X X X _ _ _ X X _ ,
-  s _ _ _ X X X X X X X X X _ X X X ,
-      ...
-  s _ _ _ _ _ X X X X X _ _ _ _ _ _ ,
-  s _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+      s _ _ _ _ _ X X X X X _ _ _ X X _ ,
+      s _ _ _ X X X X X X X X X _ X X X ,
+          ...
+      s _ _ _ _ _ X X X X X _ _ _ _ _ _ ,
+      s _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
   };
   
   #undef X
@@ -1766,8 +1828,9 @@ OS Kernel，游戏引擎，编译器之类的，会用到不少 C 语言的黑�
       #include "values.txt"
   };
   /* values.txt 中的内容为：
-  1,2,3,4,5,
-  6,7,8,9,0, */
+      1,2,3,4,5,
+      6,7,8,9,0,
+  */
   ```
 
 - 两数交换。
@@ -1804,7 +1867,7 @@ OS Kernel，游戏引擎，编译器之类的，会用到不少 C 语言的黑�
   #define is_power_of_2(n) ((n) != 0 && ((n) & ((n) - 1)) == 0)
   ```
 
-- 快速浮点数开平方（牛顿求根法导出的开平方算法，一个详解[世界上最快的浮点开方算法 - 百度文库 (baidu.com)](https://wenku.baidu.com/view/a7f9bfbff7ec4afe05a1df35.html)）。
+- 快速浮点数开平方（牛顿求根法导出的开平方算法，一个详解 [世界上最快的浮点开方算法 - 百度文库 (baidu.com)](https://wenku.baidu.com/view/a7f9bfbff7ec4afe05a1df35.html)）。
 
   ```c
   float Q_rsqrt( float number )
@@ -1845,10 +1908,32 @@ OS Kernel，游戏引擎，编译器之类的，会用到不少 C 语言的黑�
 没有写明 “实用” 的大概率仅为图个新鲜：
 
 - [gurugio/book_cprogramming: Framework and Plugin design in C (github.com)](https://github.com/gurugio/book_cprogramming)，总结 C 技巧，大概比较实用。
+
 - [C 语言有什么奇技淫巧？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/27417946/answer/1253126563)，特殊写法实现一些计算加速，比较实用。
+
 - [一个“蝇量级” C 语言协程库 | 酷 壳 - CoolShell](https://coolshell.cn/articles/10975.html)，介绍 Adam 的 protothreads 这个协程库，用 switch 实现 yield 语义。
+
 - [C PUZZLES, Some interesting C problems (gowrikumar.com)](http://www.gowrikumar.com/c/index.php)，C programming questions/puzzles，做了这些题，会学到很多的奇技。
-- [code (uguu.org)](http://uguu.org/sources.html)，可编译的源码字符画；[C 语言有什么奇技淫巧？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/27417946/answer/36555570)，源码字符画 CP。
+
+- [code (uguu.org)](http://uguu.org/sources.html)，可编译的源码为字符画形式的程序；[C 语言有什么奇技淫巧？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/27417946/answer/36555570)，源码字符画 CP。
+
+- 不使用 sizeof，求int占用的字节数：
+
+  ```c
+  #define MySizeof(Value)  (char *)(&value+1)-(char*)&value
+  
+   int i ;
+   double f;
+   double *q;
+   printf("%d\r\n",MySizeof(i));
+   printf("%d\r\n",MySizeof(f));
+   printf("%d\r\n",MySizeof(q));
+   
+   输出：
+       4 8 4
+  ```
+
+- etc.
 
 ### C 语言面向对象实现
 
@@ -1879,7 +1964,7 @@ OS Kernel，游戏引擎，编译器之类的，会用到不少 C 语言的黑�
   - 根据图片生成字符画：
     http://www.degraeve.com/img2txt.php。
     http://life.chacuo.net/convertphoto2char。
-- 图片转字符画软件 ASCIIGenerator。可调节图片明暗和对比度等等，可以自定义生成字符画的字符，可以导出彩色字符画，可以导出字符画 文本或图片，可以批量导出！
+- 图片转字符画软件 ASCIIGenerator。可调节图片明暗和对比度等等，可以自定义生成字符画的字符，可以导出彩色字符画，可以导出字符画 文本或图片，可以批量导出！这个视频 [字符画BAD APPLE-洛天依_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Ns411S7vw) 就是用这个软件 批量转字符画 做的 :）
 
 **注释的图形化描述**
 
@@ -2184,18 +2269,26 @@ extern "C" {
 
 ### 设计定律、原则和模式
 
-1. [比较优雅地编码（良好的命名，清晰的结构和不差的算法）](https://www.cnblogs.com/zzy0471/p/coderule.html)；
-2. [nusr](https://github.com/nusr)/[hacker-laws-zh 对开发人员有用的定律、理论、原则和模式](https://github.com/nusr/hacker-laws-zh)；
-3. [如何正确地使用设计模式？ - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/352074106)；
-4. [C语言和设计模式（总结篇）_平凡的程序员-CSDN博客_c设计模式](https://blog.csdn.net/feixiaoxing/article/details/7294900)；
-5. [23种设计模式全解析_CodeAllen的博客-CSDN博客](https://blog.csdn.net/super828/article/details/84311440)；
-6. [架构与设计 之一 C 嵌入式设计模式（Design Patterns for Embedded Systems in C）的学习记录_itexp-CSDN博客](https://blog.csdn.net/zcshoucsdn/article/details/80217199)；
-7. [书籍推荐《调试九法-软硬件错误的排查之道》 - lumang - 博客园 (cnblogs.com)](https://www.cnblogs.com/lumang/p/9032692.html)；
-8. etc。
+总结性的：
+
+1. [为了写好代码，你坚持了哪些好习惯？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/535244045)。
+1. [比较优雅地编码（良好的命名，清晰的结构和不差的算法）](https://www.cnblogs.com/zzy0471/p/coderule.html)。
+2. [nusr](https://github.com/nusr)/[hacker-laws-zh 对开发人员有用的定律、理论、原则和模式](https://github.com/nusr/hacker-laws-zh)。
+3. [如何正确地使用设计模式？ - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/352074106)。
+4. [C语言和设计模式（总结篇）_平凡的程序员-CSDN博客_c设计模式](https://blog.csdn.net/feixiaoxing/article/details/7294900)。
+5. [23种设计模式全解析_CodeAllen的博客-CSDN博客](https://blog.csdn.net/super828/article/details/84311440)。
+6. [架构与设计 之一 C 嵌入式设计模式（Design Patterns for Embedded Systems in C）的学习记录_itexp-CSDN博客](https://blog.csdn.net/zcshoucsdn/article/details/80217199)。
+7. [书籍推荐《调试九法-软硬件错误的排查之道》 - lumang - 博客园 (cnblogs.com)](https://www.cnblogs.com/lumang/p/9032692.html)。
+8. etc.
+
+细分性的：
+
+1. [观察者模式与订阅发布模式的区别 - 一像素 - 博客园 (cnblogs.com)](https://www.cnblogs.com/onepixel/p/10806891.html)。
+2. etc.
 
 ### 提高代码运行效率
 
-- [提高代码运行效率](https://mp.weixin.qq.com/s/5mzknQZyZU2bimO6oZUnyQ)；
+- [提高代码运行效率](https://mp.weixin.qq.com/s/5mzknQZyZU2bimO6oZUnyQ)。
 - etc。
 
 ## 11 尾记
