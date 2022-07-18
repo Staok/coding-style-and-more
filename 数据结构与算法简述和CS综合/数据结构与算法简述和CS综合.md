@@ -21,12 +21,19 @@
 
 ## 数据结构与算法学习网站推荐
 
+- [代码随想录 (programmercarl.com)](https://programmercarl.com/)，推荐，一站式，比较全。
 - [数据结构部分简介 - OI Wiki (oi-wiki.org)](https://oi-wiki.org/ds/)。
 - [算法入门教程（多语言实现） (biancheng.net)](http://c.biancheng.net/algorithm/)。
 - [算法基础简介 - OI Wiki (oi-wiki.org)](https://oi-wiki.org/basic/)。[动态规划部分简介 - OI Wiki (oi-wiki.org)](https://oi-wiki.org/dp/)。
 - [字符串部分简介 - OI Wiki (oi-wiki.org)](https://oi-wiki.org/string/)。
 - [图论部分简介 - OI Wiki (oi-wiki.org)](https://oi-wiki.org/graph/)。
 - [编程干货：15 个最有用的数据结构和 15 个最重要的算法_机器人技术与设计-面包板社区 (eet-china.com)](https://mbb.eet-china.com/forum/topic/113182_1_1.html)。[30 个重要数据结构和算法完整介绍(建议收藏保存)-云社区-华为云 (huaweicloud.com)](https://bbs.huaweicloud.com/blogs/333195)。
+
+## 刷题
+
+- [花了几千大洋买的200集算法面试突击课程，现在面试成功全部免费分享给大家_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1fa411i79r)。
+- [LeetCode 最热门 100 题_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Pq4y1j78o)。
+- 本文文末附录：附：算法刷题总结。
 
 ------
 
