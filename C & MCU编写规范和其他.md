@@ -5,25 +5,25 @@
 </p>
 ***p.s 温馨提示：点个 star 收藏一下回头慢慢看；或者下(白)载(嫖)下来，在 Typora 中阅读；或者在  [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)  阅读。一个人整理不易，此文如此丰富不值忘记 star。***
 
-本文系广泛撷取、借鉴和整理，侵删。本文适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！本文已经是长期积累和堆叠而形成一定规模，不必按照从前到后的顺序去看，可以挑感兴趣的章节去看。
+本文介绍一些 ANSI C 和 GNU C 的基本语法、编写规范，本文系广泛撷取、借鉴和整理，侵删。本文适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！本文已经是长期积累和堆叠而形成一定规模，不必按照从前到后的顺序去看，可以挑感兴趣的章节去看。
 
 本文内容较多，推荐从 `4 普适规则（General rules）` 一节开始看起。
 
-本文对应的 [Github](https://github.com/Staok/coding-style-and-more)/[Gitee](https://gitee.com/staok/coding-style-and-more) 仓库地址，本文最新的原文 和 一些源码、备查手册等等 均放在里面。
+本文存在对应的 [Github](https://github.com/Staok/coding-style-and-more)/[Gitee](https://gitee.com/staok/coding-style-and-more) 仓库地址，本文最新的原文 和 一些源码、备查手册等等 均放在里面。
 
 ------
 
 按 1：引用观视频工作室视频[【大师计划·林宝军03】北斗三号总师：我来跟你说说，...](https://www.bilibili.com/video/BV1BA411K7FJ)里面总师受访时所说的话：
 
-5:48：“...所以我经常讲，要把一个产品做好，其实有三方面，一个是**技术**，一个是**质量**，一个是**管理**，这三方面；技术水平，质量保障能力和管理能力，三条腿哪个都少不了，少一个，这个东西（航天）也做不上去，其实技术只是一方面，...”。
-
-6:44：“...光是技术上去了，不见得能做出一个系统。对我们工程来讲，就是（需要）**规范的文化**，什么意思呢，比如我们几十年的航天经验，我把这个经验总结成文字，总结成规范，不管是谁做，只要有一定的经验，按这个规范做出来，做得卫星出来，打到天上去就能好用，这就是规范文化。包括匠人文化和规范文化，最后都是按规矩去做，它强调的是解决了怎么做的问题，但它有一个缺点，没强调为什么，其实我认为在做的过程中，**加个为什么可能更好**。”
+> 5:48：“...所以我经常讲，要把一个产品做好，其实有三方面，一个是**技术**，一个是**质量**，一个是**管理**，这三方面；技术水平，质量保障能力和管理能力，三条腿哪个都少不了，少一个，这个东西（航天）也做不上去，其实技术只是一方面，...”。
+>
+> 6:44：“...光是技术上去了，不见得能做出一个系统。对我们工程来讲，就是（需要）**规范的文化**，什么意思呢，比如我们几十年的航天经验，我把这个经验总结成文字，总结成规范，不管是谁做，只要有一定的经验，按这个规范做出来，做得卫星出来，打到天上去就能好用，这就是规范文化。包括匠人文化和规范文化，最后都是按规矩去做，它强调的是解决了怎么做的问题，但它有一个缺点，没强调为什么，其实我认为在做的过程中，**加个为什么可能更好**。”
 
 按 2：引用 [雷军写代码水平如何？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/23832952/answer/1798476507)。
 
-> 雷总也在给后辈的寄语中不断强调**代码要整洁，逻辑要无懈可击，自己写的代码要达到例程（示范程序）的程度**。这一点和《代码整洁之道》的作者Bob大叔英雄所见略同了。
+> 雷总也在给后辈的寄语中不断强调**代码要整洁，逻辑要无懈可击，自己写的代码要达到例程（示范程序）的程度**。这一点和《代码整洁之道》的作者 Bob 大叔英雄所见略同了。
 > 
-> **Bob大叔就在《代码整洁之道》提出一种观点：代码质量与其整洁度成正比。**
+> Bob 大叔就在《代码整洁之道》提出一种观点：**代码质量与其整洁度成正比**。
 > 
 > 优秀的系统往往有优秀的结构设计，层次清晰，职责单一，模块化，方便拓展和复用。功能的添加往往只是在现有的框架中添加一个个模块和少量代码。
 
@@ -78,21 +78,40 @@
 
 ### 首要地重中之重
 
-- 软件工程结构的分层思想永不灭。
-  
+- 首要 清晰、明确需求 并 **全面调研**、**收集资源** 和 **参考精华**。如时间允许，开始具体任务开发之前，进行充分调研！包括：1、对要使用的 平台、框架 所提供的 功能、机制 和 能力 做全面的调研，撷取其中适合本任务的场景的部分 做组合 和 在其基础上开发；2、全人脉/全网 搜索相关设计 并 参考优秀设计，分析研究其这么做的原因、思路，对各个设计取其精华。
+
+- **顶层设计** 和 **细化设计** 阶段。理清整系统设计，首先对软硬件做良好的顶层设计/架构设计，详细的画出框图，细化设计保证可以实施、在设计上保证尽量减少可能发生的错误。画好框图、清晰的道明复杂系统机制也是一种难得的能力！
+
+- **层次化** 和 **标准化** 的输出。软件工程结构的分层思想永不灭；标准化、通用化和可靠性设计高于功能设计。
+
   <img src="assets/分层思想.png" alt="分层思想" style="zoom:50%;" />
 
-- 多任务、复杂流程的整机功能要使用状态机方法来表达、建模和实现。详细内容见 “状态机与层次化状态机” 一节。
+- 你是为了使用而学习，那就快速整起来；你是为了调研/考试而学习，那就全面一些。你不要也不是书呆子。
 
-- 设计高效、方便的数据存储的数据结构，设计高效、方便的算法来操作这些数据。
-
-- 标准化、通用化和可靠性设计高于功能设计。
+### 时常参考优秀设计
 
 在方案设计完之后准备开始实施/实现，不论软硬件，**先 全网找优秀的实例、原理图、代码、项目、库来参考实现**，不要一上来就自己吭哧做。
+
+广泛借鉴、引入第三方解决方案，或事半功倍。
 
 - [EmbedSummary: 嵌入式大杂烩资源汇总 (gitee.com)](https://gitee.com/zhengnianli/EmbedSummary)。
 - [programthink/opensource: 【编程随想】收藏的开源项目清单 (github.com)](https://github.com/programthink/opensource)。
 - github 上面的 各种 Awesome 系列 汇总仓库。
+
+### 规范参考
+
+**本文正文中参考的内容**
+
+见后面 “11 本文参考源” 一节。
+
+**更多参考强烈推荐阅读**
+
+- [C 语言编程规范 ~ Murphy's Blog](https://murphy.tech/posts/f55a6415.html)。[基于 Markdown 的中文文档排版规范 ~ Murphy's Blog](https://murphy.tech/posts/eaf5273.html)。
+- [嵌入式面试题，不断更新 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/338821919)，[嵌入式面试题（二），不断更新 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/342410727)。
+- [嵌入式软件工程师笔试面试指南-C/C++ - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/365152865)。
+- [C/C++ 代码风格和规范_路过的小熊~的博客-CSDN博客](https://blog.csdn.net/qq_32348883/article/details/123462908)。[代码整洁之道（一）最佳实践小结-阿里云开发者社区 (aliyun.com)](https://developer.aliyun.com/article/598076#?utm_content=m_1000007560)。
+- [浅谈嵌入式MCU软件开发之代码风格与代码优化 (qq.com)](https://mp.weixin.qq.com/s?__biz=MzI0MDk0ODcxMw==&mid=2247484735&idx=1&sn=1874d5e81303295444f0fdef10b196e6&chksm=e91241b9de65c8af4d771387c84e313709cba490fe2192b20ed81cff8811786665e170120a68&mpshare=1&scene=23&srcid=03174aTa6DmT6UJCouP7ykba#rd)。
+- .etc
 
 ### 一些方面的提醒
 
@@ -109,11 +128,14 @@
 #### "低耦合，可重用，参数化，注释全"
 
 - 划分好文件、功能函数和所需变量。函数 "低耦合，可重用，参数化，注释全"，变量尽量用结构体打包；可重用意味着直接复制代码或者直接复制文件到另一个项目上直接就用。
-- 功能增加裁剪的灵活性：做好预编译设置。方便于切换调试版本和执行版本，方便于切换行为模式，方便于剪裁功能块；功能剪裁用一个名字带"_config"的文件集中管理，供用户修改各种剪裁用的宏定义，就像总控台。
+- 功能增加裁剪的灵活性：做好预编译设置。方便于切换调试版本和执行版本，方便于切换行为模式，方便于剪裁功能块；功能剪裁用一个名字带 "_config" 的文件集中管理，供用户修改各种剪裁用的宏定义，就像总控台。
 - 参数化设计的适应性：对比如协议解析、模块/功能数量增减、数据范围的变化适应等地方尽量写的通用，通过参数设定来改变运行时/编译时的功能灵活变化。
+- 设计高效、方便的数据存储的数据结构，设计高效、方便的算法来操作这些数据。
 - 关于 MCU 的编写框架，我目前大抵就认我自己的开源项目 "[stm32_framework](https://github.com/Staok/stm32_framework)" 的吧，规范都对齐这个项目。
 
 ### 嵌入式 相关的提醒
+
+*p.s 这里长期更新。*
 
 #### 嵌入式  编程  的一些规范
 
@@ -149,7 +171,7 @@
 
 #### 状态机与分级/并发状态机
 
-可以多用状态机来完成各种任务，大到整个程序的状态、模式控制，小到。
+多任务、复杂流程的整机功能要使用状态机方法来表达、建模和实现。可以多用状态机来完成各种任务，大到整个程序的状态、模式控制，小到具体模块内部的工作实现。
 
 1. 多任务、复杂流程的整机功能要使用状态机方法来表达、建模和实现；益于：思路清楚、维护方便、扩展性好；不用状态机编程比较难得到这几个优点。
 2. 设计状态机要根据需求画状态图，再着手实现。要点：关键是画好状态图、不能进入死循环、不能进入非预知状态、穷举所有可能的分支。
@@ -176,7 +198,7 @@
 
   - 串口 的 应用层 通讯协议 可以上 Modbus。
   - CAN 的 应用层 通讯协议 可以上 CANOpen。
-  - TCP 的 应用层 通讯协议 还有待确定，需要选择一个支持大带宽的，可以再加上一层 TLS/SSL。 可以用 json 格式封装数据。
+  - TCP 的 应用层 通讯协议 还有待确定，需要选择一个支持大带宽的，可以再加上一层 TLS/SSL。可以用 json 格式封装数据。
 
 - 如果要自定串口等接口的通信协议，要考虑的点：
 
@@ -202,19 +224,19 @@
 
     这篇提到 通讯协议设计中，一帧消息的结构：Head——Type——DataSize——Data——SUM——Tail。
 
-    > 其 强烈建议您采用“状态机”来解析UART数据帧，并且把解析工作放在 ISR（中断服务程序）完成，根据DataSize确定要连续的接收数据的长度，再进行 SUM 和 判断 Tail，再将整个数据帧提交给进程处理。
+    > 其 强烈建议您采用 “状态机” 来解析 UART 数据帧，并且把解析工作放在 ISR（中断服务程序）完成，根据 DataSize 确定要连续的接收数据的长度，再进行 SUM 和 判断 Tail，再将整个数据帧提交给进程处理。
 
-    只要设计得当，每次进中断只执行 比较接收数据 -> 更新状态变量 -> 存储接收数据 这三个处理动作，设计其处理的快速而高效就可以。
+    只要设计得当，每次进中断只执行 “比较接收数据 -> 更新状态变量 -> 存储接收数据” 这三个处理动作，设计其处理的快速而高效就可以。
 
 - 重传机制。如果检测到通讯数据发生了错误，则要有重传机制重新发送出错的帧。
 
 #### 嵌入式 编程 的鲁棒性相关内容！
 
-- [嵌入式开发中的防御性C语言编程 (qq.com)](https://mp.weixin.qq.com/s/2OFrv_cmdCjROjqYYZ60oA)，下面对该文中内容进行简练提要。
+- [嵌入式开发中的防御性C语言编程 (qq.com)](https://mp.weixin.qq.com/s/2OFrv_cmdCjROjqYYZ60oA)，下面对该文中内容进行简练提要，再加一点自己的内容。
 
   - 函数的传入参数的合法性检查；防止数据的类型越界，用 `#include <limits.h>` 里面的一些类型极限值宏比较来确定；防止指针、数组的越界；返回标准的错误值。
 
-  - 尽量用上硬件看门狗；要尽可能早的开启看门狗；不要在中断中喂狗，除非有其他联动措施；喂狗间隔跟产品需求有关，并非特定的时间。
+  - 尽量用上 硬件 看门狗；要尽可能早的开启看门狗；不要在中断中喂狗，除非有其他联动措施；喂狗间隔跟产品需求有关，并非特定的时间。当然也不能一味的用 看门狗 去解决 系统 “跑飞”、卡死 等问题，应该思考和解决其根源，软硬件都有可能出问题；调试时候可以不加看门狗，调试稳定之后的正式版/稳定版上可以加上看门狗。
 
   - 关键数据储存多个备份，取数据采用“表决法”。比如，一个关键变量可以分别定义三份（多处备份），并分别指定到三个不连续的 RAM 区中，并在定义时按照原码、反码、0xAA的异或码进行初始化。
 
@@ -238,50 +260,22 @@
 
   - 不要出现 “死等” 的语句如 `while(!flag);`，要设置充分的退出条件，比如至少 超时 或 重复次数超过 某个值 则退出。 
 
+- 引自 [xiaowenxia/embedded-notes: 嵌入式linux软件开发、嵌入式linux驱动开发、c语言、单片机开发、IOT开发等面试要点记录 (github.com)](https://github.com/xiaowenxia/embedded-notes)。
+
+  > Cortex‐M3 有一个可选的存储器保护单元（MPU）。配上它之后,就可以对特权级访问和用户级访问分别施加不同的访问限制。当检测到犯规(violated)时,MPU 就会产生一个 fault 异常,可以由 fault异常的服务例程来分析该错误,并且在可能时改正它。MPU 有很多玩法。最常见的就是由操作系统使用 MPU,以使特权级代码的数据,包括操作系统本身的数据不被其它用户程序弄坏。MPU 在保护内存时是按区管理的(“区”的原文是 region,以后不再中译此名词——译注)。它可以把某些内存 region 设置成只读,从而避免了那里的内容意外被更改;还可以在多任务系统中把不同任务之间的数据区隔离。一句话,它会使嵌入式系统变得更加健壮,更加可靠(很多行业标准,尤其是航空的,就规定了必须使用 MPU 来行使保护职能——译注)。
+
 - .etc
 
-------
+#### 嵌入式 编程 提高 CPU利用效率、降低CPU占用举措列举
 
-## 3 代码格式化工具列举
+- 尽量利用CPU硬件、外设、提供的机制来完成相关任务。比如：
+  - 乘除法尽量用上FPU和DSP相关的指令。
+  - 外设数据和内存数据之间的转移尽量使用 DMA。
+  - 收发数据的外设带有 FIFO 则会减少 CPU占用，比如没有 FIFO 则每次来数据都会中断 CPU，而带 FIFO 则会只在其满一次或半满一次的时候才会中断 CPU 来一次性处理一整个大块的数据，大大提高效率。
+- 软件编程上需要大块数据转移、传递的时候尽量只传递其指针，即尽量使用内存映射的思路，尽量减少数据的拷贝。
+- 优化算法，尽量降低具体模块的运行的时间复杂度。合并计算式，在数学上化简计算至最简再写入程序。合理范围内去减少 CPU 运行的 无效/无用的代码。
 
-*p.s 针对较乱的"祖传代码"做初步治疗使用。代码格式化工具还可以把代码中的 tab 符变成四个空格，这样，当代码在不同的编辑器中打开时不会产生格式错误，所以可以用 AStyle 自己定制一份配置文件，在每次码完代码之后顺手运行一下 AStyle 即可。*
-
-(TODO)下面部分条目尚未补全。
-
-(TODO)查一查astyle配置文件的用法，按照自己的规范形式，写一个配置文件
-
-- 通用工具 AStyle：
-  
-  ​    配置文件：  [c-code-style仓库](https://github.com/MaJerle/c-code-style)中的 astyle-code-format.cfg 文件
-  ​    AStyle官网：[AStyle官网](http://astyle.sourceforge.net/)
-  ​    AStyle is a great piece of software that can help with formatting the code based on input configuration.
-  ​    This repository contains `astyle-code-format.cfg` file which can be used with `AStyle` software as command line below.
-  
-  ```bash
-  astyle --options="astyle-code-format.cfg" "input_path/*.c,*.h" "input_path2/*.c,*.h"
-  ```
-
-- VS Code：在 VS Code 中搜索 AStyle 插件 即可。或者 Beautify 插件，代码格式化，都还没试过。
-
-- MDK：关于“把代码中的 tab 符变成四个空格”，在 MDK 的 Edit 的 Configuration 中，把 “Insert spaces for tab” 都勾上即可。
-
-- IAR：
-
-- Eclipse：
-  
-  ​    配置文件：  [c-code-style仓库](https://github.com/MaJerle/c-code-style)中的 eclipse-ext-kr-format.xml
-  ​    Repository contains `eclipse-ext-kr-format.xml` file that can be used with eclipse-based toolchains to set formatter options.
-  ​    It is based on K&R formatter with modifications to respect above rules.
-  ​    You can import it within eclipse settings, `Preferences -> LANGUAGE -> Code Style -> Formatter` tab.
-
-- Source Insight：
-
-- Notepad：关于“把代码中的 tab 符变成四个空格”，在 Notepad 的 设置 的 语言 中，把制表符框的 “替换为空格” 勾上即可。
-
-一些网友开源项目：
-
-- [mysterywolf/formatting: 源码格式自动化调整工具 (github.com)](https://github.com/mysterywolf/formatting)。
-- 【】。
+- .etc
 
 ------
 
@@ -314,12 +308,57 @@
 - ~~[《算法新解》开源书](https://github.com/liuxinyu95/AlgoXY)。~~《啊哈！算法》。
 - 图解系统 小林。图解网络 小林。
 - [趣谈网络协议](https://book.douban.com/subject/35013753/)。
-- 手绘图解HTTP。30张图解HTTP常见面试题。
+- 手绘图解 HTTP。30张图解HTTP常见面试题。
 - [TCP/IP 教程 | 菜鸟教程 (runoob.com)](https://www.runoob.com/tcpip/tcpip-tutorial.html)。[HTTP 教程 | 菜鸟教程 (runoob.com)](https://www.runoob.com/http/http-tutorial.html)。
-- [《嵌入式C语言的自我修养》](https://book.douban.com/subject/35446929/) 从沙子讲到CPU，从编辑器讲到编译器，从高阶C语言讲到内存管理，从GNU讲到多任务编程。
+- [《嵌入式C语言的自我修养》](https://book.douban.com/subject/35446929/) 从沙子讲到 CPU，从编辑器讲到编译器，从高阶 C 语言讲到内存管理，从 GNU 讲到多任务编程。
 
 - [（完结）（小甲鱼）数据结构和算法_ 哔哩哔哩 _bilibili](https://www.bilibili.com/video/BV1os41117Fs)。
 - [国嵌唐老师主讲【数据结构与算法C语言】（非常犀利）_ 哔哩哔哩 _bilibili](https://www.bilibili.com/video/BV1eK4y1J7zh) 讲的慢。
+
+------
+
+## 3 大厂规范和名设计模式
+
+以下强烈建议空闲时认真学一学。
+
+### 大厂 / 名家规范
+
+1. [Google 开源项目风格指南——中文版 — Google 开源项目风格指南 (zh-google-styleguide.readthedocs.io)](https://zh-google-styleguide.readthedocs.io/en/latest/)。
+2. *华为 C语言编程规范*
+   - *[华为C语言编程规范（精华总结）](https://blog.csdn.net/m0_38106923/article/details/105042594)*。
+   - *[C语言编程规范（一）（华为标准要求）](https://zhuanlan.zhihu.com/p/346160926)*。
+   - *[C语言编程规范（二）（华为标准要求）](https://zhuanlan.zhihu.com/p/346689923)*。
+3. [Qihoo360/safe-rules: 详细的C/C++编程规范指南，由360质量工程部编著，适用于桌面、服务端及嵌入式软件系统。 (github.com)](https://github.com/Qihoo360/safe-rules)。
+4. *[MISRA C Coding Standard](https://www.misra.org.uk/Publications/tabid/57/Default.aspx)*。
+5. [Linux CodingStyle] Linux 内核源代码目录下的 Documentation/CodingStyle 文件。中文：[Linux 内核代码风格 — The Linux Kernel documentation](https://www.kernel.org/doc/html/latest/translations/zh_CN/process/coding-style.html)。
+6. [嵌入式软件编程规范 (qq.com)](https://mp.weixin.qq.com/s/vzydChjPtwUP_wtk1GHpGQ)，对文件架构、函数、变量等的规范均有涉及。
+7. 《航天软件C安全子集-GJB5369标准规范》，离线在本地 `\额外文档` 里。
+8. 《最强安全关键C代码规则实战手册》，离线在本地 `\额外文档` 里。
+
+### 设计定律、原则和模式
+
+总结性的：
+
+1. [guanguans/design-patterns-for-humans-cn: 设计模式超简单的解释。 (github.com)](https://github.com/guanguans/design-patterns-for-humans-cn)。
+1. [nusr](https://github.com/nusr)/[hacker-laws-zh 对开发人员有用的定律、理论、原则和模式](https://github.com/nusr/hacker-laws-zh)。
+1. [为了写好代码，你坚持了哪些好习惯？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/535244045)。
+2. [比较优雅地编码（良好的命名，清晰的结构和不差的算法）](https://www.cnblogs.com/zzy0471/p/coderule.html)。
+4. [如何正确地使用设计模式？ - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/352074106)。
+5. [C语言和设计模式（总结篇）_平凡的程序员-CSDN博客_c设计模式](https://blog.csdn.net/feixiaoxing/article/details/7294900)。
+6. [23种设计模式全解析_CodeAllen的博客-CSDN博客](https://blog.csdn.net/super828/article/details/84311440)。
+7. [架构与设计 之一 C 嵌入式设计模式（Design Patterns for Embedded Systems in C）的学习记录_itexp-CSDN博客](https://blog.csdn.net/zcshoucsdn/article/details/80217199)。
+8. [书籍推荐《调试九法-软硬件错误的排查之道》 - lumang - 博客园 (cnblogs.com)](https://www.cnblogs.com/lumang/p/9032692.html)。
+9. etc.
+
+细分性的：
+
+1. [观察者模式与订阅发布模式的区别 - 一像素 - 博客园 (cnblogs.com)](https://www.cnblogs.com/onepixel/p/10806891.html)。
+2. etc.
+
+### 提高代码运行效率
+
+- [提高代码运行效率](https://mp.weixin.qq.com/s/5mzknQZyZU2bimO6oZUnyQ)，[9个提高代码运行效率的小技巧你知道几个？ - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/344199417)。
+- etc。
 
 ------
 
@@ -434,7 +473,7 @@
 #include <stdint.h>
 #include "all_other_custom_file.h"
 
-/* 当 C 和 C++ 代码混合编译的时候，在下面两个 __cplusplus 标识的中间放 C 部分的声明代码 */
+/* 当 C 和 C++ 代码混合编译的时候，在下面 extern "C" 内的 两个括号 中间放 C 部分的声明代码 */
 #ifdef __cplusplus
     extern "C" 
     {
@@ -447,6 +486,13 @@
 #endif /* __cplusplus */
 
 #endif /* TEMPLATE_H */
+
+/* 区分 C 区 和 C++ 区也可以这样写 */
+#ifdef __cplusplus
+    cout << "c++";
+#else
+    printf("c");
+#endif
 
 /* 文件结尾至少留有空行 */
 ```
@@ -650,27 +696,25 @@
   
   > const 默认作用于其左边的东西，否则作用于其右边的东西。
   
-- 定义变量 `int i = ‘0’;`，注意 `int* i_ptr = &i;` 与 `char *i_ptr = &i;` 的区别，前者是将 i 的地址赋给 int 类型 `指针变量 i_ptr`，后者是 将 i 的地址赋给 `整形变量 *i_ptr`，注意 C 编译器并不认为 该 二者的不同，都是 `将 i 的地址赋给 int 类型指针变量 i_ptr` ，只是对于人从惯用语法来讲会觉得不同。因此对于写法规范，定义指针的三种写法 `int* i_ptr;` 、`unsigned int * i_ptr;` 、 `int *i_ptr, l_ptr, a_ptr;`，分清这三种场合，第一个 单独定义一个指针（把 * 靠近类型名），第二个 指针类型名 超过一个单词（则把 * 写在中间），第三个 多个指针定义（把 * 靠近变量名）。（我怎么感觉我在讲 “茴” 的几种写法，，搞编程嘛，这里需要细致一些）
+- 定义变量 `int i = ‘0’;`，注意 `int* i_ptr = &i;` 与 `char *i_ptr = &i;` 的区别，前者是将 i 的地址赋给 int 类型 `指针变量 i_ptr`，后者是 将 i 的地址赋给 `整形变量 *i_ptr`，注意 C 编译器并不认为 该 二者的不同，都是 `将 i 的地址赋给 int 类型指针变量 i_ptr` ，只是对于人从惯用语法来讲会觉得不同。因此对于写法规范，定义指针的三种写法 `int* i_ptr;` 、`unsigned int * i_ptr;` 、 `int *i_ptr, *l_ptr, *a_ptr;`，分清这三种场合，第一个 单独定义一个指针（把 * 靠近类型名），第二个 指针类型名 超过一个单词（则把 * 写在中间），第三个 多个指针定义（把 * 靠近变量名）。（我怎么感觉我在讲 “茴” 的几种写法，，搞编程嘛，这里需要细致一些）
 
 - 指针变量在 定义 的时候就 尽量 给确定的地址变量 而 防止 其成为 野指针 的可能；尽量避免野指针。
+
+- 关于指针相关灵活用法更多详见 `实用技巧` 一节里的 `指针专题` 部分。
 
 - 防止 指针、数组越界，要清楚其所知内存空间的大小，即其可操作的范围。
 
 - 明确全局变量的初始化顺序，系统启动阶段，使用全局变量前，要考虑到全局变量该在什么地方初始化，使用全局变量和初始化全局变量之间的时序关系一定要分析清楚。
 
-- 明确变量的作用域，防止在预想的作用域外能够调用到具体的某个变量，降低模块间耦合度。
+- 明确变量的作用域，防止在预想的作用域外能够调用到具体的某个变量，降低模块间耦合度。对于函数内的局部变量，不希望在函数跳出后局部变量数据丢失那么加上 static 修饰符（指示该变量具有所在函数的作用域），static 修饰符的变量若定义在一个文件内当作 “全局变量”，其是 只在该文件具有作用域的，其他文件不能够访问到。
 
-- 对于函数内的局部变量，不希望在函数跳出后局部变量数据丢失那么加上 static 修饰符（指示该变量具有所在文件作用域），static 修饰符的变量若定义在一个文件内当作 “全局变量”，其是 只在该文件具有作用域的，其他文件不能够访问到。
-
-- 为防止编译器优化程序中一些 关键/重要 的变量的给值顺序等，可在变量定义时加 volatile 声明，即不要优化掉这里。
+- 为防止编译器优化程序中一些 关键/重要 的变量的给值顺序等，可在变量定义时加 volatile 声明，即不要优化掉这里，中断或其它线程公用一个变量 或 这个变量是寄存器相关的东西（寄存器地址或寄存器值） 的时候，就应该加。
 
 - 玩一下，比较极端的情况，一个完整的变量声明形式：`extern static volatile const unsigned long int * const temp_reg[sizeof(int)];`。
 
 - 变量如果是低有效，变量名加尾缀 "_n"，比如使能 en 是低有效（en 上面有一横），则命名为 "en_n"。
 
-- 尽量减少不必要的数据类型转换，即 “类型强转”。关于 “类型强转”，要先看位数，低位数类型可以向高位数类型强转，而这个过程反过来的时候，高位数类型直接转换为低位数类型则高位会被丢弃，因此对于高位数类型的数值应该先取 低 八位/十六位/三十二位 等，再强转，这样是比较安全和方便阅读。
-
-- 关于指针相关灵活用法更多详见 `实用技巧` 一节里的 `指针专题` 部分。
+- 尽量减少不必要的数据类型转换，即 “类型强转”。关于 “类型强转”，要先看位数，低位数类型可以向高位数类型强转，而这个过程反过来的时候，高位数类型直接转换为低位数类型则高位会被丢弃，因此对于高位数类型的数值应该先取 低 八位/十六位/三十二 等 位，再强转，这样是比较安全和方便阅读的做法。参考 `实用技巧` 一节里 “巧用 按位 与/或/非 来 组合想要的二进制序列” 的示例代码。
 
 ### 关于结构体、枚举和类型定义形式（Structures, enumerations, typedefs）
 
@@ -685,7 +729,7 @@
 - 结构体应尽量不作为函数的形参或返回值等，而是用其指针替代，减少数据拷贝。
 
 - 结构体定义后加“_ struct”尾缀，对于类型定义后再追加 "_ t"，对于枚举同理，例子如下。
-  
+
   ```c
   /************************* 枚举定义 *************************/
   enum errType_enum
@@ -729,7 +773,8 @@
   };
   
   /************************* 位段 *************************/
-  /* 结构体内还可以对成员声明位段（有的地方也叫 位域），即声明每个成员占用的 bit 数。不多见 */
+  /* 结构体内还可以对成员声明位段（有的地方也叫 位域），即声明每个成员占用的 bit 数。
+  	不多见，位域（bit fields）在不同编译器之间是不可移植的，同时也保证代码是不可重用的。 */
   /* 成员必须为无符号整型 */
   struct mybitfields
   {
@@ -758,9 +803,9 @@
         |--------- year --------------|- month -|---- day ---|
   */
   ```
-  
+
 - 结构体的实例化尽量用 "表格" 形式，并在每列头部写好注释，例子如下。
-  
+
   ```c
   struct fsm_states_struct fsm_XXX1_state[XXX1_State_MAX] =     /*定义描述名为‘fsm_XXX1’的状态机的状态图*/
   {                                                           /*跳转条件都初始化为0*/
@@ -778,6 +823,8 @@
       .c = 1.0
   };
   ```
+
+- 关于结构体的内存对齐在 `GNU C 扩展语法` 一节内有讲。
 
 ### 关于联合和其类型的定义形式（union）
 
@@ -1002,6 +1049,47 @@
 
 ------
 
+### 关于代码格式化工具列举（Code formatter）
+
+*p.s 针对较乱的"祖传代码"做初步治疗使用。代码格式化工具还可以把代码中的 tab 符变成四个空格，这样，当代码在不同的编辑器中打开时不会产生格式错误，所以可以用 AStyle 自己定制一份配置文件，在每次码完代码之后顺手运行一下 AStyle 即可。*
+
+(TODO)下面部分条目尚未补全。
+
+(TODO)查一查astyle配置文件的用法，按照自己的规范形式，写一个配置文件
+
+- 通用工具 AStyle：
+
+  ​    配置文件：  [c-code-style仓库](https://github.com/MaJerle/c-code-style)中的 astyle-code-format.cfg 文件
+  ​    AStyle官网：[AStyle官网](http://astyle.sourceforge.net/)
+  ​    AStyle is a great piece of software that can help with formatting the code based on input configuration.
+  ​    This repository contains `astyle-code-format.cfg` file which can be used with `AStyle` software as command line below.
+
+  ```bash
+  astyle --options="astyle-code-format.cfg" "input_path/*.c,*.h" "input_path2/*.c,*.h"
+  ```
+
+- VS Code：在 VS Code 中搜索 AStyle 插件 即可。或者 Beautify 插件，代码格式化，都还没试过。
+
+- MDK：关于“把代码中的 tab 符变成四个空格”，在 MDK 的 Edit 的 Configuration 中，把 “Insert spaces for tab” 都勾上即可。
+
+- IAR：
+
+- Eclipse：
+
+  ​    配置文件：  [c-code-style仓库](https://github.com/MaJerle/c-code-style)中的 eclipse-ext-kr-format.xml
+  ​    Repository contains `eclipse-ext-kr-format.xml` file that can be used with eclipse-based toolchains to set formatter options.
+  ​    It is based on K&R formatter with modifications to respect above rules.
+  ​    You can import it within eclipse settings, `Preferences -> LANGUAGE -> Code Style -> Formatter` tab.
+
+- Source Insight：
+
+- Notepad：关于“把代码中的 tab 符变成四个空格”，在 Notepad 的 设置 的 语言 中，把制表符框的 “替换为空格” 勾上即可。
+
+一些网友开源项目：
+
+- [mysterywolf/formatting: 源码格式自动化调整工具 (github.com)](https://github.com/mysterywolf/formatting)。
+- 【】。
+
 ## 6 常用宏定义
 
 *p.s 以下有一些在 C 标准库里有实现，资源紧张可以用下面的宏定义，不紧张推荐全部使用标准库。*
@@ -1183,7 +1271,7 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
 
 *p.s 资源不紧张推荐全部使用标准库（除了 malloc 和 free）*
 
-关于各个标准库的使用，详见`额外文档\各种C标准库详解和用例\`里面，已经整理比较全。
+关于各个标准库的使用，详见 `额外文档\各种C标准库详解和用例\` 里面，已经整理比较全。
 
 - 最常用的：
   
@@ -1234,6 +1322,40 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
 
 ### 实用技巧
 
+- 大小端区分。引自 [xiaowenxia/embedded-notes: 嵌入式linux软件开发、嵌入式linux驱动开发、c语言、单片机开发、IOT开发等面试要点记录 (github.com)](https://github.com/xiaowenxia/embedded-notes)。
+
+  ```c
+  union data {
+      int a;
+      char b;
+  }endian;
+  
+  int main(int argc, char **argv)
+  {
+      endian.a = 0x12345678;
+      printf("%#02x\n", endian.b);
+  
+      return 0;
+  }
+  /*打印 0x78 说明是小端（低字节存放在低地址，高字节存放在高地址）， 0x12 说明是大端 */
+  ```
+  
+- 输入一行数字，以空格分割，如 `-1 0 1 2 3\n` 这样。
+
+  ```c
+  unsigned int temp_cnt = 0;
+  char res[10] = {0};
+  do
+  {
+      scanf("%d",&res[temp_cnt++]);
+  }while(getchar() != '\n');
+  
+  for(unsigned int i = 0;i < temp_cnt;i++)
+  {
+      printf("%d ",res[i]);
+  }
+  ```
+  
 - 巧用 按位 与/或/非 来 组合想要的二进制序列。
 
   ```c
@@ -1392,7 +1514,7 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
 
     一阶指针花样不多，下面是各种二次指针总结。
 
-  - 二阶指针的理解用 二维数组 或者 字符串数组 比较直观。对于 长度不一样的 多个 一维数组 常用 指针数组 定义，如 `char *str[]`定义缺省值个不等长的字符串，`int *var[6]`定义 6 个（6 行）不等长的整数数组，要么在定义时初始化其值，要么定义时不初始化然后在用的时候使用 malloc() 为其申请空间再幅值。初始化可以每一行不同长度，实际存储时候是 最大列数 对齐的，而非 初始化的数据 每一行 紧密排列。对于字符串 `"..."`，编译会给每个字符串的尾部添加 `\0`。
+  - 二阶指针的理解用 二维数组 或者 字符串数组 比较直观。对于 长度不一样的 多个 一维数组 常用 指针数组 定义，如 `char *str[]`定义缺省值个不等长的字符串，`int *var[6]`定义 6 个（6 行）不等长的整数数组，要么在定义时初始化其值，要么定义时不初始化然后在用的时候使用 malloc() 为其申请空间再赋值。初始化可以每一行不同长度，实际存储时候是 最大列数 对齐的，而非 初始化的数据 每一行 紧密排列。对于字符串 `"..."`，编译会给每个字符串的尾部添加 `\0`。
 
     ```c
     /* 这里介绍一种 字符串数组 的定义方法，引自 https://mp.weixin.qq.com/s/TqNTMAY2gPUcoxlEYijBUw */
@@ -1524,7 +1646,7 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
                 p2[1] = (int*)malloc(sizeof(int) * 20);
                 p2[2] = (int*)malloc(sizeof(int) * 30);
     
-        2、而另外两种（数组的指针 int (*p1)[4]; 和 二阶指针 int **p3;）是用来分别承接上面两种（二维数组 int x[3][4]; 和 指针数组 int *p2[3];）的地址的（常用于函数形参，用指针来传递 二维数组/指针数据 以减少拷贝），如：
+        2、而另外两种（数组的指针 int (*p1)[4]; 和 二阶指针 int **p3;）是用来分别 承接 上面两种（二维数组 int x[3][4]; 和 指针数组 int *p2[3];）的地址的（常用于函数形参，用指针来传递 二维数组/指针数据 以减少拷贝），如：
             数组的指针来承接二维数组的地址：（类比 一阶指针来承接一维数组的地址：char a[] = "abc"; char *a_p = a;）
                 int x[3][4];
                 int (*p1)[4] = x;
@@ -2210,7 +2332,9 @@ struct example_struct {
 
 ## 9 C 组件收集-学习或实用
 
-- Github & Gitee 等 上面 有很多 “轮子”。
+- Github & Gitee 等 上面 有很多 “轮子”。但要注意开源协议！
+
+- [tezc/sc: Common libraries and data structures for C. (github.com)](https://github.com/tezc/sc)。
 
 - [有哪些值得推荐的小型 C 语言开源项目？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/20792016/answer/2246289103)。
 
@@ -2291,7 +2415,7 @@ struct example_struct {
 
 ------
 
-## 8 ST HAL 库的编写形式
+## 10 ST HAL 库的编写形式
 
 相关文章：
 
@@ -2427,17 +2551,15 @@ extern "C" {
 最后加一个 COPYRIGHT
 ```
 
-## 9 本文参考源/更多参考
-
-**本文参考源**
+## 11 本文参考源
 
 1. [c-code-style](https://github.com/MaJerle/c-code-style)，受此启发，而积此文。
-2. 不计的众多网络文章资料，大块引用的已经在文中标出出处。
+2. 不计其数的众多网络文章资料（大块的引用的已经在文中标出出处）。
 3. 一些 C 相关的书籍。
 4. [20个成熟软件中常用的宏定义](https://jishuin.proginn.com/p/763bfbd35604)。[ST HAL](https://www.stmcu.com.cn/)。[知乎问题页：程序员们有什么好的编程习惯？](https://www.zhihu.com/question/440136872)。
-5. 【正点原子】嵌入式Linux C代码规范化V1.0。
+5. 《【正点原子】嵌入式Linux C代码规范化》手册。
 6. 本文作者长期摸索的经验。
-7. 很多 引用 的源头难考（或 中文互联网 低质量的抄来抄去的 根本就不可考源头）就没有写引用，侵删。
+7. 很多 引用 的源头难考（或 中文互联网 低质量的抄来抄去的 有些根本就不可考源头）就没有写引用，侵删。
 8. 其他。
 
 这是 ZLG致远电子 在2018年的一篇肺腑文章：
@@ -2450,53 +2572,7 @@ extern "C" {
 
 *p.s 此文件系业余整理而成，远不及"Google C/C++编程规范"、"华为编程规范"等文件的专业程度。*
 
-**更多参考**
-
-- [C 语言编程规范 ~ Murphy's Blog](https://murphy.tech/posts/f55a6415.html)。[基于 Markdown 的中文文档排版规范 ~ Murphy's Blog](https://murphy.tech/posts/eaf5273.html)。
-- .etc
-
-## 10 大厂规范和名设计模式
-
-以下强烈建议空闲时认真学一学。
-
-### 大厂 / 名家规范
-
-1. [Google 开源项目风格指南——中文版 — Google 开源项目风格指南 (zh-google-styleguide.readthedocs.io)](https://zh-google-styleguide.readthedocs.io/en/latest/)。
-2. *华为 C语言编程规范*
-   - *[华为C语言编程规范（精华总结）](https://blog.csdn.net/m0_38106923/article/details/105042594)*。
-   - *[C语言编程规范（一）（华为标准要求）](https://zhuanlan.zhihu.com/p/346160926)*。
-   - *[C语言编程规范（二）（华为标准要求）](https://zhuanlan.zhihu.com/p/346689923)*。
-3. [Qihoo360/safe-rules: 详细的C/C++编程规范指南，由360质量工程部编著，适用于桌面、服务端及嵌入式软件系统。 (github.com)](https://github.com/Qihoo360/safe-rules)。
-4. *[MISRA C Coding Standard](https://www.misra.org.uk/Publications/tabid/57/Default.aspx)*。
-5. [Linux CodingStyle] Linux 内核源代码目录下的 Documentation/CodingStyle 文件。中文：[Linux 内核代码风格 — The Linux Kernel documentation](https://www.kernel.org/doc/html/latest/translations/zh_CN/process/coding-style.html)。
-6. [嵌入式软件编程规范 (qq.com)](https://mp.weixin.qq.com/s/vzydChjPtwUP_wtk1GHpGQ)，对文件架构、函数、变量等的规范均有涉及。
-7. 航天软件C安全子集-GJB5369标准规范，离线在本地`\额外文档`。
-
-### 设计定律、原则和模式
-
-总结性的：
-
-1. [为了写好代码，你坚持了哪些好习惯？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/535244045)。
-1. [比较优雅地编码（良好的命名，清晰的结构和不差的算法）](https://www.cnblogs.com/zzy0471/p/coderule.html)。
-2. [nusr](https://github.com/nusr)/[hacker-laws-zh 对开发人员有用的定律、理论、原则和模式](https://github.com/nusr/hacker-laws-zh)。
-3. [如何正确地使用设计模式？ - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/352074106)。
-4. [C语言和设计模式（总结篇）_平凡的程序员-CSDN博客_c设计模式](https://blog.csdn.net/feixiaoxing/article/details/7294900)。
-5. [23种设计模式全解析_CodeAllen的博客-CSDN博客](https://blog.csdn.net/super828/article/details/84311440)。
-6. [架构与设计 之一 C 嵌入式设计模式（Design Patterns for Embedded Systems in C）的学习记录_itexp-CSDN博客](https://blog.csdn.net/zcshoucsdn/article/details/80217199)。
-7. [书籍推荐《调试九法-软硬件错误的排查之道》 - lumang - 博客园 (cnblogs.com)](https://www.cnblogs.com/lumang/p/9032692.html)。
-8. etc.
-
-细分性的：
-
-1. [观察者模式与订阅发布模式的区别 - 一像素 - 博客园 (cnblogs.com)](https://www.cnblogs.com/onepixel/p/10806891.html)。
-2. etc.
-
-### 提高代码运行效率
-
-- [提高代码运行效率](https://mp.weixin.qq.com/s/5mzknQZyZU2bimO6oZUnyQ)。
-- etc。
-
-## 11 尾记
+## 12 尾记
 
 ### 开光保护
 
@@ -2512,36 +2588,36 @@ extern "C" {
 
 ### 现代信息社会的基
 
-所有的可以归结为算法的问题都可以通过 运算+赋值+顺序+分支+循环 等基本要素完成，支持做到这样的机器可以被称为图灵完备的，由数字电路中的与或非门的组合组成组合逻辑电路和用其所组成的触发器单元再组合成时序逻辑电路就可以形成这样的机器，按照冯诺依曼计算机结构来设计一个带有输入、输出、存储和计算单元等的通用的一个机器，可以称之为CPU，其中计算单元将大部分问题的解决步骤分为了有限的、少量的基本运算比如锁存（幅值）、加法、位移等等，调用这些运算的称之为指令，在机器中提前规定特定的0/1组合来表示这些指令，被称之为机器码，再规定一些汇编语句与这些机器码一一对应，当编好汇编码再由一些手段转化为机器码之后，CPU读取这些机器码识别到要对哪些数据进行哪些基本运算，对于CPU来说眼里只有这点事，在此基础上构建高级语言再通过某些手段转化为汇编即可，对人类而言可以靠其用编程来解决能算法化的问题。 好，每当多一个人理解了这个现代计算机的底层精髓后，当末日降临之后新人类靠这些密语重新构建电子信息社会的几率就大一点（逃）。
+所有的可以归结为算法的问题都可以通过 运算+赋值+顺序+分支+循环 等基本要素完成，支持做到这样的机器可以被称为图灵完备的，由数字电路中的与或非门的组合组成组合逻辑电路和用其所组成的触发器单元再组合成时序逻辑电路就可以形成这样的机器，按照冯诺依曼计算机结构来设计一个带有输入、输出、存储和计算单元等的通用的一个机器，可以称之为 CPU，其中计算单元将大部分问题的解决步骤分为了有限的、少量的基本运算比如锁存（幅值）、加法、位移等等，调用这些运算的称之为指令，在机器中提前规定特定的 0/1 组合来表示这些指令，被称之为机器码，再规定一些汇编语句与这些机器码一一对应，当编好汇编码再由一些手段转化为机器码之后，CPU 读取这些机器码识别到要对哪些数据进行哪些基本运算，对于 CPU 来说眼里只有这点事，在此基础上构建高级语言再通过某些手段转化为汇编即可，对人类而言可以靠其用编程来解决能算法化的问题。 好，每当多一个人理解了这个现代计算机的底层精髓后，当末日降临之后新人类靠这些密语重新构建电子信息社会的几率就大一点（逃）。
 
-我甚至想写一篇《从沙子到操作系统》的综合多学科交叉的科普性文章，也是计算机的历史，大纲如下： 
+我甚至想写一篇《从沙子到操作系统》的综合多学科交叉的科普性文章，也是计算机的简史，大纲如下： 
 
 1. 上等的沙子。
 2. 单晶硅。
-3. 掺杂得p、n结。
+3. 掺杂得 p、n 结。
 4. 二极管。
 5. BJT。
 6. MOS。
 7. 组成基本与或非门。
 8. 组合逻辑电路。
-9. SR锁存器。
-10. 主从结构得D触发器。
+9. SR 锁存器。
+10. 主从结构得 D 触发器。
 11. 时序逻辑电路。
-12. 模n计数器。
+12. 模 n 计数器。
 13. 状态机。
 14. ALU。
 15. 存储 RAM ROM。
-16. 再联合输入输出+控制电路等等，组成通用处理器CPU，可以执行机器码。
+16. 再联合输入输出+控制电路等等，组成通用处理器 CPU，可以执行机器码。
 17. 支持顺序、分支和循环（图灵完备）。
 18. 冯诺依曼结构、哈佛结构。
 19. 设计指令集。
 20. 汇编助记符替代机器码。
-21. 用汇编写个C语言编译器。
-22. 再用C语言重新编译器。
+21. 用汇编写个 C 语言编译器。
+22. 再用 C 语言重新编译器。
 23. 写驱动、写算法，写写写。
-24. CPU演化：流水线、Cache 分级、分支预测、乱序执行、SIMD、单发射/多发射、超线程。
+24. CPU 演化：流水线、Cache 分级、分支预测、乱序执行、SIMD、单发射/多发射、超线程。
 25. 不断扩充指令集。
-26. 不断产生FPU、VPU、GPU、NPU等等（26英文字母+PU）。
+26. 不断产生 FPU、VPU、GPU、NPU 等等（26 英文字母 + PU）。
 27. 上操作系统：多任务管理、任务间通讯与同步、资源管理、设备驱动标准化等等。
 28. 等等等等。
 29. 才有了现代信息社会。
@@ -2555,17 +2631,18 @@ extern "C" {
 1. 写流水灯。
 2. 写一个状态机，实现任意模式的流水灯。
 3. 写一个实时操作系统，充分利用汇编实现高效调度算法，然后点灯。
-4. 在FPGA上实现一个sopc软核，在核内运行我写的实时操作系统，然后点灯。
-5. 在RSIC-V架构实现一个内核，其外部总线连着FPGA，内核跑我写的操作系统，通过总线控制FPGA实现时序逻辑状态机，然后点灯。
+4. 在 FPGA 上实现一个 cpu 软核，在核内运行我写的实时操作系统，然后点灯。
+5. 使用 RSIC-V 架构实现一个 cpu，其外部总线连着 FPGA，内核跑我写的操作系统，通过总线控制 FPGA 实现时序逻辑状态机，然后点灯。
 6. 设计一套包含前后端的物联网系统，视觉识别马路上的行人姿态，当有人摔倒时，然后点灯。
-7. 把旧安卓手机的cpu从主板上吹下来，再吹焊到我设计的8层板上，跑个安卓系统，然后点灯。
+7. 把旧安卓手机的 cpu 从主板上吹下来，再吹焊到我设计的 8 层板上，跑个安卓系统，然后点灯。
+7. 这个世界的目的就是点灯，与 烧开水 的重要程度并列（癫狂ing）！
 
 ## 署名
 
-- 编辑整理：[Github 页](https://github.com/Staok)，[知乎页](https://www.zhihu.com/people/xuhaoyang)
-- 发表时间：始于 2021.2 且无终稿
-- 首发平台：https://zhuanlan.zhihu.com/p/350839857 and https://github.com/Staok/coding-style-and-more
-- 遵循协议：[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)
+- 编辑整理：[Github 页](https://github.com/Staok)，[知乎页](https://www.zhihu.com/people/xuhaoyang)。
+- 发表时间：始于 2021.2 且无终稿。
+- 首发平台：https://zhuanlan.zhihu.com/p/350839857 and https://github.com/Staok/coding-style-and-more。
+- 遵循协议：[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)。
 - 其他说明：
   1. 本文件是“瞰百易”计划的一部分，尽量遵循 [“二项玻”定则](https://github.com/Staok/Please-stay-in-the-future)，致力于与网络上碎片化严重的现象泾渭分明（这中二魂...）！
   2. 本文系广泛撷取、借鉴和整理，侵删。本文适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！

@@ -100,6 +100,20 @@
 - [线性表详解：数据结构线性表10分钟入门 (biancheng.net)](http://c.biancheng.net/data_structure/linear_list/)。
 - [栈(Stack)和队列(Queue)详解 (biancheng.net)](http://c.biancheng.net/data_structure/stack_queue/)。
 
+### 哈希查找
+
+参考教程：
+
+- [C语言-哈希查找(HASH)-详解（完整代码）_细雨青峦的博客-CSDN博客_c hash](https://blog.csdn.net/qz652219228/article/details/120105248)。
+- [C的hash实现_洛晓的博客-CSDN博客_c实现hash](https://blog.csdn.net/shenpeng_sgua/article/details/104382565)。
+- [c实现hash_明珠天南的博客-CSDN博客_c hash](https://blog.csdn.net/yq272393925/article/details/90289968)。
+
+> 哈希表查 找算法的时间复杂度为O(n^1)。
+>
+> HASH查找 效率高的原因：
+>
+> ​    查找某一个数，先求出这个数的余数，然后根据余数直接定位到对应的链表地址，然后在该链表里查找（链表里只有几个数据）--所以快！！
+
 #### 树
 
 以下为树的基本概念（定义、基本操作、性质、存储结构等）、二叉树（定义、基本操作、存储、遍历等）、平衡二叉树、红黑树等。
