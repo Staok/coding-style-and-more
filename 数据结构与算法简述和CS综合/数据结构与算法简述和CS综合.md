@@ -23,6 +23,7 @@
 
 - [代码随想录 (programmercarl.com)](https://programmercarl.com/)，推荐，一站式，比较全。
 - [数据结构部分简介 - OI Wiki (oi-wiki.org)](https://oi-wiki.org/ds/)。
+- [SummerLife/DataStructure: 记录学习浙江大学《数据结构》课程的学习笔记和练习题， 以及在工作中常见数据结构的整理 (github.com)](https://github.com/SummerLife/DataStructure).
 - [算法入门教程（多语言实现） (biancheng.net)](http://c.biancheng.net/algorithm/)。
 - [算法基础简介 - OI Wiki (oi-wiki.org)](https://oi-wiki.org/basic/)。[动态规划部分简介 - OI Wiki (oi-wiki.org)](https://oi-wiki.org/dp/)。
 - [字符串部分简介 - OI Wiki (oi-wiki.org)](https://oi-wiki.org/string/)。
@@ -100,7 +101,7 @@
 - [线性表详解：数据结构线性表10分钟入门 (biancheng.net)](http://c.biancheng.net/data_structure/linear_list/)。
 - [栈(Stack)和队列(Queue)详解 (biancheng.net)](http://c.biancheng.net/data_structure/stack_queue/)。
 
-### 哈希查找
+#### 哈希查找
 
 参考教程：
 
@@ -586,6 +587,7 @@ Github 开源项目：
 - embedded-notes：[xiaowenxia/embedded-notes: 嵌入式linux软件开发、嵌入式linux驱动开发、c语言、单片机开发、IOT开发等面试要点记录 (github.com)](https://github.com/xiaowenxia/embedded-notes)。
 - [从事嵌入式行业的你，现在年薪多少，有什么经历想和大家分享？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/55453399/answer/1847544192)。
 - [嵌入式面试题，不断更新 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/338821919)。
+- EmbeddedSystem：[SummerLife/EmbeddedSystem: 计算机体系架构、嵌入式系统基础与主流编程语言相关内容总结 (github.com)](https://github.com/SummerLife/EmbeddedSystem)。
 
 ## 附：算法刷题总结
 
