@@ -98,12 +98,11 @@
 - [嵌入式面试题，不断更新 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/338821919)，[嵌入式面试题（二），不断更新 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/342410727)。
 - [嵌入式软件工程师笔试面试指南-C/C++ - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/365152865)。
 - [C/C++ 代码风格和规范_路过的小熊~的博客-CSDN博客](https://blog.csdn.net/qq_32348883/article/details/123462908)。[代码整洁之道（一）最佳实践小结-阿里云开发者社区 (aliyun.com)](https://developer.aliyun.com/article/598076#?utm_content=m_1000007560)。
-- [浅谈嵌入式MCU软件开发之代码风格与代码优化 (qq.com)](https://mp.weixin.qq.com/s?__biz=MzI0MDk0ODcxMw==&mid=2247484735&idx=1&sn=1874d5e81303295444f0fdef10b196e6&chksm=e91241b9de65c8af4d771387c84e313709cba490fe2192b20ed81cff8811786665e170120a68&mpshare=1&scene=23&srcid=03174aTa6DmT6UJCouP7ykba#rd)。
 - .etc
 
 ### 一些方面的提醒
 
-#### 时间、空间复杂度
+#### 时间、空间复杂度 的 取舍 和 有意识优化
 
 时间复杂度表示一个算法内执行语句的数量在最坏的情况下随着循环次数 n 的增加而增长的数量级。一个算法内语句的使用次数（频度）表示为 f(n)，n 为算法内循环语句的循环数，n 的变化直接改变 整个算法的语句使用次数；时间复杂度 O(g(n)) 的定义为，对于一个算法，当且仅当存在正整数 c 和 n0，使得 f(n) ≤ cg(n) 对于所有 n ≥ n0 成立，则该算法的渐进时间复杂度为 f(n) = O(g(n))，g(n) 为 n 的函数。
 
@@ -121,7 +120,7 @@
 - 设计高效、方便的数据存储的数据结构，设计高效、方便的算法来操作这些数据。
 - 关于 MCU 的编写框架，我目前大抵就认我自己的开源项目 "[stm32_framework](https://github.com/Staok/stm32_framework)" 的吧，规范都对齐这个项目。
 
-### 嵌入式 相关的提醒
+### 嵌入式 相关提醒
 
 *p.s 这里长期更新。*
 
@@ -254,6 +253,32 @@
 
 - .etc
 
+### 优化程序执行性能 相关提醒
+
+可以总结为三大方向上去优化：
+
+- 硬件（硬件决定了最高性能，软件实现去逼近。尽量多的利用硬件提供的）。
+- 软件编码实现（完成关键任务代码本身的执行效率提升，包括数据结构与算法的精良设计，包括对驱动提供的机制、操作系统提供的机制等等的高效利用）。
+- 编译器（理解编译器对代码的编译和优化，让编译器的编译、优化结果达成你想要的）。
+
+具体的里面的道道、经验很多需要慢慢内化、积累。
+
+#### 通用优化策略
+
+- > 引自 [《深入理解计算机系统》读书笔记 & 要点总结<中> | 浅墨的部落格 (0xffffff.org)](https://www.0xffffff.org/2013/01/16/9-csapp-2/)。
+  >
+  > 1. 编写高效程序需要几类活动：第一，我们必须选择一组合适的算法和数据结构；第二，我们必须编写出编译器能够有效优化以转换成高效可执行代码的源代码。对于第二点，理解编译器的优化能力和局限性是很重要的。编写程序的方式中看似只是一点点的变动，都会引起编译器优化方式上很大的变化；第三项技术针对处理运算量特别大的计算，讲一个任务分为多个部分，这些部分可以在多核和多处理器的某种组合上并行的计算。
+  > 2. 尽管做了广泛的变化，但还是要维护代码一定程度的简洁和可读性。
+  > 3. 程序员必须编写容易优化的代码，以帮助编译器。主要包括：消除循环的低效率，减少过程调用和消除不必要的存储器引用。
+  > 4. 在实际的处理器中，是同时对多条指令求值，这个现象叫做指令级并行。特别地，当一系列操作必须严格按照顺序执行时，就会遇到延迟界限（latency bound），因为下一条指令开始之间，这条指令必须结束。当代码中的数据相关限制了处理器利用指令级并行的能力时，延迟界限会限制程序性能。吞吐量界限（throughput bound）刻画了处理器单元的原始计算能力。这个界限是程序性能的终极限制。
+  > 5. 没有任何编译器能用一个好的算法或数据结构代替低效率的算法或数据结构，因此程序设计的这些方面仍然是程序员主要关心的。
+
+- [提高代码运行效率](https://mp.weixin.qq.com/s/5mzknQZyZU2bimO6oZUnyQ)，[9个提高代码运行效率的小技巧你知道几个？ - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/344199417)。
+
+- [C语言编程之运行速度优化方法汇总（转载）_automan2019的博客-CSDN博客_c语言常用的运行速度优化方法](https://blog.csdn.net/qq_38719138/article/details/116464509)，[C语言编程之运行速度优化方法汇总 - 腾讯云开发者社区-腾讯云 (tencent.com)](https://cloud.tencent.com/developer/news/395160)。
+
+- etc。
+
 #### 嵌入式 编程 提高 CPU利用效率、降低CPU占用举措列举
 
 - 尽量利用CPU硬件、外设、提供的机制来完成相关任务。比如：
@@ -262,7 +287,7 @@
   - 收发数据的外设带有 FIFO 则会减少 CPU占用，比如没有 FIFO 则每次来数据都会中断 CPU，而带 FIFO 则会只在其满一次或半满一次的时候才会中断 CPU 来一次性处理一整个大块的数据，大大提高效率。
 - 软件编程上需要大块数据转移、传递的时候尽量只传递其指针，即尽量使用内存映射的思路，尽量减少数据的拷贝。
 - 优化算法，尽量降低具体模块的运行的时间复杂度。合并计算式，在数学上化简计算至最简再写入程序。合理范围内去减少 CPU 运行的 无效/无用的代码。
-
+- [浅谈嵌入式MCU软件开发之代码风格与代码优化 (qq.com)](https://mp.weixin.qq.com/s?__biz=MzI0MDk0ODcxMw==&mid=2247484735&idx=1&sn=1874d5e81303295444f0fdef10b196e6&chksm=e91241b9de65c8af4d771387c84e313709cba490fe2192b20ed81cff8811786665e170120a68&mpshare=1&scene=23&srcid=03174aTa6DmT6UJCouP7ykba#rd)。
 - .etc
 
 ------
@@ -292,16 +317,18 @@
 
 ## 相关有趣/耐看书或视频
 
+- [学习心得介绍 | 小林coding (xiaolincoding.com)](https://xiaolincoding.com/cs_learn/)。[介绍 | 小林coding (xiaolincoding.com)](https://xiaolincoding.com/reader_nb/)。
 - [13 万字 C 语言从入门到精通保姆级教程2021 年版_极客江南的博客-CSDN博客](https://blog.csdn.net/weixin_44617968/article/details/117656810)。
-- ~~[《算法新解》开源书](https://github.com/liuxinyu95/AlgoXY)。~~《啊哈！算法》。
-- 图解系统 小林。图解网络 小林。
+- [tangtangcoding/C-CppLearning: C语言与C++学习 (github.com)](https://github.com/tangtangcoding/C-CppLearning)，内容超多。
+- [图解系统 小林](https://xiaolincoding.com/os/)，[笔记：图解系统（小林coding）_NiXGo的博客-CSDN博客](https://blog.csdn.net/qq_45858169/article/details/117233800)，推荐。
+- [图解网络 小林](https://xiaolincoding.com/network/)，推荐。
 - [趣谈网络协议](https://book.douban.com/subject/35013753/)。
 - 手绘图解 HTTP。30张图解HTTP常见面试题。
 - [TCP/IP 教程 | 菜鸟教程 (runoob.com)](https://www.runoob.com/tcpip/tcpip-tutorial.html)。[HTTP 教程 | 菜鸟教程 (runoob.com)](https://www.runoob.com/http/http-tutorial.html)。
 - [《嵌入式C语言的自我修养》](https://book.douban.com/subject/35446929/) 从沙子讲到 CPU，从编辑器讲到编译器，从高阶 C 语言讲到内存管理，从 GNU 讲到多任务编程。
-
 - [（完结）（小甲鱼）数据结构和算法_ 哔哩哔哩 _bilibili](https://www.bilibili.com/video/BV1os41117Fs)。
 - [国嵌唐老师主讲【数据结构与算法C语言】（非常犀利）_ 哔哩哔哩 _bilibili](https://www.bilibili.com/video/BV1eK4y1J7zh) 讲的慢。
+- ~~[《算法新解》开源书](https://github.com/liuxinyu95/AlgoXY)，我为什么加下划线？~~，《啊哈！算法》。
 
 ------
 
@@ -342,11 +369,6 @@
 
 1. [观察者模式与订阅发布模式的区别 - 一像素 - 博客园 (cnblogs.com)](https://www.cnblogs.com/onepixel/p/10806891.html)。
 2. etc.
-
-### 提高代码运行效率
-
-- [提高代码运行效率](https://mp.weixin.qq.com/s/5mzknQZyZU2bimO6oZUnyQ)，[9个提高代码运行效率的小技巧你知道几个？ - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/344199417)。
-- etc。
 
 ------
 
@@ -1310,6 +1332,10 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
 
 ### 实用技巧
 
+- [前言 · C语言开发心得 (crifan.org)](https://book.crifan.org/books/c_lang_dev_summary/website/)，[crifan/c_lang_dev_summary: C语言开发心得 (github.com)](https://github.com/crifan/c_lang_dev_summary)。
+
+- [快速范围判断：再来一种新写法 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/147039093)。
+
 - 大小端区分。引自 [xiaowenxia/embedded-notes: 嵌入式linux软件开发、嵌入式linux驱动开发、c语言、单片机开发、IOT开发等面试要点记录 (github.com)](https://github.com/xiaowenxia/embedded-notes)。
 
   ```c
@@ -1422,230 +1448,6 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
   GPIO_ORD GPIOA_ODR __attribute__((at(0x40020014))); /*  */
   ```
 
-- **指针专题**
-
-  - 若要修改一函数的局部变量的值那么请用一级指针，若要修改一局部变量一级指针的值那么用二级指针，以此类推。
-
-    ```c
-    /* 修改一函数的局部变量的值那么请用一级指针，这个好理解，举例 */
-    void set_to_five(int* val)
-    {
-        *val = 5;
-    }
-    
-    int main(void)
-    {
-        int value = 10; /* 要修改 main() 函数的局部变量 value */
-        printf("before - value = %d\n",value);
-        set_to_five(&value); /* 修改值，要传入其地址 */
-        printf("after - value = %d\n",value);
-    }
-    
-    /* 依上面类推，传递入地址才能修改值，因此修改一局部变量一级指针的值那么用二级指针，举例 */
-    int ten   = 10;
-    int five  = 5;
-    
-    void set_to_five(int** val)
-    {
-        *val = &five;
-    }
-    
-    int main(void)
-    {
-        int* value = &ten;
-        printf("before - *value = %d\n",*value);
-        test4(&value); /* 修改值，要传入其地址 */
-        printf("after - *value = %d\n",*value);
-    }
-    
-    /* 再一个例子，引用自：https://blog.csdn.net/c243311364/article/details/109619361 */
-    void GetMemery(int** p) /* 修改外面的一个局部变量 *P，需要外面传入该局部变量的指针 即 **P */
-    {
-        /*申请1024个int大小*/
-        *p = malloc(sizeof(int)*1024);
-        if(NULL == *p)
-        {
-            printf("malloc failed\n");
-        }
-    }
-    int main(void)
-    {
-        int* p = NULL; /* 定义一个 局部变量 的 空指针（野指针） */
-        GetMemery(&p); /* 为其申请空间，即让其他函数修改 本函数中的局部变量的值，注意是传入 指针 p 的指针 */
-        printf("address of p is %p\n",p);
-        free(p);
-        return 0;
-    }
-    /* 上面这种将一局部指针变量在另一个函数内为其赋值，当然应该传入的是其指针，即 &p */
-    
-    /* 但，在任何地方申请空间后作为返回值 进行赋值 可以，因为申请空间的地址是 堆区，是全局变量，例子如下 */
-    int* GetMemery(int n)
-    {
-        int* iptr = malloc(sizeof(int) * n); /* 申请 n 个 int 大小 */
-        if(NULL == iptr)
-        {
-            printf("malloc failed\n");
-            return NULL;
-        }else
-        {
-            return iptr;
-        }
-    }
-    int main(void)
-    {
-        int* p = GetMemery(1024);
-        printf("address of p is %p\n",p);
-        free(p);
-        return 0;
-    }
-    ```
-
-    一阶指针花样不多，下面是各种二次指针总结。
-
-  - 二阶指针的理解用 二维数组 或者 字符串数组 比较直观。对于 长度不一样的 多个 一维数组 常用 指针数组 定义，如 `char *str[]`定义缺省值个不等长的字符串，`int *var[6]`定义 6 个（6 行）不等长的整数数组，要么在定义时初始化其值，要么定义时不初始化然后在用的时候使用 malloc() 为其申请空间再赋值。初始化可以每一行不同长度，实际存储时候是 最大列数 对齐的，而非 初始化的数据 每一行 紧密排列。对于字符串 `"..."`，编译会给每个字符串的尾部添加 `\0`。
-
-    ```c
-    /* 这里介绍一种 字符串数组 的定义方法，引自 https://mp.weixin.qq.com/s/TqNTMAY2gPUcoxlEYijBUw */
-    #define EINVAL 1
-    #define ENOMEM 2
-    #define EFAULT 3 /* 这些量 或可使用枚举 */
-    
-    #define E2BIG 7
-    #define EBUSY 8
-    
-    #define ECHILD 12
-    
-    char *err_strings[] = {
-        [0] = "Success",
-        [EINVAL] = "Invalid argument",
-        [ENOMEM] = "Not enough memory",
-        [EFAULT] = "Bad address",
-        /* ... */
-        [E2BIG ] = "Argument list too long",
-        [EBUSY ] = "Device or resource busy",
-        /* ... */
-        [ECHILD] = "No child processes"
-        /* ... */
-    };
-    
-    /* 引用某一个字符串可以直接这样：err_strings[EFAULT] */
-    ```
-
-  - 各种二次指针（二维数组、指针数组 与 数组指针、二阶指针）的传递总结：
-
-    ```c
-    /*  参考：https://blog.csdn.net/u013684730/article/details/46565577
-            实参                                     传递→       所匹配的形参
-    
-            数组的数组            char x[3][4];                 char (*p1)[4];         数组指针
-    
-            数组指针(行指针)       char (*p1)[4];                char (*p1)[4];         自身类型
-    
-            指针数组              char *p2[3];                  char **p3;             指针的指针
-    
-            指针的指针            char **p3;                     char **p3;            自身类型
-    */
-    
-    /* 二维数组，实参 x[3][4]，可以传递的/所匹配的形参为 数组的指针 int (*p1)[4]; 即可以给 p1  */
-    int x[3][4] =       /* 3 行 4 列，编译器实际分配了 12 个 int 类型的空间 */
-    {                   /* x[n] 或 *(x + n) 为第 n 行头字节的指针，*(*(x + 2) + 3) 与 x[2][3] 等价 */
-        {1, 3,  5, 7},  
-            /* 值得一提，x、&x[0]、x[0]、&x[0][0] 是同一个地址，因此 *(*(x + 2) + 3) 与 x[2][3] 等价，均可用于索引 */
-        {9, 11, 2, 4}, 
-        {6, 8, 10, 12}
-    };
-    
-    /* 数组的指针，实参为 int (*p1)[4]，可以传递的/所匹配的形参为 数组的指针 int (*p1)[4]; 即只可以传递给相同类型的 */
-    int (*p1)[4] = x;     /* 包含 4 个 int 型 数组 的指针，即 p1 指向 一个包含 4 个 int 值的数组 */ 
-    /* 有的说可以写为 int p1[][4] = x，可读性更强 */
-    /* 该初始化或写为
-        int (*p1)[4];
-        p1 = x;
-    */
-    /* 加深对 数组的指针 的理解
-        short int tell[10];
-            tell 与 &tell 在数字上来说相同，但从 概念上/编译器上 来看来，二者不同
-            tell 或 &tell[0] 是 2 字节 为单位 的内存块的地址，cell 是 short* 类型，tell++ 则指针移动 2 个字节
-            &tell 是 20 字节 为单位 的内存块的地址，&cell 是指向 包含 10 个 short 类型的数组的地址，
-                这个表示为 short(*)[10]，&tell++ 则指针移动 20 个字节
-        因此 有
-        short (*pas)[10] = &tell;
-            tell 的 类型为 short*，而 &tell 和 pas 的类型叫 short(*)[10]
-            *pas 与 tell 等价，(*pas)[0] 即 tell[0]
-    */
-    /* 补充，因二维数组在存储空间中是对其每一行数据紧密排列串在一维地址索引的存储空间里，
-        因此可以用一阶指针承接二维数组 x：int* p0 = x[0]; 此后索引二维数组 x 用 p0[n]，是一维的，用地址偏移索引，
-        比如 *(p0 + i*4 + j) 等价于 p0[i*4 + j] 等价于 x[i][j] （4 是 数组 x 的列数） */
-    
-    /* 指针数组，实参为 int *p2[3]，可以传递的/所匹配的形参为 二阶指针 int **p3;，即可以给 p3 */
-    int *p2[3] = {x[0], x[1], x[2]};    /* 3 个 int* 类型的变量组成的数组；取 二维数组 x 的每一行的头地址 幅值给 指针数组 */
-    /* 或写为
-        int *p2[3];
-        for(int i = 0;i < 3;i++)
-            p2[i] = x[i];
-    */
-    
-    /* 指向指针的指针，二阶指针 或叫 二维指针，实参为 int **p3，可以传递的/所匹配的形参为 二阶指针 int **p3; 即只可以传递给相同类型的 */
-    int **p3 = p2;    /* 实际上 int **p3 和 *p3[] 是等价的 */
-    /* 或写为 
-    	int **p3 = &p2[0];
-    
-       或写为
-        int **p3;
-        p3 = p2;
-    */
-    
-    int k, m;
-    for(m = 0, k = 1; m < 3; m++, k++)
-    {
-        printf("p1[%d][%d] = %d\t",m,k,p1[m][k]);
-        printf("*(*(p1 + %d) + %d) = %d\n",m,k,*(*(p1 + m) + k));
-    
-        printf("p2[%d][%d] = %d\t",m,k,p2[m][k]);
-        printf("*(*(p2 + %d) + %d) = %d\n",m,k,*(*(p2 + m) + k));
-    
-        printf("p3[%d][%d] = %d\t",m,k,p3[m][k]);
-        printf("*(*(p3 + %d) + %d) = %d\n",m,k,*(*(p3 + m) + k));
-    
-        printf("\n");
-    }
-    
-    /* 打印结果：
-        p1[0][1] = 3    *(*(p1 + 0) + 1) = 3
-        p2[0][1] = 3    *(*(p2 + 0) + 1) = 3
-        p3[0][1] = 3    *(*(p3 + 0) + 1) = 3
-    
-        p1[1][2] = 2    *(*(p1 + 1) + 2) = 2
-        p2[1][2] = 2    *(*(p2 + 1) + 2) = 2
-        p3[1][2] = 2    *(*(p3 + 1) + 2) = 2
-    
-        p1[2][3] = 12   *(*(p1 + 2) + 3) = 12
-        p2[2][3] = 12   *(*(p2 + 2) + 3) = 12
-        p3[2][3] = 12   *(*(p3 + 2) + 3) = 12
-    */
-    
-    /* 综上可以总结：
-        1、对于开辟空间填充数据，一种静态、一种动态：
-            静态：二维数组，定义时直接声明好静态空间大小，并实际占用这么大：
-                int x[3][4];
-            动态：指针数组，在定义后、使用前，要分别给每一个指针按需申请可大小不等的动态空间，使用后要释放空间 free()：
-                int *p2[3];
-                p2[0] = (int*)malloc(sizeof(int) * 10);
-                p2[1] = (int*)malloc(sizeof(int) * 20);
-                p2[2] = (int*)malloc(sizeof(int) * 30);
-    
-        2、而另外两种（数组的指针 int (*p1)[4]; 和 二阶指针 int **p3;）是用来分别 承接 上面两种（二维数组 int x[3][4]; 和 指针数组 int *p2[3];）的地址的（常用于函数形参，用指针来传递 二维数组/指针数据 以减少拷贝），如：
-            数组的指针来承接二维数组的地址：（类比 一阶指针来承接一维数组的地址：char a[] = "abc"; char *a_p = a;）
-                int x[3][4];
-                int (*p1)[4] = x;
-            二阶指针来承接指针数组的地址：
-                int *p2[3];
-                int **p3 = p2;
-    */
-    ```
-
-  - etc...
-
 - 关于连接符 “#” 和 “##” 的使用说明，这两个都是预处理命令。
 
   ```c
@@ -1751,8 +1553,6 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
   https://stackoverflow.com/questions/1642028/what-is-the-operator-in-c-c/1642035#1642035 */
   ```
 
-- [快速范围判断：再来一种新写法 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/147039093)。
-
 - scanf 的正则表达式用法举例。
 
   ```c
@@ -1828,6 +1628,230 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
   
 
 - etc.
+
+### 指针专题
+
+- 若要修改一函数的局部变量的值那么请用一级指针，若要修改一局部变量一级指针的值那么用二级指针，以此类推。
+
+  ```c
+  /* 修改一函数的局部变量的值那么请用一级指针，这个好理解，举例 */
+  void set_to_five(int* val)
+  {
+      *val = 5;
+  }
+  
+  int main(void)
+  {
+      int value = 10; /* 要修改 main() 函数的局部变量 value */
+      printf("before - value = %d\n",value);
+      set_to_five(&value); /* 修改值，要传入其地址 */
+      printf("after - value = %d\n",value);
+  }
+  
+  /* 依上面类推，传递入地址才能修改值，因此修改一局部变量一级指针的值那么用二级指针，举例 */
+  int ten   = 10;
+  int five  = 5;
+  
+  void set_to_five(int** val)
+  {
+      *val = &five;
+  }
+  
+  int main(void)
+  {
+      int* value = &ten;
+      printf("before - *value = %d\n",*value);
+      test4(&value); /* 修改值，要传入其地址 */
+      printf("after - *value = %d\n",*value);
+  }
+  
+  /* 再一个例子，引用自：https://blog.csdn.net/c243311364/article/details/109619361 */
+  void GetMemery(int** p) /* 修改外面的一个局部变量 *P，需要外面传入该局部变量的指针 即 **P */
+  {
+      /*申请1024个int大小*/
+      *p = malloc(sizeof(int)*1024);
+      if(NULL == *p)
+      {
+          printf("malloc failed\n");
+      }
+  }
+  int main(void)
+  {
+      int* p = NULL; /* 定义一个 局部变量 的 空指针（野指针） */
+      GetMemery(&p); /* 为其申请空间，即让其他函数修改 本函数中的局部变量的值，注意是传入 指针 p 的指针 */
+      printf("address of p is %p\n",p);
+      free(p);
+      return 0;
+  }
+  /* 上面这种将一局部指针变量在另一个函数内为其赋值，当然应该传入的是其指针，即 &p */
+  
+  /* 但，在任何地方申请空间后作为返回值 进行赋值 可以，因为申请空间的地址是 堆区，是全局变量，例子如下 */
+  int* GetMemery(int n)
+  {
+      int* iptr = malloc(sizeof(int) * n); /* 申请 n 个 int 大小 */
+      if(NULL == iptr)
+      {
+          printf("malloc failed\n");
+          return NULL;
+      }else
+      {
+          return iptr;
+      }
+  }
+  int main(void)
+  {
+      int* p = GetMemery(1024);
+      printf("address of p is %p\n",p);
+      free(p);
+      return 0;
+  }
+  ```
+
+  一阶指针花样不多，下面是各种二次指针总结。
+
+- 二阶指针的理解用 二维数组 或者 字符串数组 比较直观。对于 长度不一样的 多个 一维数组 常用 指针数组 定义，如 `char *str[]`定义缺省值个不等长的字符串，`int *var[6]`定义 6 个（6 行）不等长的整数数组，要么在定义时初始化其值，要么定义时不初始化然后在用的时候使用 malloc() 为其申请空间再赋值。初始化可以每一行不同长度，实际存储时候是 最大列数 对齐的，而非 初始化的数据 每一行 紧密排列。对于字符串 `"..."`，编译会给每个字符串的尾部添加 `\0`。
+
+  ```c
+  /* 这里介绍一种 字符串数组 的定义方法，引自 https://mp.weixin.qq.com/s/TqNTMAY2gPUcoxlEYijBUw */
+  #define EINVAL 1
+  #define ENOMEM 2
+  #define EFAULT 3 /* 这些量 或可使用枚举 */
+  
+  #define E2BIG 7
+  #define EBUSY 8
+  
+  #define ECHILD 12
+  
+  char *err_strings[] = {
+      [0] = "Success",
+      [EINVAL] = "Invalid argument",
+      [ENOMEM] = "Not enough memory",
+      [EFAULT] = "Bad address",
+      /* ... */
+      [E2BIG ] = "Argument list too long",
+      [EBUSY ] = "Device or resource busy",
+      /* ... */
+      [ECHILD] = "No child processes"
+      /* ... */
+  };
+  
+  /* 引用某一个字符串可以直接这样：err_strings[EFAULT] */
+  ```
+
+- 各种二次指针（二维数组、指针数组 与 数组指针、二阶指针）的传递总结：
+
+  ```c
+  /*  参考：https://blog.csdn.net/u013684730/article/details/46565577
+          实参                                     传递→       所匹配的形参
+  
+          数组的数组            char x[3][4];                 char (*p1)[4];         数组指针
+  
+          数组指针(行指针)       char (*p1)[4];                char (*p1)[4];         自身类型
+  
+          指针数组              char *p2[3];                  char **p3;             指针的指针
+  
+          指针的指针            char **p3;                     char **p3;            自身类型
+  */
+  
+  /* 二维数组，实参 x[3][4]，可以传递的/所匹配的形参为 数组的指针 int (*p1)[4]; 即可以给 p1  */
+  int x[3][4] =       /* 3 行 4 列，编译器实际分配了 12 个 int 类型的空间 */
+  {                   /* x[n] 或 *(x + n) 为第 n 行头字节的指针，*(*(x + 2) + 3) 与 x[2][3] 等价 */
+      {1, 3,  5, 7},  
+          /* 值得一提，x、&x[0]、x[0]、&x[0][0] 是同一个地址，因此 *(*(x + 2) + 3) 与 x[2][3] 等价，均可用于索引 */
+      {9, 11, 2, 4}, 
+      {6, 8, 10, 12}
+  };
+  
+  /* 数组的指针，实参为 int (*p1)[4]，可以传递的/所匹配的形参为 数组的指针 int (*p1)[4]; 即只可以传递给相同类型的 */
+  int (*p1)[4] = x;     /* 包含 4 个 int 型 数组 的指针，即 p1 指向 一个包含 4 个 int 值的数组 */ 
+  /* 有的说可以写为 int p1[][4] = x，可读性更强 */
+  /* 该初始化或写为
+      int (*p1)[4];
+      p1 = x;
+  */
+  /* 加深对 数组的指针 的理解
+      short int tell[10];
+          tell 与 &tell 在数字上来说相同，但从 概念上/编译器上 来看来，二者不同
+          tell 或 &tell[0] 是 2 字节 为单位 的内存块的地址，cell 是 short* 类型，tell++ 则指针移动 2 个字节
+          &tell 是 20 字节 为单位 的内存块的地址，&cell 是指向 包含 10 个 short 类型的数组的地址，
+              这个表示为 short(*)[10]，&tell++ 则指针移动 20 个字节
+      因此 有
+      short (*pas)[10] = &tell;
+          tell 的 类型为 short*，而 &tell 和 pas 的类型叫 short(*)[10]
+          *pas 与 tell 等价，(*pas)[0] 即 tell[0]
+  */
+  /* 补充，因二维数组在存储空间中是对其每一行数据紧密排列串在一维地址索引的存储空间里，
+      因此可以用一阶指针承接二维数组 x：int* p0 = x[0]; 此后索引二维数组 x 用 p0[n]，是一维的，用地址偏移索引，
+      比如 *(p0 + i*4 + j) 等价于 p0[i*4 + j] 等价于 x[i][j] （4 是 数组 x 的列数） */
+  
+  /* 指针数组，实参为 int *p2[3]，可以传递的/所匹配的形参为 二阶指针 int **p3;，即可以给 p3 */
+  int *p2[3] = {x[0], x[1], x[2]};    /* 3 个 int* 类型的变量组成的数组；取 二维数组 x 的每一行的头地址 幅值给 指针数组 */
+  /* 或写为
+      int *p2[3];
+      for(int i = 0;i < 3;i++)
+          p2[i] = x[i];
+  */
+  
+  /* 指向指针的指针，二阶指针 或叫 二维指针，实参为 int **p3，可以传递的/所匹配的形参为 二阶指针 int **p3; 即只可以传递给相同类型的 */
+  int **p3 = p2;    /* 实际上 int **p3 和 *p3[] 是等价的 */
+  /* 或写为 
+  	int **p3 = &p2[0];
+  
+     或写为
+      int **p3;
+      p3 = p2;
+  */
+  
+  int k, m;
+  for(m = 0, k = 1; m < 3; m++, k++)
+  {
+      printf("p1[%d][%d] = %d\t",m,k,p1[m][k]);
+      printf("*(*(p1 + %d) + %d) = %d\n",m,k,*(*(p1 + m) + k));
+  
+      printf("p2[%d][%d] = %d\t",m,k,p2[m][k]);
+      printf("*(*(p2 + %d) + %d) = %d\n",m,k,*(*(p2 + m) + k));
+  
+      printf("p3[%d][%d] = %d\t",m,k,p3[m][k]);
+      printf("*(*(p3 + %d) + %d) = %d\n",m,k,*(*(p3 + m) + k));
+  
+      printf("\n");
+  }
+  
+  /* 打印结果：
+      p1[0][1] = 3    *(*(p1 + 0) + 1) = 3
+      p2[0][1] = 3    *(*(p2 + 0) + 1) = 3
+      p3[0][1] = 3    *(*(p3 + 0) + 1) = 3
+  
+      p1[1][2] = 2    *(*(p1 + 1) + 2) = 2
+      p2[1][2] = 2    *(*(p2 + 1) + 2) = 2
+      p3[1][2] = 2    *(*(p3 + 1) + 2) = 2
+  
+      p1[2][3] = 12   *(*(p1 + 2) + 3) = 12
+      p2[2][3] = 12   *(*(p2 + 2) + 3) = 12
+      p3[2][3] = 12   *(*(p3 + 2) + 3) = 12
+  */
+  
+  /* 综上可以总结：
+      1、对于开辟空间填充数据，一种静态、一种动态：
+          静态：二维数组，定义时直接声明好静态空间大小，并实际占用这么大：
+              int x[3][4];
+          动态：指针数组，在定义后、使用前，要分别给每一个指针按需申请可大小不等的动态空间，使用后要释放空间 free()：
+              int *p2[3];
+              p2[0] = (int*)malloc(sizeof(int) * 10);
+              p2[1] = (int*)malloc(sizeof(int) * 20);
+              p2[2] = (int*)malloc(sizeof(int) * 30);
+  
+      2、而另外两种（数组的指针 int (*p1)[4]; 和 二阶指针 int **p3;）是用来分别 承接 上面两种（二维数组 int x[3][4]; 和 指针数组 int *p2[3];）的地址的（常用于函数形参，用指针来传递 二维数组/指针数据 以减少拷贝），如：
+          数组的指针来承接二维数组的地址：（类比 一阶指针来承接一维数组的地址：char a[] = "abc"; char *a_p = a;）
+              int x[3][4];
+              int (*p1)[4] = x;
+          二阶指针来承接指针数组的地址：
+              int *p2[3];
+              int **p3 = p2;
+  */
+  ```
+
+- etc...
 
 ### 黑魔法
 
@@ -2254,6 +2278,7 @@ struct example_struct {
 
 - [lw_oopc（C语言的面向对象） - robert_cai - 博客园 (cnblogs.com)](https://www.cnblogs.com/robert-cai/archive/2013/12/04/3456785.html)，作者做了大量的工作实现了 c 语言的封装、多态、继承这三种面向对象特征，还实现了所谓的虚函数。[OOPC-C面向对象 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/25997811)。
 - [C语言的高级用法，面向对象 (qq.com)](https://mp.weixin.qq.com/s/cwl4o-JJ0ZmLaq77_80A_w)。
+- [iota/OO-in-C.md at main · niltok/iota (github.com)](https://github.com/niltok/iota/blob/main/src/OO-in-C.md)。
 
 ### 用 C 实现高阶特性
 
