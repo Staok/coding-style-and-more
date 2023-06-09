@@ -3,13 +3,13 @@
 <p align="center">
     <img src="assets/CC-BY-NC-SA-4.0-88x31.png" alt="CC BY-NC-SA 4.0 88x31"  />
 </p>
-***p.s 温馨提示：点个 star 收藏一下回头慢慢看；或者下(白)载(嫖)下来，在 Typora 中阅读；或者在  [本文知乎地址](https://zhuanlan.zhihu.com/p/350839857)  阅读。一个人整理不易，此文如此丰富不值忘记 star。***
-
-本文介绍一些 ANSI C 和 GNU C 的基本语法、编写规范，本文系广泛撷取、借鉴和整理，侵删。本文适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！本文已经是长期积累和堆叠而形成一定规模，不必按照从前到后的顺序去看，可以挑感兴趣的章节去看。
+本文介绍一些 ANSI C 和 GNU C 的基本语法、编写规范，本文系广泛撷取、借鉴和整理，侵删。本文适合刚入门的人阅读和遵守，也适合已经有较多编程经验的人参看。如有错误恭谢指出！**本文已经是长期积累和堆叠而形成一定规模，不必按照从前到后的顺序去看，可以挑感兴趣的章节去看。**
 
 本文内容较多，推荐从 `4 普适规则（General rules）` 一节开始看起。
 
 本文存在对应的 [Github](https://github.com/Staok/coding-style-and-more)/[Gitee](https://gitee.com/staok/coding-style-and-more) 仓库地址，本文最新的原文 和 一些源码、备查手册等等 均放在里面。
+
+p.s 温馨提示：点个 star 收藏一下回头慢慢看；或者下(白)载(嫖)下来，在 Typora 中阅读；[本文知乎地址（不是最新）](https://zhuanlan.zhihu.com/p/350839857) ；一个人整理不易，此文如此丰富不值忘记 star。
 
 ------
 
@@ -62,28 +62,16 @@
 
 ------
 
-## 2 程序框架要点
-
-### 首要地重中之重
-
-- 首要 清晰、明确需求 并 **全面调研**、**收集资源** 和 **参考精华**。如时间允许，开始具体任务开发之前，进行充分调研！包括：1、对要使用的 平台、框架 所提供的 功能、机制 和 能力 做全面的调研，撷取其中适合本任务的场景的部分 做组合 和 在其基础上开发；2、全人脉/全网 搜索相关设计 并 参考优秀设计，分析研究其这么做的原因、思路，对各个设计取其精华。
-
-- **顶层设计** 和 **细化设计** 阶段。理清整系统设计，首先对软硬件做良好的顶层设计/架构设计，详细的画出框图，细化设计保证可以实施、在设计上保证尽量减少可能发生的错误。画好框图、清晰的道明复杂系统机制也是一种难得的能力！
-
-- **层次化** 和 **标准化** 的输出。软件工程结构的分层思想永不灭；标准化、通用化和可靠性设计高于功能设计。
-
-  <img src="assets/分层思想.png" alt="分层思想" style="zoom:50%;" />
-
-- 你是为了使用而学习，那就快速整起来；你是为了调研/考试而学习，那就全面一些。你不要也不是书呆子。
-
 ### 时常参考优秀设计
 
 在方案设计完之后准备开始实施/实现，不论软硬件，**先 全网找优秀的实例、原理图、代码、项目、库来参考实现**，不要一上来就自己吭哧做。
 
 广泛借鉴、引入第三方解决方案，或事半功倍。
 
+- [计算机教育中缺失的一课 · the missing semester of your cs education (missing-semester-cn.github.io)](https://missing-semester-cn.github.io/)，[为什么大学c语言课不顺便教一下Linux，Makefile，git，gdb等配套工具链呢? - 知乎 (zhihu.com)](https://www.zhihu.com/question/576758408/answer/2830758012)。强 烈 烈 烈 烈 推荐看一遍！
 - [EmbedSummary: 嵌入式大杂烩资源汇总 (gitee.com)](https://gitee.com/zhengnianli/EmbedSummary)。
 - [programthink/opensource: 【编程随想】收藏的开源项目清单 (github.com)](https://github.com/programthink/opensource)。
+- [jobbole/awesome-c-cn: C 资源大全中文版，包括了：构建系统、编译器、数据库、加密、初中高的教程/指南、书籍、库等。 (github.com)](https://github.com/jobbole/awesome-c-cn)。
 - github 上面的 各种 Awesome 系列 汇总仓库。
 
 ### 规范参考
@@ -99,6 +87,22 @@
 - [嵌入式软件工程师笔试面试指南-C/C++ - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/365152865)。
 - [C/C++ 代码风格和规范_路过的小熊~的博客-CSDN博客](https://blog.csdn.net/qq_32348883/article/details/123462908)。[代码整洁之道（一）最佳实践小结-阿里云开发者社区 (aliyun.com)](https://developer.aliyun.com/article/598076#?utm_content=m_1000007560)。
 - .etc
+
+------
+
+## 2 程序框架要点
+
+### 首要地重中之重
+
+- 首要 清晰、明确需求 并 **全面调研**、**收集资源** 和 **参考精华**。如时间允许，开始具体任务开发之前，进行充分调研！包括：1、对要使用的 平台、框架 所提供的 功能、机制 和 能力 做全面的调研，撷取其中适合本任务的场景的部分 做组合 和 在其基础上开发；2、全人脉/全网 搜索相关设计 并 参考优秀设计，分析研究其这么做的原因、思路，对各个设计取其精华。
+
+- **顶层设计** 和 **细化设计** 阶段。理清整系统设计，首先对软硬件做良好的顶层设计/架构设计，详细的画出框图，细化设计保证可以实施、在设计上保证尽量减少可能发生的错误。画好框图、清晰的道明复杂系统机制也是一种难得的能力！
+
+- **层次化** 和 **标准化** 的输出。软件工程结构的分层思想永不灭；标准化、通用化和可靠性设计高于功能设计。
+
+  <img src="assets/分层思想.png" alt="分层思想" style="zoom:50%;" />
+
+- 你是为了使用而学习，那就快速整起来；你是为了调研/考试而学习，那就全面一些。你不要也不是书呆子。
 
 ### 一些方面的提醒
 
@@ -126,7 +130,9 @@
 
 #### 嵌入式  编程  的一些规范
 
-*p.s 以下为项目 "[stm32_framework](https://github.com/Staok/stm32_framework)" 编写时形成的一些经验和规范，更多具体的还以此项目的源码和架构为准！*
+**项目 "[stm32_framework](https://github.com/Staok/stm32_framework)" 编写时形成的一些经验和规范**
+
+更多具体的还以此项目的源码和架构为准！
 
 - 本文章 "C 编写规范" 的全部规则都适用。
 
@@ -155,6 +161,16 @@
     要发送的串放入 发送缓冲区，检查发送启动标志位是否就绪，若就绪就打 发送启动标志位 -> 发送中断中，检测发送启动标志位，判断是否发送 发送缓冲区 的串，发完清此标志位，即设为就绪态。
 
 - 等等等等。
+
+
+
+**引自网络的好文章 / 规范经验分享**
+
+- [单片机STM32有什么推荐的裸机编程架构么，或者推荐的思路也行，谢谢？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/438340661/answer/2735154401)：
+
+  > 正常的做法应该是剥离硬件相关部分,把逻辑代码剥离出来在PC上架一个虚拟环境来调试,,等做的比较稳定后,再对接实际的硬件直接接口往下层MCU上移植,好处很多,一个是可以充分使用Visual studio强大的调试和性能分析功能,找bug什么的会比直接mcu上调快几倍几十倍,二是要换平台换MCU也很方便,直接改改底层就能用了,是减少项目库鲁西的一个好办法。
+
+- .etc
 
 #### 状态机与分级/并发状态机
 
@@ -283,12 +299,50 @@
 
 - 尽量利用CPU硬件、外设、提供的机制来完成相关任务。比如：
   - 乘除法尽量用上FPU和DSP相关的指令。
-  - 外设数据和内存数据之间的转移尽量使用 DMA。
+  - 外设数据和内存数据之间的转移尽量使用 DMA（首选） 或 收发中断。
   - 收发数据的外设带有 FIFO 则会减少 CPU占用，比如没有 FIFO 则每次来数据都会中断 CPU，而带 FIFO 则会只在其满一次或半满一次的时候才会中断 CPU 来一次性处理一整个大块的数据，大大提高效率。
 - 软件编程上需要大块数据转移、传递的时候尽量只传递其指针，即尽量使用内存映射的思路，尽量减少数据的拷贝。
 - 优化算法，尽量降低具体模块的运行的时间复杂度。合并计算式，在数学上化简计算至最简再写入程序。合理范围内去减少 CPU 运行的 无效/无用的代码。
 - [浅谈嵌入式MCU软件开发之代码风格与代码优化 (qq.com)](https://mp.weixin.qq.com/s?__biz=MzI0MDk0ODcxMw==&mid=2247484735&idx=1&sn=1874d5e81303295444f0fdef10b196e6&chksm=e91241b9de65c8af4d771387c84e313709cba490fe2192b20ed81cff8811786665e170120a68&mpshare=1&scene=23&srcid=03174aTa6DmT6UJCouP7ykba#rd)。
 - .etc
+
+#### 可移植性 相关提醒
+
+- [编写可移植C/C++程序的要点-面包板社区 (eet-china.com)](https://www.eet-china.com/mp/a180205.html)。
+
+  > **1、分层设计，隔离平台相关的代码。**
+  >
+  > **2、事先熟悉各目标平台，合理抽象底层功能。**
+  >
+  > **3、尽量使用标准C/C++函数。**
+  >
+  > **4、尽量不要使用C/C++新标准里出现的特性。**就是说不要太激进。
+  >
+  > **5、尽量不要使用C/C++标准里没有明确规定的特性。**
+  >
+  > **6、尽量不要使用准标准函数。**
+  >
+  > **7、注意标准函数的细节。**注意不同平台下相同 API 的微小差异。
+  >
+  > **8、小心数据标准数据类型。**
+  >
+  > **9、最好不要使用平台独有的特性。**
+  >
+  > **10、最好不要使用编译器特有的特性。**即少用编译器的特有扩展关键字。
+  >
+  > **11、注意平台的特性。**
+
+  个人补充，除非程序本身将来没有移植的打算，那就可以根据平台、工具链等提供的机制 深度地、特制地、独占性地 优化程序。
+
+- .etc
+
+### 生成静态库、动态库
+
+p.s 用时现查，再整理到这里。
+
+- [Unix 环境高级编程（一）：开发环境_屋外下着猫和狗的博客-CSDN博客_unix环境高级编程——四、静态库](https://blog.csdn.net/Richard_MZ/article/details/115029264#t11)。
+
+
 
 ------
 
@@ -375,6 +429,8 @@
 ## 4 普适规则（General rules）
 
 *p.s 以下所有章节中示例代码均以 32 / 64 位机为运行环境，即 int 占 4 字节。*
+
+*p.s 下文 会出现 `遵循 "属什么 _ 是什么 _ 做什么" 的命名形式` 的规范，但是也推荐反过来，遵循 "做什么 _ 是什么 _ 属什么" 的命名形式。*
 
 1. 第一条，请您重视编写规范！可以有代码洁癖。
 
@@ -570,6 +626,8 @@
 
   函数指针即指 函数类型的指针，定义的形式和使用情景如下，函数指针名加后缀 "_ fn"，函数指针类型定义名再追加后缀 "_ t"。
 
+  TODO：有待吸收的 [C语言函数指针的六个高级应用场景 (qq.com)](https://mp.weixin.qq.com/s/aWKbd6mL7PgZp88NT2g3XQ)。
+
   ```c
   /* 函数指针定义写法和用法举例 */
           unsigned char (*sys_print_compile_time_fn)(unsigned char);
@@ -701,6 +759,8 @@
       对于单独定义一个指针并且不赋初值的情况，char* c; 与 char * c; 与 char *c; 没有任何区别。
   */
   ```
+  
+  [嵌入式C中 const 妙用之处 (qq.com)](https://mp.weixin.qq.com/s/OjxF3KHVqXMjQVPpX1bOFA)，const 用法集合~
   
   更多补充 [ C/C++里 const int* 与 int const* 有什么区别？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/443195492/answer/1723886545) 其中写到：
   
@@ -1332,11 +1392,13 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
 
 ### 实用技巧
 
+- 更多 见后面 “更多奇技淫巧”  一节。
+
 - [前言 · C语言开发心得 (crifan.org)](https://book.crifan.org/books/c_lang_dev_summary/website/)，[crifan/c_lang_dev_summary: C语言开发心得 (github.com)](https://github.com/crifan/c_lang_dev_summary)。
 
 - [快速范围判断：再来一种新写法 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/147039093)。
 
-- 大小端区分。引自 [xiaowenxia/embedded-notes: 嵌入式linux软件开发、嵌入式linux驱动开发、c语言、单片机开发、IOT开发等面试要点记录 (github.com)](https://github.com/xiaowenxia/embedded-notes)。
+- 大小端区分。引 [xiaowenxia/embedded-notes: 嵌入式linux软件开发、嵌入式linux驱动开发、c语言、单片机开发、IOT开发等面试要点记录 (github.com)](https://github.com/xiaowenxia/embedded-notes)。
 
   ```c
   union data {
@@ -2139,6 +2201,8 @@ struct natural
    当 N 为 1 时，sizeof（natural）为 6 */
 ```
 
+[代码片段_“#pragma pack”和“__attribute __（（aligned））”之间的区别是什么？ (cha138.com)](http://it.cha138.com/shida/show-426755.html)。
+
 **零长度数组**
 
 不分配内存空间，但可以通过索引数组的方式索引其所在以及其后的内存的数据。
@@ -2652,7 +2716,7 @@ extern "C" {
 
 ## 署名
 
-- 编辑整理：[Github 页](https://github.com/Staok)，[知乎页](https://www.zhihu.com/people/xuhaoyang)。
+- 编辑整理：[个人主页](https://staok.gitee.io/categories/)，[Github 页](https://github.com/Staok)，[知乎页](https://www.zhihu.com/people/xuhaoyang)，[CSDN页](https://blog.csdn.net/Staokgo)。
 - 发表时间：始于 2021.2 且无终稿。
 - 首发平台：https://zhuanlan.zhihu.com/p/350839857 and https://github.com/Staok/coding-style-and-more。
 - 遵循协议：[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)。
