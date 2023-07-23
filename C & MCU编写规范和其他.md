@@ -697,6 +697,14 @@ p.s 用时现查，再整理到这里。
 
 - 避免使用 stdbool.h 里的 "true" 或 "false"，用 "1" 或 "0" 代替。
 
+- 关于 float 和 doube 的避坑使用：！浮点数无法准确表示精度！
+
+  [浮点数的坑很深，但不多_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV14V4y1U7rN/?vd_source=c633af9518bed5572b1614612e2be3df)。
+
+  > 所有的金额，重量，长度，等等等等，都是有基本单位的，全都用整数，单位用最小单位就可以了，只有不牵扯精度的展示再换算成浮点数，其他情况都用整数。
+
+  [Floating Point Math (30000000000000004.com)](https://0.30000000000000004.com/)。
+
 - 变量类型，除了char* 、float 和 double，都使用 stdint.h 库（对于不同位数的机器，使用这个文件里面的类型定义，可以明确每个类型的长度）里面的，统一起来。整文件或整工程中变量定义处的变量关键字修改，可以用 批量替换 来完成，如 统一的将 `INT8` 修改为 `char`。
   
   ```c
@@ -1394,6 +1402,37 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
 
 - 更多 见后面 “更多奇技淫巧”  一节。
 
+- 输入
+
+  0、输入不确定组数的数据，每组数据以回车划分且包括两个正整数a,b(1 <= a, b <= 1000)。
+
+  ```c
+  int main() {
+      int a, b;
+      while (scanf("%d %d", &a, &b) != EOF)
+      {
+          ...
+      }
+      return 0;
+  }
+  ```
+
+  1、输入一行不确定数量的数字，以空格分割，如 `-1 0 1 2 3\n` 这样。
+
+  ```c
+  unsigned int temp_cnt = 0;
+  char res[10] = {0};
+  do
+  {
+      scanf("%d",&res[temp_cnt++]);
+  }while(getchar() != '\n');
+  
+  for(unsigned int i = 0;i < temp_cnt;i++)
+  {
+      printf("%d ",res[i]);
+  }
+  ```
+
 - [前言 · C语言开发心得 (crifan.org)](https://book.crifan.org/books/c_lang_dev_summary/website/)，[crifan/c_lang_dev_summary: C语言开发心得 (github.com)](https://github.com/crifan/c_lang_dev_summary)。
 
 - [快速范围判断：再来一种新写法 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/147039093)。
@@ -1415,23 +1454,7 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
   }
   /*打印 0x78 说明是小端（低字节存放在低地址，高字节存放在高地址）， 0x12 说明是大端 */
   ```
-  
-- 输入一行数字，以空格分割，如 `-1 0 1 2 3\n` 这样。
 
-  ```c
-  unsigned int temp_cnt = 0;
-  char res[10] = {0};
-  do
-  {
-      scanf("%d",&res[temp_cnt++]);
-  }while(getchar() != '\n');
-  
-  for(unsigned int i = 0;i < temp_cnt;i++)
-  {
-      printf("%d ",res[i]);
-  }
-  ```
-  
 - 巧用 按位 与/或/非 来 组合想要的二进制序列。
 
   ```c
@@ -1692,6 +1715,8 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
 - etc.
 
 ### 指针专题
+
+请先看这篇文章 [为什么有人讨厌指针？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/432288840/answer/1791510455)。
 
 - 若要修改一函数的局部变量的值那么请用一级指针，若要修改一局部变量一级指针的值那么用二级指针，以此类推。
 
