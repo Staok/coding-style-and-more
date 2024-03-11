@@ -1016,24 +1016,35 @@ p.s 用时现查，再整理到这里。
 2. 尽量使用 Doxygen 的注释语法，然后可以使用 Doxygen 这个软件从源码工程的注释中自动化生成软件工程的说明文档，注释写的全（包括文件和API等的描述等等）那么生成的文档也会很全。Documented code allows doxygen to parse and general html/pdf/latex output, thus it is very important to do it properly。目测目前我见过的用源文件产生手册的大型项目有：LWIP、FreeRTOS、ST HAL、CMSIS等，关于 ST HAL 库里面的注释形式的详细情况请看 “8 ST HAL 的编写形式” 章节！
 
    - Doxygen 的注释语法规范。网上很多，这里列举几个：
-     
+
+     - [Doxygen注释规范 - 哔哩哔哩 (bilibili.com)](https://www.bilibili.com/read/cv28275083)。
      - [Doxygen 注释语法规范 - 黄树超 - 博客园 (cnblogs.com)](https://www.cnblogs.com/schips/p/12200388.html)。
      - [C语言中的Doxygen注释模板_胡图图-CSDN博客_c语言函数注释模板](https://blog.csdn.net/u013178472/article/details/107164902)。
-     
+
      需要注意的是，Doxygen 并不处理所有的注释，其重点关注与程序结构有关的注释，比如：文件、类、结构、函数、全局变量、宏等注释，而忽略函数内局部变量、代码等的注释。先从文件开始注释，然后是所在文件的全局函数、结构体、枚举变量、命名空间→命名空间中的类→成员函数和成员变量。
 
    - 使用 Doxygen 生成文档的教程（这几个教程里面也包含有 Doxygen 的语法介绍）：
-     
+
      - [Doxygen给C程序生成注释文档 - on_the_road - 博客园 (cnblogs.com)](https://www.cnblogs.com/fkpj/p/4537145.html)。
      - [Doxygen生成注释文档_destiny的专栏-CSDN博客_doxygen生成文档](https://blog.csdn.net/tuwenqi2013/article/details/70050849)。
      - [代码注释规范之Doxygen - silencehuan - 博客园 (cnblogs.com)](https://www.cnblogs.com/silencehuan/p/11169084.html)。
 
    - Vs Code 的 Doxygen 格式注释生成插件：
-     
+
      - [Doxygen Documentation Generator - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cschlosser.doxdocgen)，用这个，官方比较全。或者在 VScode 扩展里 安装 C/C++ Extension Pack，里面包含了许多 C/C++ 实用扩展，包括 Doxygen Documentation Generator。
      - [Vs code自动生成Doxygen格式注释_wang0huan的博客-CSDN博客](https://blog.csdn.net/wang0huan/article/details/103107472/)。
-     
+
      *p.s 关于 Doxygen 文档的更多具体写法用时再详看进行手写，或者使用生成插件*
+
+   - 配置模板，现成模板
+
+     - stm32 hal 库风格，直接程序文件直接填充成模板
+
+       [在VSCode中为代码添加注释、文件头、代码块分割线 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/647274361)。
+
+     - 基本插件使用和生成文档 [搭建 Doxygen 便捷编写环境（VSCode） - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/681843334)。
+
+     - 自制模板 [【Doxygen】Vscode 插件 DoxyGen Documentation Generator C语言详细设置_vscode doxygen-CSDN博客](https://blog.csdn.net/qq_39030013/article/details/129184995)。
 
 3. 下面列举几种花哨的，其中有我自己“创造”的。函数定义的注释，主任务函数的注释，用于显眼！
 
@@ -1133,7 +1144,9 @@ p.s 用时现查，再整理到这里。
 
 (TODO)下面部分条目尚未补全。
 
-(TODO)查一查astyle配置文件的用法，按照自己的规范形式，写一个配置文件
+- clangd VsCode 插件。Vscode 直接安装 clangd 插件，然后会提示关闭 c/c++ 插件 的 智能感知 功能 就关闭（c/c++ 插件 的提示慢且功能少），然后本地安装 clang 工具链。clangd 提供了很多有用的 辅助 编码 的功能！！！首选！
+
+下面是比较老的很久前的总结，看看就好。
 
 - 通用工具 AStyle：
 
@@ -1141,6 +1154,8 @@ p.s 用时现查，再整理到这里。
   ​    AStyle官网：[AStyle官网](http://astyle.sourceforge.net/)
   ​    AStyle is a great piece of software that can help with formatting the code based on input configuration.
   ​    This repository contains `astyle-code-format.cfg` file which can be used with `AStyle` software as command line below.
+
+  (TODO)查一查astyle配置文件的用法，按照自己的规范形式，写一个配置文件
 
   ```bash
   astyle --options="astyle-code-format.cfg" "input_path/*.c,*.h" "input_path2/*.c,*.h"
@@ -1706,6 +1721,99 @@ MIN(++ia，++ib) 会展开为 ((++ia) < (++ib) ? (++ia) : (++ib))，传入宏的
       while(1)
       {
          // ...
+      }
+  }
+  ```
+
+- 24bit 字符串 转 整数
+
+  ```c
+  // 输入 "1010..." 24bit 的 字符串，转 整数
+  int _24bin2dec(char* _24bin_str)
+  {
+      char* ptr = _24bin_str;
+  
+      int dec = 0;
+      char index = 1;
+  
+      if(*ptr++ == '1')
+      {
+          index = -1;
+      }
+      
+      for(unsigned int i = 0;i < 23;i++)
+      {
+          dec += ((*ptr++) -'0') * pow(2,22 - i);
+      }
+  
+      dec = dec * index;
+  
+      return dec;
+  }
+  ```
+
+- c 实现的 字符串 `strtok()`
+
+  ```c
+  char *strchr(const char *s, int c) {
+      const char c_ = (char)c;
+      do {
+          if (*s == c_) {
+              return (char *)s;
+          }
+      } while (*s++ != '\0');
+      return NULL;
+  }
+  
+  size_t strcspn(const char *s1, const char *s2) {
+      size_t res = 0;
+      while (*s1 != '\0') {
+          if (strchr(s2, *s1) == NULL) {
+              ++s1;
+              ++res;
+          } else {
+              return res;
+          }
+      }
+      return res;
+  }
+  
+  char *strtok(char *s, const char *delim) {
+      static char *last;
+  
+      if (s == NULL) {
+          s = last;
+      }
+      int ch;
+      do {
+          ch = *s++;
+          if (ch == '\0') {
+              return NULL;
+          }
+      } while (strchr(delim, ch));
+      --s;
+      last = s + strcspn(s, delim);
+      if (*last != '\0') {
+          *last++ = '\0';
+      }
+      return s;
+  }
+  
+  // 下面是测试
+  
+  char srt_buf[50] = {"a,bc,d-ef,1 23,!,@a aa,\n,ee-e,@#$^&,ww, "};
+  char *buf4tok,i;
+  
+  void test1(void)
+  {
+      buf4tok = strtok(srt_buf," ,-");
+      if(buf4tok != NULL)
+      {
+          for(i = 0;buf4tok != NULL;i++)
+          {
+              printf("%3d : %s\r\n",i,buf4tok);
+              buf4tok = strtok(NULL," ,-");
+          }
       }
   }
   ```
@@ -2361,13 +2469,19 @@ struct example_struct {
        4 8 4
   ```
 
+- [Linux kernel中有哪些奇技淫巧？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/471637144)。
+
 - etc.
+
+
 
 ### C 语言面向对象实现
 
 - [lw_oopc（C语言的面向对象） - robert_cai - 博客园 (cnblogs.com)](https://www.cnblogs.com/robert-cai/archive/2013/12/04/3456785.html)，作者做了大量的工作实现了 c 语言的封装、多态、继承这三种面向对象特征，还实现了所谓的虚函数。[OOPC-C面向对象 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/25997811)。
 - [C语言的高级用法，面向对象 (qq.com)](https://mp.weixin.qq.com/s/cwl4o-JJ0ZmLaq77_80A_w)。
 - [iota/OO-in-C.md at main · niltok/iota (github.com)](https://github.com/niltok/iota/blob/main/src/OO-in-C.md)。
+
+
 
 ### 用 C 实现高阶特性
 
@@ -2378,6 +2492,8 @@ struct example_struct {
   受 Python 等高级语言的启发，实现了通用数据结构/动态函数/类等等，比较全和丰富。
 
 - [C 语言有什么奇技淫巧？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/27417946/answer/1412733677)，介绍 Morn 库，用 C 实现 “函数重载” 和 “泛型”。
+
+
 
 ### 字符画生产工具/注释的图形化描述
 
