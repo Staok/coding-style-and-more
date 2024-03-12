@@ -346,7 +346,9 @@ p.s 用时现查，再整理到这里。
 
 ------
 
-## IT 学习路线
+## 资源汇集
+
+### IT 学习路线
 
 1. C语言基础（看书、B站等均可） →
 2. C语言三剑客：《C和指针》、《C陷阱与缺陷》和《C专家编程》，经典永流传 →
@@ -357,7 +359,21 @@ p.s 用时现查，再整理到这里。
 
 更多可详细参考 [rd2coding/Road2Coding: 编程之路 (github.com)](https://github.com/rd2coding/Road2Coding) 的总结，比较全面了。
 
-## 相关坚韧大厚书
+
+
+### 嵌入式相关学习路线
+
+见 [【目录贴】硕士实验室嵌入式学习路线参考清单 - 欢迎来到 Staok - 瞰百易 (gitee.io)](https://staok.gitee.io/硕士实验室嵌入式学习路线参考清单/)。
+
+
+
+### C++ 总结
+
+见 [Cpp-Learning: C++学习总结备查 (gitee.com)](https://gitee.com/staok/Cpp-Learning)。
+
+
+
+### 相关坚韧大厚书
 
 没给出链接的 网搜名字即可。
 
@@ -369,7 +385,7 @@ p.s 用时现查，再整理到这里。
 - 嵌入式应用相关：《GNU Make》，《Debugging with GDB》，《Linux 高级程序开发》，《POSIX 多线程程序设计》，《嵌入式Linux基础教程》，《嵌入式Linxu应用开发完全手册》，《嵌入式Linxu应用程序开发详解》。
 - 嵌入式底层相关：内核相关：《深入理解Linux内核》，《Linux内核源代码情景分析》，《Linux内核设计与实现》；驱动相关：《Linux设备驱动程序》，《Linux设备驱动开发详解》，《Linux驱动开发入门与实践》。
 
-## 相关有趣/耐看书或视频
+### 相关有趣/耐看书或视频
 
 - [学习心得介绍 | 小林coding (xiaolincoding.com)](https://xiaolincoding.com/cs_learn/)。[介绍 | 小林coding (xiaolincoding.com)](https://xiaolincoding.com/reader_nb/)。
 - [13 万字 C 语言从入门到精通保姆级教程2021 年版_极客江南的博客-CSDN博客](https://blog.csdn.net/weixin_44617968/article/details/117656810)。
@@ -383,6 +399,23 @@ p.s 用时现查，再整理到这里。
 - [（完结）（小甲鱼）数据结构和算法_ 哔哩哔哩 _bilibili](https://www.bilibili.com/video/BV1os41117Fs)。
 - [国嵌唐老师主讲【数据结构与算法C语言】（非常犀利）_ 哔哩哔哩 _bilibili](https://www.bilibili.com/video/BV1eK4y1J7zh) 讲的慢。
 - ~~[《算法新解》开源书](https://github.com/liuxinyu95/AlgoXY)，我为什么加下划线？~~，《啊哈！算法》。
+
+
+
+### 资料包
+
+引自 [（大集合）数据结构与算法简述和CS综合 - 欢迎来到 Staok - 瞰百易 (gitee.io)](https://staok.gitee.io/15数据结构与算法简述和cs综合/)。
+
+Github 上或其它地方的有极大学习价值的教程或库：
+
+- 附：算法代码库。
+- 附：CS 综合学习类。
+- 附：嵌入式 综合学习类。
+- 附：算法刷题总结。
+
+该部分涉及十几个 Github 仓库，鉴于挨个下载很麻烦，这里我全部下载并整理好了（四部分仓库 + 硬件领域面经集合 1.42 GB 侵删）：
+
+链接：https://pan.baidu.com/s/1-A_wA3YP4666tge2llxqEg 提取码：XHYN –来自百度网盘超级会员V4的分享。
 
 ------
 
