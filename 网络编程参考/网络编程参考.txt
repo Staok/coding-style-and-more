@@ -1,0 +1,59 @@
+首先 socket 支持 网络通讯 和 IPC（进程间通讯）
+
+————————————————————————
+
+用于 网络通讯的，参考 “socket” 文件夹 里面的实现（ .h 文件对 各种结构体有详细说明）：
+0、选择 TCP：socket() 填入参数 AF_INET, SOCK_STREAM, 0（最后这个 0 参数，对于 win 则换为 IPPROTO_TCP）
+	选择 UDP 则为：AF_INET, SOCK_DGRAM, 0（最后这个 0 参数，对于 win 则换为 IPPROTO_TCP）
+1、使用 结构体 struct sockaddr_in 来填充与上对应的参数（之后再强转为 struct sockaddr* 结构体 给 bind() 等用）
+
+—————————
+TCP 需要建立连接，进行可靠的双向通信。
+TCP 模式 API 调用顺序：
+server:
+
+socket()
+bind()
+listen()、accept()
+recv()、send()
+
+client:
+
+socket()
+connect()
+recv()、send()
+
+关于 Client 端不需要 bind()：
+bind() 函数的主要作用是将套接字与特定的本地地址（包括 IP 地址和端口号）绑定。
+客户端主要是发起连接的角色，通常只关心连接到服务器的远程地址和端口，而不需要关心本地的地址。connect() 函数会处理本地地址的选择（包括本地 IP 地址和端口号）。
+对比之下，服务端需要显式指定本地的 IP 地址和端口号，因为它需要监听特定的端口来接受来自客户端的连接。
+特殊情况下可能需要 bind()
+虽然大多数情况下客户端不需要显式调用 bind()，但是在某些特殊场景下，可能会有需要。例如，客户端希望使用特定的本地端口或 IP 地址来进行连接，或者需要绑定到某个特定的网络接口时，可以使用 bind() 显式指定本地地址。
+例如，如果一个客户端程序需要同时与多个服务器进行通信，并且需要为每个连接指定不同的本地端口，或者它希望绑定到特定的本地 IP 地址，这时就需要使用 bind()。
+
+—————————
+UDP 不需要建立连接，适用于快速、低延迟的通信，但不保证可靠性。
+UDP 模式 API 调用顺序：
+server:
+
+socket()
+bind()
+recvfrom()、sendto()
+
+client:
+
+socket()
+recvfrom()、sendto()
+
+UDP 的 Server 在 recvfrom() 时候只知道有没有接收到数据（以及数据来源的IP和Port），而不知道 有哪些 UDP Client 的存在，只能根据 客户端的 IP 地址和端口号 来区分不同的客户端。
+可以为每个接收到的客户端数据包创建一个记录，表示该客户端的存在。然后，通过周期性检查和清理（如果超过一定时间没有收到来自该客户端的消息，可以将其标记为离线），模拟客户端在线或离线的状态。
+
+————————————————————————
+
+用于进程间通讯：
+0、socket() 填入参数 AF_UNIX, SOCK_STREAM, 0（是 TCP 的面向连接的概念）
+1、使用 struct sockaddr_un 结构体，并传入 .sun_family = AF_UNIX（之后再强转为 struct sockaddr* 结构体 给 bind() 等用），.sun_path 传入 临时管道文件路径如 "/tmp/unix_socket" 等
+	struct sockaddr_un 用于 Unix 域套接字（Unix Domain Socket）进行进程间通信（IPC）。与 TCP 或 UDP 不同，Unix 域套接字不是基于网络的通信协议，而是基于文件系统，通过路径名称进行进程间通信。
+	使用 struct sockaddr_un 并不涉及 TCP 或 UDP，因为它们是网络协议，而 sockaddr_un 是用于本地进程间通信的。
+
+API 调用顺序 同上 TCP 模式 的 API 调用。

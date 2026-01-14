@@ -30,3 +30,31 @@ p.s 温馨提示：点个 star 收藏一下回头慢慢看；或者下(白)载(�
 
 - Github 地址：[C & MCU编写规范和其他](https://github.com/Staok/coding-style-and-more/blob/main/C%20%26%20MCU%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83%E5%92%8C%E5%85%B6%E4%BB%96.md)。
 -  Gitee  地址：[C & MCU编写规范和其他](https://gitee.com/staok/coding-style-and-more/blob/main/C%20&%20MCU%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83%E5%92%8C%E5%85%B6%E4%BB%96.md)。
+
+------
+
+这里为 C & MCU 的总结。下面为 C++ 面向 Linux / PC 的应用层编码 的大总结，为补充 数据结构与算法、设计模式 等的大总结。此皆为 此生 时不时更新的。
+
+- CS学习进阶优质路径总结。
+
+  Github：[Staok/EE-CS-study-map: CS学习进阶优质路径总结，随着自己的学习将不断补充](https://github.com/Staok/EE-CS-study-map)。
+
+  Gitee：[瞰百/EE-CS-study-map](https://gitee.com/staok/EE-CS-study-map)。
+
+- C++ 大总结。
+
+  Github：[Staok/Cpp-Learning: C++11 / 14 / 17 语法大总结；C++ 最佳实践规则规范大总结；C++ 实用库大收集；C++ debug / 动态 & 静态检查 技术 大整理。等等。](https://github.com/Staok/Cpp-Learning)。
+
+  Gitee：[Cpp-Learning: C++11 / 14 / 17 语法大总结；C++ 最佳实践规则规范大总结；C++ 实用库大收集；C++ debug / 动态 & 静态检查 技术 大整理。等等。](https://gitee.com/staok/Cpp-Learning)。
+
+- 数据结构与算法。
+
+  Github：[Staok/C-Cpp-data-struct-algo: C-C++-数据结构与算法相关优秀资料集子](https://github.com/Staok/C-Cpp-data-struct-algo)。
+
+  Gitee：[C-Cpp-data-struct-algo: C-C++-数据结构与算法相关优秀资料集子](https://gitee.com/staok/C-Cpp-data-struct-algo)。
+
+- 设计模式。
+
+  Github：[Staok/C-Cpp-design-patterns: C/C++设计模式相关优秀资料集子](https://github.com/Staok/C-Cpp-design-patterns)。
+
+  Gitee：[C-Cpp-design-patterns: C/C++设计模式相关优秀资料集子](https://gitee.com/staok/C-Cpp-design-patterns)。
